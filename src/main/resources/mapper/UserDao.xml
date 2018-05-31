@@ -32,4 +32,13 @@
         select count(*) from user where email=#{email}
     </select>
 
+    <!-- 根据用户名检查是否已经注册 -->
+    <select id="checkByUsername" resultType="int">
+        select count(*) from user where user_name=#{username}
+    </select>
+
+    <!-- 根据邮箱检查是否已经注册 -->
+    <select id="checkByEmail" resultType="int">
+        select count(*) from user where email=#{email}
+    </select>
 </mapper>

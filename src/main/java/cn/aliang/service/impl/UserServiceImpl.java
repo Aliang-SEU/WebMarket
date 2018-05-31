@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
      * @param password
      * @return
      */
+    @Override
     public Map<String, Object> register(String userName, String email, String password) {
         Map<String, Object> map = new HashMap<>();
         //首先查询数据库内是否有对应的账号存在
@@ -55,6 +56,7 @@ public class UserServiceImpl implements UserService {
      * @param password
      * @return
      */
+    @Override
     public Map<String, Object> userLogin(String userName, String password, HttpServletResponse response){
         Map<String, Object> map = new HashMap<>();
 
@@ -92,6 +94,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public boolean checkUsername(String username) {
+        Integer count = userDao.checkByUsername(username);
+        return count == 1;
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        Integer count = userDao.checkByEmail(email);
+        return count == 1;
+    }
+
+    @Override
     public Map<String, Object> queryUserIdByLoginToken(String loginToken) {
         Map<String, Object> map = new HashMap<>();
 
@@ -107,6 +121,7 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
+    @Override
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         /**
          * 先清除服务端的cookie

@@ -44,4 +44,18 @@ public interface UserService {
      * @return
      */
     public String logout(HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 验证用户的姓名
+     * @param username
+     * @return
+     */
+    public boolean checkUsername(String username);
+
+    /**
+     * 验证用户的邮箱
+     * @param email
+     * @return
+     */
+    public boolean checkEmail(String email);
 }

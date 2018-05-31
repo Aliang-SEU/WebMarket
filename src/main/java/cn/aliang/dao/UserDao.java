@@ -2,10 +2,12 @@ package cn.aliang.dao;
 
 import cn.aliang.entity.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  * 用户操作接口
  */
+@Repository
 public interface UserDao {
 
     /**
@@ -43,6 +45,20 @@ public interface UserDao {
      * @return
      */
     int selectUserInfoByEmail(@Param("email") String email);
+
+    /**
+     * 验证用户名是否已经被注册
+     * @param username
+     * @return
+     */
+    int checkByUsername(@Param("username") String username);
+
+    /**
+     * 验证邮箱是否已经被注册
+     * @param email
+     * @return
+     */
+    int checkByEmail(@Param("email") String email);
 
 }
 
