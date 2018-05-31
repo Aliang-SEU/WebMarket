@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- UserDao的mybatis映射文件 -->
+<mapper namespace="cn.aliang.dao.UserDao">
+
+    <!-- 添加用户 -->
+    <insert id="insertUser">
+       insert into user(user_name,real_name,password,email,phone,address)
+        values(#{user.userName},#{user.realName},#{user.password},#{user.email},#{user.phone},#{user.address})
+    </insert>
+
+    <!-- 删除用户 -->
+    <delete id="deleteUser">
+        DELETE FROM user WHERE user_id = #{user.userId}
+    </delete>
+
+    <!-- 查询用户ID 这里可以使用索引加快查找的速度 -->
+    <select id="selectUserIdByUserNameAndPassword" resultType="int">
+      select user_id from user where user_name = #{userName} and password = #{password}
+    </select>
+
+    <!-- 根据用户ID查询用户的信息 -->
+    <select id="selectUserInfoByUserId" resultType="cn.aliang.entity.User">
+      select user_id,user_name,real_name,password,email,phone,address from user where user_id = #{userId}
+    </select>
+    
+    <!-- 根据邮箱查询是否有对应的账号 -->
+    <select id="selectUserInfoByEmail" resultType="int">
+        select count(*) from user where email=#{email}
+    </select>
+
+</mapper>

@@ -1,0 +1,78 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+
+    <link href="resource/css/bootstrap.css" rel="stylesheet">
+    <link href="resource/css/bootstrapvalidator0.5.3.css" rel="stylesheet">
+    <script src="resource/js/jquery3.2.1.js"></script>
+    <script src="resource/js/bootstrap.js"></script>
+    <script src="resource/js/bootstrapvalidator.js"></script>
+
+    <link rel="stylesheet" href="resource/css/login.css">
+    <script src="resource/js/login.js?t=20180530"></script>
+
+</head>
+<body class="img-responsive center-block">
+
+<div class="container">
+    <div class="row">
+        <a href="/" ><img src="resource/img/logo.jpg"> </a>
+    </div>
+    <div class="row bg">
+        <div class="row form">
+            <!-- 登录表单 -->
+            <form class="form-horizontal" role="form" id="loginForm">
+                <div class="row" style="padding-top: 15px;">
+                    <div align="center" style="padding: 0px 0px 20px 0px; font-size:20px;"><b>用户登录</b></div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-3"> </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3"> </div>
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3"> </div>
+                        <div class="col-md-4">
+                            <label class="checkbox" class="col-md-6 control-label">
+                                <input type="checkbox" name="remember" value="1"/>记住用户名
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group" align="center">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <button type="button" id="loginButton" class="btn btn-block btn-success">登录</button>
+                        </div>
+                    </div>
+                    <div class="form-group text-center" style="margin-top: 10px;">
+                        <a href="/toRegister">免费注册</a>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <a>忘记密码</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+<footer>
+    <br/>
+    <p id="c1" style="text-align:center">Copyright &copy; 2018-2019 aliang-seu.cn 版权所有</p>
+</footer>
+</body>
+<script type="text/javascript">
+
+</script>
+</html>

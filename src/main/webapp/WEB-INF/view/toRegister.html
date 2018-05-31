@@ -1,0 +1,74 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+
+    <link href="resource/css/bootstrap.css" rel="stylesheet">
+    <link href="resource/css/bootstrapvalidator0.5.3.css" rel="stylesheet">
+    <script src="resource/js/jquery3.2.1.js"></script>
+    <script src="resource/js/bootstrap.js"></script>
+    <script src="resource/js/bootstrapvalidator.js"></script>
+
+
+    <link rel="stylesheet" href="resource/css/register.css">
+    <script src="resource/js/register.js?t=20180530"></script>
+
+</head>
+<body class="center-block">
+<div class="container">
+    <div class="row">
+        <a href="/" ><img src="resource/img/logo.jpg"> </a>
+    </div>
+    <div class="row bg">
+        <div class="row form">
+            <form class="form-horizontal" role="form" method="post">
+                <div class="row">
+                    <div align="center" style="padding: 0px 0px 20px 0px; font-size:20px;"><b>用户注册</b></div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="username" class="col-md-4 control-label">用户名:</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="请输入你的用户名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-md-4 control-label">邮   箱:</label>
+                        <div class="col-md-6">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="请输入你的电子邮箱地址">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-4 control-label">密   码:</label>
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="请输入你的密码">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-4 control-label">确认密码:</label>
+                        <div class="col-md-6">
+                            <input type="password" class="form-control" id="verifypassword" name="verifypassword" placeholder="请再次输入你的密码">
+                        </div>
+                    </div>
+                    <div class="form-group" align="center">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-block btn-success">立即注册</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <br/>
+    <p id="c1" style="text-align:center">Copyright &copy; 2018-2019 aliang-seu.cn 版权所有</p>
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网上商城</title>
+
+    <link href="resource/css/bootstrap.css" rel="stylesheet">
+    <link href="resource/css/bootstrapvalidator0.5.3.css" rel="stylesheet">
+    <script src="resource/js/jquery3.2.1.js"></script>
+    <script src="resource/js/bootstrap.js"></script>
+    <script src="resource/js/bootstrapvalidator.js"></script>
+
+    <style type="text/css">
+        .top_row{
+            border: 1px solid black;
+            align-content: center;
+            width: 400px;
+            padding: 10px 0px 10px 0px;
+        }
+        li{
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        table, th , td  {
+            border: 1px solid grey;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        table tr:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <img src="resource/img/top.jpg" class="img-responsive center-block" >
+    </div>
+</div>
+<!-- 顶端状态栏 -->
+<div class="container-fluid" id="loginState">
+    <div class="row" style="background-color:darkgrey">
+        <div class="col-md-3  pull-right" style="padding-top: 5px; padding-bottom: 5px;" id="userState">
+
+        </div>
+    </div>
+</div>
+
+<!-- 搜索框预留 -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-1">
+            <a href="/"><img src="resource/img/logo.jpg" alt="logo"></a>
+        </div>
+        <div class="col-md-6 pull-right" style="margin-top: 15px; margin-right: 100px;">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="请输入要查询的内容" onkeydown="onKeyDown(event)"/>
+                <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div ng-app="myApp" ng-controller="customersCtrl">
+    <!-- 导航栏 -->
+    <div class="container">
+        <div class="col-md-12">
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <div class="navbar-header col-offset-2 col-md-1">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">首 页</a>
+                    </div>
+                    <div class="navbar-header col-md-10 pull-right">
+                        <div class="navbar-collapse collapse" role="navigation">
+                            <ul class="nav navbar-nav">
+                                <li ng-repeat="x in names">
+                                    <a class="navbar-brand" ng-href="/Goods/{{x.type}}" target="_self">{{x.name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 商品栏 -->
+    <div class="container">
+        <ul>
+            <li ng-repeat="x in values">
+                <a ng-href="/Goods/{{x.type}}" target="_self">{{x.name}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<script src="https://cdn.bootcss.com/angular.js/1.4.6/angular.min.js"></script>
+<script src="resource/js/utils.js"></script>
+</body>
+
+
+<script type="text/javascript">
+    $(function () {
+        getLoginState();
+    });
+
+    var app = angular.module('myApp',[]);
+    app.controller('customersCtrl', function($scope, $http) {
+
+        $http.get("/queryGoodType").success(function (response)
+        {$scope.names = response.data;});
+
+    });
+
+    /**
+     * 获取登录的状态
+     */
+    function getLoginState(){
+        var loginToken = getCookie("loginToken");
+
+        //loginToken不为空
+        if(loginToken != null){
+            $.get("/getLoginState",{"loginToken":loginToken} , function(result){
+                if(result != null && result.success == true){
+                    $("#userState").html("欢迎您:<a href=\"/toLogin\" style=\"margin-right: 10px;\">" + result.data.username  + " \
+                            <a href=\"/logOut\"> 注销 </a> " + " \
+                            <a href=\"#\" style=\"margin:15px\">我的订单</a>");
+                    return;
+                }else{
+                    $("#userState").html("<a href=\"/toLogin\" style=\"margin-right: 10px;\">亲,请登陆</a>" +
+                        "<a href=\"#\" style=\"margin:15px\">我的订单</a>");
+                }
+            });
+        }
+    }
+
+    function onKeyDown(event){
+        var e = event || windows.event || arguments.callee.caller.arguments[0];
+        if(e && e.keyCode == 13){ //按下enter键触发
+
+        }
+    }
+</script>
+</html>

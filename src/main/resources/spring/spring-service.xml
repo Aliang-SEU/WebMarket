@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:property-placeholder location="classpath:database.properties"/>
+
+    <!-- Redis连接池的配置 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig" >
+        <property name="maxTotal" value="${redis.pool.maxActive}"/>
+        <property name="maxIdle" value="${redis.pool.maxIdle}"/>
+        <property name="minIdle" value="${redis.pool.minIdle}"/>
+        <property name="maxWaitMillis" value="${redis.pool.maxWait}"/>
+        <property name="testOnBorrow" value="${redis.pool.testOnBorrow}"/>
+        <property name="testOnReturn" value="${redis.pool.testOnReturn}"/>
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1" value="${redis.hostName}" />
+        <constructor-arg index="2" value="${redis.port}" />
+        <constructor-arg index="3" value="${redis.timeout}" />
+        <!--Redis密码-->
+    </bean>
+
+    <!--
+    <bean id="userService" class="cn.aliang.service.impl.UserServiceImpl"/>
+    -->
+    <!-- 4:扫描web相关的bean -->
+    <context:component-scan base-package="cn.aliang.service"/>
+
+</beans>

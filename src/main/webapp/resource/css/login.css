@@ -1,0 +1,14 @@
+.bg{
+    background-image: url("../img/login_bg.jpg");
+    background-position: center 0;  
+    background-repeat: no-repeat;  
+    background-attachment: fixed;  
+    background-size: cover;  
+}
+.form{
+    background: rgba(255,255,255,0.5); 
+    width:400px; 
+    margin:120px auto;
+}
+/*阴影*/
+.checkbox{padding-left:21px;}
