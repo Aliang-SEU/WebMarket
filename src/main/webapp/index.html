@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <title>网上商城</title>
 
-    <link href="resource/css/bootstrap.css" rel="stylesheet">
-    <link href="resource/css/bootstrapvalidator0.5.3.css" rel="stylesheet">
-    <script src="resource/js/jquery3.2.1.js"></script>
-    <script src="resource/js/bootstrap.js"></script>
-    <script src="resource/js/bootstrapvalidator.js"></script>
+    <link href="resource/css/lib/bootstrap.css" rel="stylesheet">
+    <link href="resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
+    <script src="resource/js/lib/jquery3.2.1.js"></script>
+    <script src="resource/js/lib/bootstrap.js"></script>
+    <script src="resource/js/lib/bootstrapValidator.js"></script>
     <link href="resource/css/main.css" rel="stylesheet">
 </head>
 
@@ -37,8 +37,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="请输入要查询的内容"/>
                 <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </span>
+                        <i class="glyphicon glyphicon-search"></i></span>
             </div>
         </div>
     </div>
@@ -78,10 +77,10 @@
             </div>
         </div>
 
-        <div class="row" ng-controller="goodListCtrl">
+        <div ng-controller="goodListCtrl">
             <!-- 分页网格 -->
             <div class="row">
-                <div class="col-md-3" ng-repeat="item in items">
+                <div class="col-md-3 col-sm-3 col-xs-4" ng-repeat="item in items">
                     <div class="goodBlock">
                         <p class="pPic"><a href="#"><img class="goodPicture" src="resource/img/mi5.jpg" ></a></p>
                         <p class="pName">{{item.name}}</p>
@@ -93,35 +92,32 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" id="changePage">
                 <!-- 换页支持 -->
-                <nav>
-                    <!-- jQuery分页插件 -->
-                    <ul class="pagination">
-                        <li>
-                            <a ng-click="Previous()">
-                                <span role="button">上一页</span>
-                            </a>
-                        </li>
-                        <li ng-repeat="page in pageList" ng-class="{active: isActivePage(page)}">
-                            <a ng-click="selectPage(page)" >{{ page }}</a>
-                        </li>
-                        <li>
-                            <a ng-click="Next()">
-                                <span role="button">下一页</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                <!-- jQuery分页插件 -->
+                <ul class="pagination pull-right">
+                    <li>
+                        <a ng-click="Previous()">
+                            <span role="button">上一页</span>
+                        </a>
+                    </li>
+                    <li class="active" ng-repeat="page in pageList" ng-class="{active: isActivePage(page)}">
+                        <a ng-click="selectPage(page)" >{{ page }}</a>
+                    </li>
+                    <li>
+                        <a ng-click="Next()">
+                            <span role="button">下一页</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
-
         </div>
     </div>
 
 </div>
 
 
-<script src="resource/js/angular.min.js"></script>
+<script src="resource/js/lib/angular.min.js"></script>
 <script src="resource/js/utils.js"></script>
 
 <script src="resource/js/main.js?t=20180601"></script>

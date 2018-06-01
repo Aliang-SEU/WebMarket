@@ -24,19 +24,7 @@ table tr:nth-child(odd) {
 table tr:nth-child(even) {
     background-color: #ffffff;
 }
-nav {
-    position: relative;
-    width:100%;
-    height: 50px;
-}
-.pagination {
-    right: 0px;
-    position: absolute;
-    top: -30px;
-}
-nav li{
-    cursor: pointer;
-}
+
 img.goodPicture{
     height: 10em;
     width: 10em;
@@ -49,13 +37,17 @@ p.pPic{
 }
 p.pName{
     margin-top: 1em;
-    font-size: 20px;
+    font-size: 1.5em;
 }
 p.pPrice{
     color: #ff6700;
+    font-size: 1.5em;
 }
 p.pDescription{
     color: grey;
+}
+p.pCounts{
+    font-size: 1.2em;
 }
 span.goodNum{
     color:  #ff6700;
@@ -66,4 +58,7 @@ span.goodNum{
 }
 body{
     background-color: #f1f1f1;
+}
+#changePage{
+    margin-top: 1.5em;
 }
