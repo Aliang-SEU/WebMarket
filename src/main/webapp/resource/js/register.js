@@ -69,7 +69,7 @@ $(function () {
                         message: '该用户名已被注册',
                         url: '/checkUsername',
                         data : {"username": $("#username")}, //这里默认会传递该验证字段的值到后端
-                        type: 'POST',
+                        type: 'GET',
                         delay: 500 //这里特别要说明，必须要加此属性，否则用户输入一个字就会访问后台一次，会消耗大量的系统资源，
                     }
                 }
@@ -86,7 +86,7 @@ $(function () {
                         message: '该邮箱已被注册',
                         url: '/checkEmail',
                         data : {"email": $("#email")}, //这里默认会传递该验证字段的值到后端
-                        type: 'POST',
+                        type: 'GET',
                         delay: 500 //这里特别要说明，必须要加此属性，否则用户输入一个字就会访问后台一次，会消耗大量的系统资源，
                     }
                 }

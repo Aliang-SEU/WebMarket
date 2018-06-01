@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import cn.aliang.Util.Response;
 
+/**
+ * @author: aliang
+ */
 @Controller
 @RequestMapping("/")
 public class UserController {
@@ -95,7 +98,7 @@ public class UserController {
      * @param email
      * @return
      */
-    @RequestMapping(value = "/checkUsername", method = RequestMethod.GET,
+    @RequestMapping(value="/checkEmail", method={RequestMethod.GET},
             produces = {"application/json; charset=UTF-8"})
     @ResponseBody
     public Map<String, Boolean> checkEmail(String email){

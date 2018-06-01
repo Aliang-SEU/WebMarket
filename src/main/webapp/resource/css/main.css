@@ -1,0 +1,69 @@
+.top_row{
+    border: 1px solid black;
+    align-content: center;
+    width: 400px;
+    padding: 10px 0px 10px 0px;
+}
+.sep{
+    margin-left:0.5em;
+    margin-right: 0.5em;
+    color: #424242;
+}
+li{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+table, th , td  {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+}
+table tr:nth-child(odd) {
+    background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+    background-color: #ffffff;
+}
+nav {
+    position: relative;
+    width:100%;
+    height: 50px;
+}
+.pagination {
+    right: 0px;
+    position: absolute;
+    top: -30px;
+}
+nav li{
+    cursor: pointer;
+}
+img.goodPicture{
+    height: 10em;
+    width: 10em;
+}
+.goodBlock p{
+    text-align:center;
+}
+p.pPic{
+    padding-top: 1em;
+}
+p.pName{
+    margin-top: 1em;
+    font-size: 20px;
+}
+p.pPrice{
+    color: #ff6700;
+}
+p.pDescription{
+    color: grey;
+}
+span.goodNum{
+    color:  #ff6700;
+    margin-bottom: 1em;
+}
+.goodBlock{
+    background-color: white;
+}
+body{
+    background-color: #f1f1f1;
+}
