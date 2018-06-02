@@ -39,10 +39,14 @@ $(function () {
                     regexp: {
                         regexp: /^[a-zA-Z0-9_]+$/,
                         message: '密码只能包含大写、小写和数字'
+                    },
+                    identical:{
+                        field: 'verifyPassword',
+                        message: '两次输入的密码不相符'
                     }
                 }
             },
-            verifypassword:{
+            verifyPassword:{
               validators:{
                   identical:{
                       field: 'password',

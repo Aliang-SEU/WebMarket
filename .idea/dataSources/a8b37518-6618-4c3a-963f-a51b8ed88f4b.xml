@@ -924,5 +924,266 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
+    <table id="234" parent="14" name="good">
+      <Comment>商品表</Comment>
+    </table>
+    <table id="235" parent="14" name="good_type">
+      <Comment>商品分类表</Comment>
+    </table>
+    <table id="236" parent="14" name="shopping_cart">
+      <Comment>购物车表</Comment>
+    </table>
+    <table id="237" parent="14" name="shopping_order">
+      <Comment>订单表</Comment>
+    </table>
+    <table id="238" parent="14" name="user">
+      <Comment>用户表</Comment>
+    </table>
+    <column id="239" parent="234" name="good_id">
+      <Position>1</Position>
+      <Comment>商品id</Comment>
+      <DataType>int(10) unsigned zerofill|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="240" parent="234" name="name">
+      <Position>2</Position>
+      <Comment>商品的名称</Comment>
+      <DataType>varchar(50)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="241" parent="234" name="description">
+      <Position>3</Position>
+      <Comment>商品描述</Comment>
+      <DataType>varchar(1000)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="242" parent="234" name="key_word">
+      <Position>4</Position>
+      <Comment>商品的关键字</Comment>
+      <DataType>varchar(1000)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="243" parent="234" name="price">
+      <Position>5</Position>
+      <Comment>商品的价格</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="244" parent="234" name="counts">
+      <Position>6</Position>
+      <Comment>商品的数量</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="245" parent="234" name="type">
+      <Position>7</Position>
+      <Comment>商品的分类</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="246" parent="234" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>good_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="247" parent="235" name="type">
+      <Position>1</Position>
+      <Comment>商品分类id</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="248" parent="235" name="name">
+      <Position>2</Position>
+      <Comment>分类的名称</Comment>
+      <DataType>varchar(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="249" parent="235" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>type</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="250" parent="236" name="user_id">
+      <Position>1</Position>
+      <Comment>用户id</Comment>
+      <DataType>int(10) unsigned zerofill|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="251" parent="236" name="good_id">
+      <Position>2</Position>
+      <Comment>商品id</Comment>
+      <DataType>int(10) unsigned zerofill|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="252" parent="236" name="good_price">
+      <Position>3</Position>
+      <Comment>商品价格</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="253" parent="236" name="counts">
+      <Position>4</Position>
+      <Comment>商品的数量</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="254" parent="236" name="good_id">
+      <ColNames>good_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="255" parent="236" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id
+good_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="256" parent="236" name="shopping_cart_ibfk_2">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>webmarket</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>user_id</RefColNames>
+    </foreign-key>
+    <foreign-key id="257" parent="236" name="shopping_cart_ibfk_1">
+      <ColNames>good_id</ColNames>
+      <RefSchemaName>webmarket</RefSchemaName>
+      <RefTableName>good</RefTableName>
+      <RefColNames>good_id</RefColNames>
+    </foreign-key>
+    <column id="258" parent="237" name="user_id">
+      <Position>1</Position>
+      <Comment>用户id</Comment>
+      <DataType>int(10) unsigned zerofill|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="259" parent="237" name="good_id">
+      <Position>2</Position>
+      <Comment>商品id</Comment>
+      <DataType>int(10) unsigned zerofill|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="260" parent="237" name="time">
+      <Position>3</Position>
+      <Comment>订单提交时间</Comment>
+      <DataType>timestamp|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+      <OnUpdate>CURRENT_TIMESTAMP</OnUpdate>
+    </column>
+    <column id="261" parent="237" name="order_status">
+      <Position>4</Position>
+      <Comment>订单状态</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="262" parent="237" name="good_price">
+      <Position>5</Position>
+      <Comment>商品价格</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="263" parent="237" name="counts">
+      <Position>6</Position>
+      <Comment>商品数量</Comment>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="264" parent="237" name="good_id">
+      <ColNames>good_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="265" parent="237" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id
+good_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="266" parent="237" name="shopping_order_ibfk_2">
+      <ColNames>user_id</ColNames>
+      <RefSchemaName>webmarket</RefSchemaName>
+      <RefTableName>user</RefTableName>
+      <RefColNames>user_id</RefColNames>
+    </foreign-key>
+    <foreign-key id="267" parent="237" name="shopping_order_ibfk_1">
+      <ColNames>good_id</ColNames>
+      <RefSchemaName>webmarket</RefSchemaName>
+      <RefTableName>good</RefTableName>
+      <RefColNames>good_id</RefColNames>
+    </foreign-key>
+    <column id="268" parent="238" name="user_id">
+      <Position>1</Position>
+      <Comment>用户id</Comment>
+      <DataType>int(10) unsigned zerofill|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="269" parent="238" name="user_name">
+      <Position>2</Position>
+      <Comment>用户登录名</Comment>
+      <DataType>varchar(40)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="270" parent="238" name="real_name">
+      <Position>3</Position>
+      <Comment>用户真实姓名</Comment>
+      <DataType>varchar(40)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="271" parent="238" name="password">
+      <Position>4</Position>
+      <Comment>密码</Comment>
+      <DataType>varchar(40)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="272" parent="238" name="email">
+      <Position>5</Position>
+      <Comment>邮箱</Comment>
+      <DataType>varchar(40)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="273" parent="238" name="phone">
+      <Position>6</Position>
+      <Comment>手机号码</Comment>
+      <DataType>varchar(11)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="274" parent="238" name="address">
+      <Position>7</Position>
+      <Comment>地址</Comment>
+      <DataType>varchar(40)|0s</DataType>
+      <DefaultExpression>&apos;&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="275" parent="238" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_id</ColNames>
+      <Primary>1</Primary>
+    </key>
   </database-model>
 </dataSource>
