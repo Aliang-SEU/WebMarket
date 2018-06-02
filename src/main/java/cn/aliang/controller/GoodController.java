@@ -5,29 +5,40 @@ import cn.aliang.entity.Good;
 import cn.aliang.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/good")
 public class GoodController {
 
     @Autowired
     private GoodService goodService;
 
-    @RequestMapping(value="/good/{type}", method = RequestMethod.GET,
+    @RequestMapping(value="/GetResult", method = RequestMethod.POST,
             produces={"application/json; charset=utf-8"})
     @ResponseBody
-    public Response<List<Good>> queryGoodList(@PathVariable(value = "type") Integer type){
+    public Response<List<Good>> queryGoodList(@RequestBody Map<String, Integer> map){
 
-        List<Good> list= goodService.listGoodsByType(type);
+        if(map == null || map.size() != 3)
+            return new Response<List<Good>>(false, "页面请求错误");
+        List<Good> list= goodService.queryGoodsByPage(map.get("type"), map.get("curPage"), map.get("pageSize"));
         return new Response<List<Good>>(true, "", list);
 
+    }
+
+    @RequestMapping(value="/GetResultCount/{type}", method = RequestMethod.GET,
+            produces={"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Integer> queryGoodCount(@PathVariable(value = "type") Integer type){
+
+        Integer resultCount= goodService.getGoodCountByType(type);
+
+        return new Response<Integer>(true, "", resultCount);
     }
 
 }

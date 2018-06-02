@@ -22,4 +22,15 @@ public class GoodServiceImpl implements GoodService {
         List<Good> list = goodDao.queryGoodsByType(type);
         return list;
     }
+
+    @Override
+    public Integer getGoodCountByType(Integer type) {
+        return goodDao.getGoodCountByType(type);
+    }
+
+    @Override
+    public List<Good> queryGoodsByPage(Integer type, Integer curPage, Integer pageSize) {
+        Integer rows = (curPage - 1) * (pageSize);
+        return goodDao.queryGoodsByPage(type, rows, pageSize);
+    }
 }

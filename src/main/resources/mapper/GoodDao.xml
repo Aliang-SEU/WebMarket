@@ -9,5 +9,12 @@
         select * from good where good.type=#{type}
     </select>
 
+    <select id="getGoodCountByType" resultType="int">
+        select count(*) from good where good.type=#{type};
+    </select>
+
+    <select id="queryGoodsByPage" resultType="Good">
+        select * from good where good.type=#{type} limit #{curPage}, #{pageSize};
+    </select>
 
 </mapper>

@@ -23,6 +23,14 @@ public class GoodServiceImplTest {
     @Test
     public void listGoodsByType() {
         List<Good> list = goodService.listGoodsByType(1);
-        System.out.println(list);
+        for(Good i : list)
+            System.out.println(i);
+    }
+
+    @Test
+    public void listGoodsByType1() {
+        List<Good> list = goodService.queryGoodsByPage(1,1,5);
+        for(Good i : list)
+            System.out.println(i);
     }
 }

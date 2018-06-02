@@ -17,9 +17,16 @@ public class GoodDaoTest {
 
     @Autowired
     private GoodDao goodDao;
+
     @Test
     public void queryGoodsByType() {
         List<Good> result = goodDao.queryGoodsByType(1);
+        System.out.println(result);
+    }
+
+    @Test
+    public void test(){
+        List<Good> result = goodDao.queryGoodsByPage(1,1,5);
         System.out.println(result);
     }
 }

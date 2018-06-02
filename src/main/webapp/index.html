@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <title>网上商城</title>
 
-    <link href="resource/css/lib/bootstrap.css" rel="stylesheet">
+    <link href="resource/css/bootstrap.min.css" rel="stylesheet">
     <link href="resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
     <script src="resource/js/lib/jquery3.2.1.js"></script>
     <script src="resource/js/lib/bootstrap.js"></script>
     <script src="resource/js/lib/bootstrapValidator.js"></script>
-    <link href="resource/css/main.css" rel="stylesheet">
+    <link href="resource/css/main.css?t=20180602" rel="stylesheet">
+
 </head>
 
 <body>
+
 <div class="container-fluid" style="margin-top: 4em;">
     <div class="row">
         <img src="resource/img/top.jpg" class="img-responsive center-block" >
@@ -61,15 +63,16 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="#">首 页</a>
+                            <a class="navbar-brand" href="/">首 页</a>
                         </div>
                         <div>
                             <div class="navbar-header col-md-10 pull-right">
-                                    <ul class="nav navbar-nav">
-                                        <li ng-repeat="type in goodTypes">
-                                           <a class="navbar-brand" ng-click="ShowPages(type.type)">{{type.name}}</a>
-                                        </li>
-                                    </ul>
+                                <ul class="nav navbar-nav">
+                                    <li ng-repeat="type in goodTypes">
+                                        <!-- 显示对应的商品分类 -->
+                                       <a class="navbar-brand" ng-click="ShowPages(type.type)">{{type.name}}</a>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -77,8 +80,8 @@
             </div>
         </div>
 
+            <!-- 分页网格 显示对于分类下的商品详情-->
         <div ng-controller="goodListCtrl">
-            <!-- 分页网格 -->
             <div class="row">
                 <div class="col-md-3 col-sm-3 col-xs-4" ng-repeat="item in items">
                     <div class="goodBlock">
@@ -88,29 +91,9 @@
                         <p class="pPrice"><span>{{item.price}}元</span></p>
                         <p class="pCounts">数量:<span class="goodNum">{{item.counts}}</span></p>
                     </div>
-
                 </div>
             </div>
-
-            <div class="row" id="changePage">
-                <!-- 换页支持 -->
-                <!-- jQuery分页插件 -->
-                <ul class="pagination pull-right">
-                    <li>
-                        <a ng-click="Previous()">
-                            <span role="button">上一页</span>
-                        </a>
-                    </li>
-                    <li class="active" ng-repeat="page in pageList" ng-class="{active: isActivePage(page)}">
-                        <a ng-click="selectPage(page)" >{{ page }}</a>
-                    </li>
-                    <li>
-                        <a ng-click="Next()">
-                            <span role="button">下一页</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <tm-pagination conf="paginationConf"></tm-pagination>
         </div>
     </div>
 
@@ -118,8 +101,9 @@
 
 
 <script src="resource/js/lib/angular.min.js"></script>
+<script src="resource/js/lib/tm.pagination.js"></script>
 <script src="resource/js/utils.js"></script>
-<script src="resource/js/mainController.js?t=20180601"></script>
+<script src="resource/js/mainController.js?t=20180602"></script>
 <script src="resource/js/main.js?t=20180601"></script>
 </body>
 
