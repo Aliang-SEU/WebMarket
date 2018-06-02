@@ -33,4 +33,9 @@ public class GoodServiceImpl implements GoodService {
         Integer rows = (curPage - 1) * (pageSize);
         return goodDao.queryGoodsByPage(type, rows, pageSize);
     }
+
+    @Override
+    public Good queryGoodDetailById(Integer goodId) {
+        return goodDao.getGoodDetailById(goodId);
+    }
 }

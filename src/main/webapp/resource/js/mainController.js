@@ -103,6 +103,13 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
     };
     $scope.$watch('paginationConf.currentPage',getAllGoods);
     $scope.$watch('selType', getAllGoods);
+
+    $scope.toDetailPage = function (id) {
+        var href = '/good/GoodDetail?goodId=' + id;
+        //传递对象：先将对象转成字符串（序列化）
+        //location.href = href;
+        window.open(href);
+    }
 });
 app.factory('GoodService', function ($http) {
     return {

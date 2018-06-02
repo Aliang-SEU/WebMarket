@@ -25,3 +25,6 @@ function getLoginState(){
         });
     }
 }
+function toGoodDetail() {
+    $window.location.href="/";
+}

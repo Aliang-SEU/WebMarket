@@ -80,3 +80,8 @@ body{
 .page-list .page-total input {width: 40px; padding-left:3px;}
 .page-list .page-total select {width: 50px;}
 .page-list .pagination .am-active span{background-color: #248cff; color: white;}
+
+.goodBlock:hover{
+    cursor: pointer;
+    background-color: rgb(255, 247, 236);
+}

@@ -17,4 +17,7 @@
         select * from good where good.type=#{type} limit #{curPage}, #{pageSize};
     </select>
 
+    <select id="getGoodDetailById" resultType="Good">
+        select * from good where good.good_id = #{goodId}
+    </select>
 </mapper>

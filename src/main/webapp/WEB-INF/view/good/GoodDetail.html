@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品详情</title>
+    <link href="/resource/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
+    <script src="/resource/js/lib/jquery3.2.1.js"></script>
+    <script src="/resource/js/lib/bootstrap.js"></script>
+    <script src="/resource/js/lib/bootstrapValidator.js"></script>
+    <script src="/resource/js/lib/angular.min.js"></script>
+
+    <style>
+        .detail-img {
+            width: 20em;
+        }
+        .detail-x {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body ng-app="myApp">
+<div class="container-fluid" ng-controller="goodDetailCtrl">
+    <div class="row">
+        <div class="col-sm-1 col-md-1"></div>
+        <div class="col-sm-10 col-md-10">
+            <h1>{{good.name}} </h1> <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-md-2"></div>
+        <div class="col-sm-4 col-md-4">
+            <img class="detail-img" src="/resource/img/mi5.jpg">
+        </div>
+        <div class="col-sm-5 col-md-5 detail-x">
+            <table class="table table-striped">
+                <tr>
+                    <th>商品名称</th>
+                    <td>{{good.name}}</td>
+                </tr>
+                <tr>
+                    <th>商品价格</th>
+                    <td>{{good.price}}元</td>
+                </tr>
+                <tr>
+                    <th>商品描述</th>
+                    <td>{{good.description}}</td>
+                </tr>
+                <tr>
+                    <th>商品类别</th>
+                    <td>5</td>
+                </tr>
+                <tr>
+                    <th>商品库存</th>
+                    <td>{{good.counts}}</td>
+                </tr>
+                <tr>
+                    <th>购买数量</th>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-default" onclick="subCounts()">-</button>
+                            <button id="productCounts" type="button" class="btn btn-default">1</button>
+                            <button type="button" class="btn btn-default" onclick="addCounts(1)">+</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="row">
+                <div class="col-sm-1 col-md-1 col-lg-1"></div>
+                <button class="btn btn-danger btn-lg col-sm-4 col-md-4 col-lg-4" onclick="addToShoppingCar(5)">添加购物车</button>
+                <div class="col-sm-2 col-md-2 col-lg-2"></div>
+                <button  class="btn btn-danger btn-lg col-sm-4 col-md-4 col-lg-4" onclick="buyConfirm(5)">购买</button>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1 col-md-1 col-lg-1"></div>
+        <div class="col-sm-10 col-md-10 col-lg-10">
+            <hr class="division"/>
+            <table class="table evaluationTable" border="0" id="evaluation">
+            </table>
+            <hr/>
+            <div id="inputArea"></div>
+        </div>
+    </div>
+</div>
+<footer>
+    <br/>
+    <p id="c1" style="text-align:center">Copyright &copy; 2018-2019 aliang-seu.cn 版权所有</p>
+</footer>
+
+
+<script>
+    var href = location.href; //取得整个地址栏
+    var goodId = href.substr(href.indexOf("=") + 1);
+    var app = angular.module("myApp", []);
+
+    app.controller("goodDetailCtrl", function ($scope, $http) {
+        $http.get("/good/GoodDetail/"+goodId).success(function (response) {
+            $scope.good = response.data;
+            console.log(response.data)
+        }).error(function (resposne) {
+            alert("数据库错误");
+        })
+    })
+</script>
+</body>
+</html>

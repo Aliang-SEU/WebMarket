@@ -20,4 +20,5 @@ public interface GoodDao {
 
     public Integer getGoodCountByType(@Param("type") Integer type);
 
+    public Good getGoodDetailById(@Param("goodId") Integer goodId);
 }

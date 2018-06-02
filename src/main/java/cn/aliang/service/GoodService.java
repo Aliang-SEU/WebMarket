@@ -14,4 +14,5 @@ public interface GoodService {
 
     public List<Good>  queryGoodsByPage(Integer type, Integer curPage, Integer pageSize);
 
+    public Good queryGoodDetailById(Integer goodId);
 }

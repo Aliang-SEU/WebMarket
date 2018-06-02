@@ -3,14 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>网上商城</title>
-
-    <link href="resource/css/bootstrap.min.css" rel="stylesheet">
-    <link href="resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
-    <script src="resource/js/lib/jquery3.2.1.js"></script>
-    <script src="resource/js/lib/bootstrap.js"></script>
-    <script src="resource/js/lib/bootstrapValidator.js"></script>
-    <link href="resource/css/main.css?t=20180602" rel="stylesheet">
-
 </head>
 
 <body>
@@ -20,6 +12,7 @@
         <img src="resource/img/top.jpg" class="img-responsive center-block" >
     </div>
 </div>
+
 <!-- 顶端状态栏 -->
 <div class="container-fluid" id="loginState">
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="topBar">
@@ -83,8 +76,8 @@
             <!-- 分页网格 显示对于分类下的商品详情-->
         <div ng-controller="goodListCtrl">
             <div class="row">
-                <div class="col-md-3 col-sm-3 col-xs-4" ng-repeat="item in items">
-                    <div class="goodBlock">
+                <div class="col-md-3 col-sm-3 col-xs-4" ng-repeat="item in items" >
+                    <div class="goodBlock" ng-click="toDetailPage(item.goodId)">
                         <p class="pPic"><a href="#"><img class="goodPicture" src="resource/img/mi5.jpg" ></a></p>
                         <p class="pName">{{item.name}}</p>
                         <p class="pDescription">{{item.description}}</p>
@@ -93,6 +86,7 @@
                     </div>
                 </div>
             </div>
+            <!-- 换页js脚本 -->
             <tm-pagination conf="paginationConf"></tm-pagination>
         </div>
     </div>
@@ -100,7 +94,14 @@
 </div>
 
 
+<link href="resource/css/bootstrap.min.css" rel="stylesheet">
+<link href="resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
+<script src="resource/js/lib/jquery3.2.1.js"></script>
+<script src="resource/js/lib/bootstrap.js"></script>
+<script src="resource/js/lib/bootstrapValidator.js"></script>
 <script src="resource/js/lib/angular.min.js"></script>
+
+<link href="resource/css/main.css?t=20180602" rel="stylesheet">
 <script src="resource/js/lib/tm.pagination.js"></script>
 <script src="resource/js/utils.js"></script>
 <script src="resource/js/mainController.js?t=20180602"></script>

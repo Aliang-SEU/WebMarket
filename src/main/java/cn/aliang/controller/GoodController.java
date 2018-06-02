@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -41,4 +39,15 @@ public class GoodController {
         return new Response<Integer>(true, "", resultCount);
     }
 
+    @RequestMapping(value="/GoodDetail/{goodId}", method = RequestMethod.GET,
+            produces={"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Good> queryGoodDetail(@PathVariable(value="goodId") Integer goodId){
+        Good result= goodService.queryGoodDetailById(goodId);
+        return new Response<Good>(true, "", result);
+    }
+    @RequestMapping(value="/GoodDetail", method = RequestMethod.GET)
+    public String toGoodDetail(){
+        return "good/GoodDetail";
+    }
 }
