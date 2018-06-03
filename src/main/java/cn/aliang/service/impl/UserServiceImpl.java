@@ -4,6 +4,9 @@ import cn.aliang.Util.MyUtil;
 import cn.aliang.dao.UserDao;
 import cn.aliang.entity.User;
 import cn.aliang.service.UserService;
+import com.dyuproject.protostuff.LinkedBuffer;
+import com.dyuproject.protostuff.ProtostuffIOUtil;
+import com.dyuproject.protostuff.runtime.RuntimeSchema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -26,6 +29,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private JedisPool jedisPool;
+
+    private RuntimeSchema<User> schema = RuntimeSchema.createFrom(User.class);
 
     /**
      * 用户注册(暂时不需要做)
@@ -75,6 +80,7 @@ public class UserServiceImpl implements UserService {
         response.addCookie(cookie);
 
         // 将token:userId存入redis，并设置过期时间为10min
+        // 通常需要进行异常验证
         Jedis jedis = jedisPool.getResource();
         /**
          * EX seconds -- Set the specified expire time, in seconds.
@@ -83,11 +89,16 @@ public class UserServiceImpl implements UserService {
          * XX -- Only set the key if it already exist.
          */
         jedis.set(loginToken, userId.toString(), "NX", "EX", 60 * 60 * 10);
+        User user = userDao.selectUserInfoByUserId(userId);
+        byte[] bytes = ProtostuffIOUtil.toByteArray(user, schema,
+                LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
+        String key = "userId:" + userId.toString();
+        int timeout = 60 * 10; //10min
+        String result = jedis.setex(key.getBytes(), timeout, bytes);
         jedis.close();
 
         // 将用户信息返回，存入localStorage
-        User user = userDao.selectUserInfoByUserId(userId);
-        user.setUserId(userId);
+        //user.setUserId(userId);
         map.put("userInfo", user);
 
         return map;
@@ -117,6 +128,33 @@ public class UserServiceImpl implements UserService {
             map.put("userId", userId);
             User user = userDao.selectUserInfoByUserId(Integer.parseInt(userId));
             map.put("username", user.getUserName());
+        }
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> queryUserInfoByLoginToken(String loginToken) {
+        Map<String, Object> map = new HashMap<>();
+
+        //redis查询
+        Jedis jedis = jedisPool.getResource();
+        String userId = jedis.get(loginToken);
+
+        if(userId != null) {
+            String key = "userId:" + userId;
+            byte[] bytes = jedis.get(key.getBytes());
+            if(bytes != null) {
+                //空对象
+                User user = schema.newMessage();
+                ProtostuffIOUtil.mergeFrom(bytes, user, schema);
+                //user 被反序列化
+                map.put("UserInfo", user);
+            }else{
+                User user = userDao.selectUserInfoByUserId(Integer.parseInt(userId));
+                map.put("UserInfo", user);
+            }
+        }else{
+            map.put("error", "未找到用户信息");
         }
         return map;
     }

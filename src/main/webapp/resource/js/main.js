@@ -1,4 +1,4 @@
-
+//页面加载的时候执行的函数
 $(function () {
     getLoginState();
 });
@@ -14,7 +14,8 @@ function getLoginState(){
     if(loginToken != null){
         $.get("/getLoginState",{"loginToken":loginToken} , function(result){
             if(result != null && result.success == true){
-                $("#userState").html("欢迎您:<a href=\"/toLogin\" >" + result.data.username  + " <span class='sep'> | </span>  \
+                localStorage.setItem("username", result.data.username);
+                $("#userState").html("欢迎您:<a onclick=\"alterData()\" id='userName'>" + result.data.username  + " <span class='sep'> | </span>  \
                             <a href=\"/logOut\"> 注销 </a> " + " <span class='sep'> | </span> \
                             <a href=\"#\" >我的订单</a>");
                 return;
@@ -25,6 +26,12 @@ function getLoginState(){
         });
     }
 }
-function toGoodDetail() {
-    $window.location.href="/";
+
+//修改用户的个人资料
+function alterData(){
+    var username = localStorage.getItem("username");
+    var loginToken = getCookie("loginToken");
+    var url = 'alterData?loginToken=' + loginToken;
+    window.open(url);
+
 }

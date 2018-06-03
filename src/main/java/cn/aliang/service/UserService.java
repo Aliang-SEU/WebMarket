@@ -58,4 +58,11 @@ public interface UserService {
      * @return
      */
     public boolean checkEmail(String email);
+
+    /**
+     * 获取用户信息
+     * @param loginToken
+     * @return
+     */
+    public Map<String, Object> queryUserInfoByLoginToken(String loginToken);
 }

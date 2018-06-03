@@ -37,6 +37,11 @@
     <context:component-scan base-package="cn.aliang.controller"/>
 
     <!-- 拦截器配置 -->
-
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path=""/>
+            <bean class="cn.aliang.Interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>
