@@ -171,7 +171,9 @@ public class UserServiceImpl implements UserService {
                 loginToken = cookie.getValue();
                 // 从缓存中清除loginToken
                 Jedis jedis = jedisPool.getResource();
-                jedis.del(loginToken);
+                String key = "userId:" +  jedis.get(loginToken);
+                Long state = jedis.del(key);
+                state = jedis.del(loginToken);
                 jedis.close();
                 break;
             }
