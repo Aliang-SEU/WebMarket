@@ -7,9 +7,43 @@
 <mapper namespace="cn.aliang.dao.ShoppingOrderDao">
 
     <select id="queryOrderByUserId" resultType="ShoppingOrder">
-        select user_id,good_id,time,order_status,good_price,counts
-               from shopping_order
-               where user_id = #{userId}
+        select a.order_id as order_id,
+              a.order_number as order_number,
+              a.user_id as user_id,
+              a.good_id as good_id,
+              b.name as good_name,
+              a.time as time,
+              a.order_state as order_state,
+              a.good_price as good_price,
+              a.counts as counts
+               from shopping_order as a inner join good as b on(a.good_id=b.good_id)
+               where  user_id = #{userId}
     </select>
 
+    <insert id="insertShoppingOrder">
+        insert into shopping_order(order_number,user_id,good_id,time,order_state,good_price,counts)
+                    values(#{shoppingOrder.orderNumber},
+                           #{shoppingOrder.userId},
+                           #{shoppingOrder.goodId},
+                           #{shoppingOrder.time},
+                           #{shoppingOrder.orderState},
+                           #{shoppingOrder.goodPrice},
+                           #{shoppingOrder.counts})
+    </insert>
+
+    <!-- 联合查询
+    <resultMap id="shoppingOrderResult" type="HashMap">
+        <result column="cab_name" property="cabName"/>
+        <result column="speed" property="speed" />
+    </resultMap>
+    <select id="selectLoopSpeed"  parameterType="java.util.Map"  resultMap="shoppingOrderResult">
+        SELECT B.cab_name as cab_name, round(avg(speed),2) as speed
+        FROM table1 as A, table2 as B
+        Where left(right(B.unit_name,3),2) = '__'
+        and (B.lon between #{minLon}  and #{maxLon} )
+        and (B.lat between #{minLat}  and #{maxLat} )
+        and stamp <![CDATA[ >= ]]>  #{beginTime,jdbcType=TIMESTAMP} and stamp <![CDATA[ <= ]]>  #{endTime,jdbcType=TIMESTAMP}
+        and A.lid = B.id
+        group by B.id
+    </select> -->
 </mapper>

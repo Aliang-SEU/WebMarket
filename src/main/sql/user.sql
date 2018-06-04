@@ -39,13 +39,16 @@ CREATE TABLE shopping_cart(
 
 '订单表'
 CREATE TABLE shopping_order(
+  `order_id` int(10) unsigned zerofill AUTO_INCREMENT COMMENT '订单id',
+  `order_number` varchar(32) NOT NULL COMMENT '订单号',
   `user_id` int(10) unsigned zerofill NOT NULL COMMENT '用户id',
   `good_id` int(10) unsigned zerofill NOT NULL COMMENT '商品id',
   `time` timestamp not null COMMENT '订单提交时间',
   `order_status` int not null COMMENT '订单状态',
   `good_price` int not null COMMENT '商品价格',
   `counts` int not null COMMENT '商品数量',
-  primary key (user_id, good_id),
+  primary key (order_id),
+  key(user_id),
   foreign key (good_id) references good(good_id),
   foreign key (user_id) references user(user_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='订单表';

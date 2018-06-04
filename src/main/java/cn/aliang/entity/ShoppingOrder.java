@@ -1,8 +1,15 @@
 package cn.aliang.entity;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 public class ShoppingOrder {
+
+    //订单Id
+    private int orderId;
+
+    //订单号
+    private String orderNumber;
 
     //用户Id
     private int userId;
@@ -10,17 +17,46 @@ public class ShoppingOrder {
     //商品Id
     private int goodId;
 
+    //商品名称
+    private String goodName;
+
+    //商品名称价格
+    private int goodPrice;
+
     //订单下达时间
     private Date time;
 
     //订单状态
     private int orderState;
 
-    //订单价格
-    private int goodPrice;
-
     //订单数量
     private int counts;
+
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
+
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
 
     public int getUserId() {
         return userId;
@@ -72,7 +108,8 @@ public class ShoppingOrder {
 
     @Override
     public String toString() {
-        return "ShoppingOrder{" + "userId=" + userId + ", goodId=" + goodId + ", time=" + time + ", orderState=" +
-               orderState + ", goodPrice=" + goodPrice + ", counts=" + counts + '}';
+        return "ShoppingOrder{" + "orderId=" + orderId + ", orderNumber='" + orderNumber + '\'' + ", userId=" + userId +
+               ", goodId=" + goodId + ", goodName='" + goodName + '\'' + ", goodPrice=" + goodPrice + ", time=" + time +
+               ", orderState=" + orderState + ", counts=" + counts + '}';
     }
 }

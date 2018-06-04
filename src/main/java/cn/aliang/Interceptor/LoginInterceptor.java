@@ -22,27 +22,19 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private JedisPool jedisPool;
 
-    private List<String> excludedUrls;
+    //Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
+
+    //private List<String> excludedUrls;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        String requestUri = request.getRequestURI();
+        //String requestUri = request.getRequestURI();
 
-        // 是否需要拦截
-        for (String s : excludedUrls) {
-            if (requestUri.endsWith(s)) {
-                return true;
-            }
-        }
         String loginToken = null;
         // 是否有cookie
         Cookie[] cookies = request.getCookies();
-
-        if (false) {
-            request.getRequestDispatcher("toLogin").forward(request, response);
-            return false;
-        } else {
+        if(cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("loginToken")) {
                     loginToken = cookie.getValue();
@@ -52,8 +44,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         }
 
         // cookie中是否有loginToken
-        if (StringUtils.hasText(loginToken)) {
-            request.getRequestDispatcher("toLogin").forward(request, response);
+        //如果cookie中没有loginToken 则转发到login界面进行验证
+        if (!StringUtils.hasText(loginToken)) {
+            //request.getRequestDispatcher("/getLoginState").forward(request, response);
+            //终止运行之后的拦截器和控制器
             return false;
         }
 
@@ -61,11 +55,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         String userId = jedis.get(loginToken);
 
         // 根据loginToken是否能从redis中获取userId
-        if (StringUtils.hasText(userId)) {
-            request.getRequestDispatcher("toLogin").forward(request, response);
+        if (!StringUtils.hasText(userId)) {
+            //request.getRequestDispatcher("/getLoginState").forward(request, response);
             return false;
         }
-
+        //用户通过验证
         return true;
     }
 
@@ -76,7 +70,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
     }
-
+/*
     public List<String> getExcludedUrls() {
         return excludedUrls;
     }
@@ -84,5 +78,5 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public void setExcludedUrls(List<String> excludedUrls) {
         this.excludedUrls = excludedUrls;
     }
-
+*/
 }

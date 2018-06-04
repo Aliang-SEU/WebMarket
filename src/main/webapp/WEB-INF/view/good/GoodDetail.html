@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>商品详情</title>
     <link href="/resource/css/bootstrap.min.css" rel="stylesheet">
     <link href="/resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
@@ -9,7 +12,7 @@
     <script src="/resource/js/lib/bootstrap.js"></script>
     <script src="/resource/js/lib/bootstrapValidator.js"></script>
     <script src="/resource/js/lib/angular.min.js"></script>
-
+    <script src="/resource/js/utils.js?t=20180604"></script>
     <style>
         .detail-img {
             width: 20em;
@@ -17,14 +20,27 @@
         .detail-x {
             font-size: 18px;
         }
+        #userState{
+            margin-top: 1.5em;
+            font-size: 1em;
+            color: white;
+        }
+        .sep{
+            margin-left:0.5em;
+            margin-right: 0.5em;
+            color: black;
+        }
     </style>
 </head>
 <body ng-app="myApp">
+
 <div class="container-fluid" ng-controller="goodDetailCtrl">
     <div class="row">
         <div class="col-sm-1 col-md-1"></div>
-        <div class="col-sm-10 col-md-10">
+        <div class="col-sm-6 col-md-6">
             <h1>{{good.name}} </h1> <hr>
+        </div>
+        <div class="col-md-3" id="userState">
         </div>
     </div>
     <div class="row">
@@ -32,7 +48,7 @@
         <div class="col-sm-4 col-md-4">
             <img class="detail-img" src="/resource/img/mi5.jpg">
         </div>
-        <div class="col-sm-5 col-md-5 detail-x">
+        <div class="col-sm-4 col-md-4 detail-x">
             <table class="table table-striped">
                 <tr>
                     <th>商品名称</th>
@@ -48,7 +64,7 @@
                 </tr>
                 <tr>
                     <th>商品类别</th>
-                    <td>{{good.type}}</td>
+                    <td>{{type}}</td>
                 </tr>
                 <tr>
                     <th>商品库存</th>
@@ -59,7 +75,7 @@
                     <td>
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-default" ng-click="subCounts()">-</button>
-                            <button id="productCounts" type="button" class="btn btn-default" ng-init="productCounts=2">{{productCounts}}</button>
+                            <button id="productCounts" type="button" class="btn btn-default" ng-init="productCounts=1">{{productCounts}}</button>
                             <button type="button" class="btn btn-default" ng-click="addCounts()">+</button>
                         </div>
                     </td>
@@ -92,6 +108,9 @@
 
 
 <script>
+    $(function () {
+        getLoginState();
+    })
     var href = location.href; //取得整个地址栏
     var goodId = href.substr(href.indexOf("=") + 1);
     var app = angular.module("myApp", []);
@@ -101,7 +120,7 @@
             $scope.good = response.data;
 
             $http.get("/queryGoodType/" + $scope.good.type).success(function (response) {
-                $scope.good.type = response.data;
+                $scope.type = response.data;
             });
 
             console.log(response.data)
@@ -125,15 +144,33 @@
         }
         //购买商品页面
         $scope.buyConfirm = function () {
-            var data = {
-                good : $scope.good,
-                goodCounts: $scope.productCounts
-            }
-            $http.post("/createOrder", data).success(function () {
-                
-            })
-        }
+            var loginToken = getCookie("loginToken");
 
+            //loginToken不为空
+            if(loginToken != null || loginToken != ""){
+                $.get("/getLoginState",{"loginToken":loginToken} , function(result){
+                    if(result != null && result.success == true){
+                        var orderData = {
+                            userId: result.data.userId,
+                            goodId: $scope.good.goodId,
+                            time: Date.now(),
+                            orderState: 0,
+                            goodPrice: $scope.good.price,
+                            counts:$scope.productCounts
+                        }
+                        $http.post("/order/createOrder",  orderData).success(function (response) {
+                            if(response != null && response.success == true){
+                                alter(response.message);
+                                location.href = "/toOrder";
+                            }
+                        })
+                    }else{
+                        alert("您还未登录，请登录后再操作")
+                        location.href = "/toLogin";
+                    }
+                });
+            }
+        }
     })
 </script>
 </body>

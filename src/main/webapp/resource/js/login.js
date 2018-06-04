@@ -9,7 +9,7 @@ $(function(){
 
         $.post("/login", data, function(response){
             if(response != null && response.success == true){
-                localStorage.setItem("username", response.data.userInfo.username);
+                localStorage.setItem("userId", response.data.userInfo.userId);
                 alert("登录成功");
                 var prevLink = document.referrer;
                 if($.trim(prevLink)==''){
