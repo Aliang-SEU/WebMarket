@@ -41,4 +41,12 @@
     <select id="checkByEmail" resultType="int">
         select count(*) from user where email=#{email}
     </select>
+
+    <update id="alterUserInfo">
+        update user set real_name = #{user.realName},
+                        email = #{user.email},
+                        phone = #{user.phone},
+                        address = #{user.address}
+                        where user_id = #{user.userId}
+    </update>
 </mapper>

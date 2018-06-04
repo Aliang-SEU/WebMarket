@@ -8,6 +8,7 @@ import cn.aliang.service.GoodService;
 import cn.aliang.service.GoodTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +30,16 @@ public class GoodTypeController {
 
         List<GoodType> list = goodTypeService.queryGoodType();
         return new Response<List<GoodType>>(true, "", list);
+
+    }
+
+    @RequestMapping(value="/queryGoodType/{type}", method = RequestMethod.GET,
+            produces={"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<String> queryGoodType(@PathVariable(value = "type") Integer type){
+
+        String typeNameByType = goodTypeService.queryGoodTypeNameByType(type);
+        return new Response<String>(true, "", typeNameByType);
 
     }
 

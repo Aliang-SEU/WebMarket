@@ -16,6 +16,55 @@ app.controller('goodTypeCtrl', function ($scope, $http, $rootScope) {
         $rootScope.selType = type;
     }
 });
+
+// 在controller初始化的时候，注册ListFactory服务
+app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, GoodService) {
+
+
+    var getAllGoods = function () {
+
+        var postData = {
+            type:$rootScope.selType,
+            curPage: $scope.paginationConf.currentPage,
+            pageSize: $scope.paginationConf.itemsPerPage
+        }
+        GoodService.getListCount($rootScope.selType).success(function (response) {
+            $scope.paginationConf.totalItems = response.data;
+        })
+        GoodService.getList(postData).success(function (response) {
+            console.log($scope.paginationConf.currentPage);
+            $scope.items = response.data;
+        });
+
+    }
+
+    // 配置分页的基本参数，分页控件的初始化
+    $scope.paginationConf = {
+        currentPage: 1,
+        totalItems: 0, // 一共多少条数据，和itemsPerPage决定一共会有几页
+        itemsPerPage: 20, // 每页几条数据，和totalItems决定一共会有几页
+        pagesLength: 5,
+    };
+    $scope.$watch('paginationConf.currentPage',getAllGoods);
+    $scope.$watch('selType', getAllGoods);
+
+    $scope.toDetailPage = function (id) {
+        var href = '/good/GoodDetail?goodId=' + id;
+        //传递对象：先将对象转成字符串（序列化）
+        //location.href = href;
+        window.open(href);
+    }
+});
+app.factory('GoodService', function ($http) {
+    return {
+        getList: function (condition) {
+            return $http.post("/good/GetResult", condition);
+        },
+        getListCount: function (condition) {
+            return $http.get("/good/GetResultCount/" + condition);
+        }
+    };
+});
 /*
 app.controller('goodListCtrl', function ($scope, $http, $rootScope) {
 
@@ -72,52 +121,3 @@ app.controller('goodListCtrl', function ($scope, $http, $rootScope) {
     });
 });
 */
-
-// 在controller初始化的时候，注册ListFactory服务
-app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, GoodService) {
-
-
-    var getAllGoods = function () {
-
-        var postData = {
-            type:$rootScope.selType,
-            curPage: $scope.paginationConf.currentPage,
-            pageSize: $scope.paginationConf.itemsPerPage
-        }
-        GoodService.getListCount($rootScope.selType).success(function (response) {
-            $scope.paginationConf.totalItems = response.data;
-        })
-        GoodService.getList(postData).success(function (response) {
-            console.log($scope.paginationConf.currentPage);
-            $scope.items = response.data;
-        });
-
-    }
-
-    // 配置分页的基本参数，分页控件的初始化
-    $scope.paginationConf = {
-        currentPage: 1,
-        totalItems: 0, // 一共多少条数据，和itemsPerPage决定一共会有几页
-        itemsPerPage: 20, // 每页几条数据，和totalItems决定一共会有几页
-        pagesLength: 5,
-    };
-    $scope.$watch('paginationConf.currentPage',getAllGoods);
-    $scope.$watch('selType', getAllGoods);
-
-    $scope.toDetailPage = function (id) {
-        var href = '/good/GoodDetail?goodId=' + id;
-        //传递对象：先将对象转成字符串（序列化）
-        //location.href = href;
-        window.open(href);
-    }
-});
-app.factory('GoodService', function ($http) {
-    return {
-        getList: function (condition) {
-            return $http.post("/good/GetResult", condition);
-        },
-        getListCount: function (condition) {
-            return $http.get("/good/GetResultCount/" + condition);
-        }
-    };
-});

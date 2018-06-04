@@ -65,4 +65,11 @@ public interface UserService {
      * @return
      */
     public Map<String, Object> queryUserInfoByLoginToken(String loginToken);
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    public boolean alterUserInfo(User user);
 }

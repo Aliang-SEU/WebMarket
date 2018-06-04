@@ -19,4 +19,14 @@ public class GoodTypeServiceImpl implements GoodTypeService {
         List<GoodType> result = goodTypeDao.queryGoodType();
         return result;
     }
+
+    @Override
+    public String queryGoodTypeNameByType(Integer type) {
+        GoodType goodType = goodTypeDao.queryGoodTypeNameByType(type);
+        if(goodType != null) {
+            return goodType.getName();
+        }else{
+            return "";
+        }
+    }
 }

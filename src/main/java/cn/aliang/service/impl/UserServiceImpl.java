@@ -189,4 +189,15 @@ public class UserServiceImpl implements UserService {
 
         return loginToken;
     }
+
+    @Override
+    public boolean alterUserInfo(User user) {
+
+        Integer result = userDao.alterUserInfo(user);
+        if(result != 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

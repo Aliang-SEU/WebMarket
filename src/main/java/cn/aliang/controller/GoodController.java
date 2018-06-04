@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author hzl
+ */
 @Controller
 @RequestMapping("/good")
 public class GoodController {
@@ -22,8 +25,9 @@ public class GoodController {
     @ResponseBody
     public Response<List<Good>> queryGoodList(@RequestBody Map<String, Integer> map){
 
-        if(map == null || map.size() != 3)
+        if(map == null) {
             return new Response<List<Good>>(false, "页面请求错误");
+        }
         List<Good> list= goodService.queryGoodsByPage(map.get("type"), map.get("curPage"), map.get("pageSize"));
         return new Response<List<Good>>(true, "", list);
 

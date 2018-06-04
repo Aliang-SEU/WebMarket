@@ -1,6 +1,6 @@
 package cn.aliang.dao;
 
-import cn.aliang.entity.GoodType;
+import cn.aliang.entity.ShoppingOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,27 +11,21 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
-public class GoodTypeDaoTest {
+public class ShoppingOrderDaoTest {
 
     @Autowired
-    GoodTypeDao goodTypeDao;
+    private ShoppingOrderDao shoppingOrderDao;
 
     @Test
-    public void queryGoodType() {
-        List<GoodType> result = goodTypeDao.queryGoodType();
-        System.out.println(result);
+    public void queryOrderByUserId() throws Exception {
+
+        List<ShoppingOrder> list = shoppingOrderDao.queryOrderByUserId(1);
+        for(ShoppingOrder order : list) {
+            System.out.println(order);
+        }
+
     }
 
-    @Test
-    public void addGoodType() {
-    }
-
-    @Test
-    public void queryGoodTypeNameByType(){
-        GoodType goodType = goodTypeDao.queryGoodTypeNameByType(1);
-        System.out.println(goodType.getName());
-    }
 }

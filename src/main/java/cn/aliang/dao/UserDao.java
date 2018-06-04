@@ -60,5 +60,11 @@ public interface UserDao {
      */
     int checkByEmail(@Param("email") String email);
 
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
+    Integer alterUserInfo(@Param("user") User user);
 }
 

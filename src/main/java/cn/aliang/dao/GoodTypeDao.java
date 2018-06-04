@@ -1,6 +1,7 @@
 package cn.aliang.dao;
 
 import cn.aliang.entity.GoodType;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,4 +12,6 @@ public interface GoodTypeDao {
     public List<GoodType> queryGoodType();
 
     public boolean addGoodType(String name);
+
+    public GoodType queryGoodTypeNameByType(@Param("type") Integer type);
 }

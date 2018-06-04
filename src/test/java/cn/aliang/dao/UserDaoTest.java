@@ -40,7 +40,14 @@ public class UserDaoTest {
 
     @Test
     public void selectUserInfoByEmail(){
-        int result = userDao.selectUserInfoByEmail("550@qq.com");
+        User user = new User("hzl","1234","1234");
+        user.setUserName("hzl");
+        user.setRealName("hzl");
+        user.setPassword("1234");
+        user.setEmail("1234");
+        user.setPhone("123");
+        user.setAddress("nihaoa");
+        Integer result = userDao.alterUserInfo(user);
         System.out.println(result);
     }
 

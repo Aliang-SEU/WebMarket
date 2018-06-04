@@ -85,3 +85,7 @@ body{
     cursor: pointer;
     background-color: rgb(255, 247, 236);
 }
+
+#userName{
+    cursor: pointer;
+}

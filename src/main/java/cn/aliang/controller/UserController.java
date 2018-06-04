@@ -177,14 +177,14 @@ public class UserController {
     }
 
     @RequestMapping(value = "/alterData", method = RequestMethod.GET)
-    public String alterUserInfo(){
+    public String alterData(){
         return "alterData";
     }
 
     @RequestMapping(value = "/getUserData", method = RequestMethod.POST,
             produces={"application/json;charset=UTF-8"})
     @ResponseBody
-    public Response<Object> alterUserInfo(@RequestBody Map<String, String> map){
+    public Response<Object> getUserData(@RequestBody Map<String, String> map){
         String loginToken = map.get("loginToken");
         Map<String, Object> result= userService.queryUserInfoByLoginToken(loginToken);
         if(result.get("error") != null){
@@ -194,4 +194,15 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "/alterUserData", method = RequestMethod.POST,
+            produces={"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Response<Object> alterUserData(@RequestBody User user){
+        boolean result = userService.alterUserInfo(user);
+        if(result == true){
+            return new Response<Object>(true, "资料更新成功");
+        }else{
+            return new Response<Object>(false, "资料更改失败");
+        }
+    }
 }

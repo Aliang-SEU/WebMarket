@@ -30,32 +30,36 @@
     <div class="row">
         <div class="col-sm-2 col-md-2"></div>
         <div class="col-sm-5 col-md-5 detail-x">
-            <table class="table table-striped">
-                <tr>
-                    <th>用户名</th>
-                    <td>{{user.userName}}</td>
-                </tr>
-                <tr>
-                    <th>真实姓名</th>
-                    <td>{{user.realName}}</td>
-                </tr>
-                <tr>
-                    <th>电子邮箱</th>
-                    <td>{{user.email}}</td>
-                </tr>
-                <tr>
-                    <th>手机</th>
-                    <td>{{user.phone}}</td>
-                </tr>
-                <tr>
-                    <th>地址</th>
-                    <td>{{user.address}}</td>
-                </tr>
-            </table>
-            <div class="row">
-                <div class="col-sm-1 col-md-1 col-lg-1"></div>
-                <button class="btn btn-danger btn-lg col-sm-4 col-md-4 col-lg-4" onclick="addToShoppingCar(5)">确认修改</button>
-            </div>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <table class="table table-striped">
+                        <tr>
+                            <th>用户名</th>
+                            <td><input id="username" name="username" disabled ng-model="user.userName"></td>
+                        </tr>
+                        <tr>
+                            <th>真实姓名</th>
+                            <td><input id="realname" name="realname" ng-model="user.realName"></td>
+                        </tr>
+                        <tr>
+                            <th>电子邮箱</th>
+                            <td><input id="email" name="email" disabled ng-model="user.email"></td>
+                        </tr>
+                        <tr>
+                            <th>手机</th>
+                            <td><input id="phone" name="phone" ng-model="user.phone"></td>
+                        </tr>
+                        <tr>
+                            <th>地址</th>
+                            <td><input id="address" name="address" ng-model="user.address"></td>
+                        </tr>
+                    </table>
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1 col-lg-1"></div>
+                        <button class="btn btn-danger btn-lg col-sm-4 col-md-4 col-lg-4" ng-click="confirmAlter(user)">确认修改</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="row">
@@ -90,6 +94,17 @@
         }).error(function (resposne) {
             alert("数据库错误");
         })
+
+        $scope.confirmAlter = function(data){
+            var jsonData = JSON.stringify(data)
+
+            $http.post("/alterUserData", jsonData).success(function(response){
+                if(response != null && response.success == true){
+                    alert(response.message);
+                    location.href="/";
+                }
+            })
+        }
     })
 </script>
 </body>

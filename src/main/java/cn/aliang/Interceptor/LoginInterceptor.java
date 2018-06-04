@@ -13,6 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * 权限拦截，验证登录的状态
+ * @author J10154
+ */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired

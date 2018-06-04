@@ -39,8 +39,14 @@
     <!-- 拦截器配置 -->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path=""/>
-            <bean class="cn.aliang.Interceptor.LoginInterceptor"/>
+            <mvc:mapping path="/*" />
+            <bean class="cn.aliang.Interceptor.LoginInterceptor">
+                <property name="excludedUrls">
+                    <list>
+                        <value>/placeOrder</value>
+                    </list>
+                </property>
+            </bean>
         </mvc:interceptor>
     </mvc:interceptors>
 

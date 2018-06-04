@@ -11,7 +11,15 @@ $(function(){
             if(response != null && response.success == true){
                 localStorage.setItem("username", response.data.userInfo.username);
                 alert("登录成功");
-                window.location.href="/";
+                var prevLink = document.referrer;
+                if($.trim(prevLink)==''){
+                    location.href = '/';
+                }else{
+                    if(prevLink.indexOf('toRegister.html') != -1){      //来自注册页面
+                        location.href = '/';
+                    }
+                    location.href = prevLink;
+                }
             }else{
                 alert("登录信息错误");
             }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- UserDao的mybatis映射文件 -->
+<mapper namespace="cn.aliang.dao.ShoppingOrderDao">
+
+    <select id="queryOrderByUserId" resultType="ShoppingOrder">
+        select user_id,good_id,time,order_status,good_price,counts
+               from shopping_order
+               where user_id = #{userId}
+    </select>
+
+</mapper>

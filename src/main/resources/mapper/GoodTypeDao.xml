@@ -10,4 +10,7 @@
         select * from good_type;
     </select>
 
+    <select id="queryGoodTypeNameByType" resultType="GoodType">
+        SELECT * from good_type where type = #{type}
+    </select>
 </mapper>
