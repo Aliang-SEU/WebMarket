@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>确认订单</title>
+
+    <link href="/resource/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
+    <script src="/resource/js/lib/jquery3.2.1.js"></script>
+    <script src="/resource/js/lib/bootstrap.js"></script>
+    <script src="/resource/js/lib/bootstrapValidator.js"></script>
+    <script src="/resource/js/lib/angular.min.js"></script>
+
+    <style>
+        .address-box{
+            width: 18em;
+            height: 12em;
+            border:1px solid grey;
+            margin: 0.5em;
+        }
+        .address-box:hover{
+            background: #cacaca;
+            cursor: pointer;
+        }
+        .address-address{
+            color: #a1a1a1;
+        }
+        .delete-address{
+            float:right;
+        }
+        .delete-address:hover{
+            background: white;
+        }
+
+    </style>
+</head>
+<body ng-app="myApp">
+
+<div class="container" ng-controller="confirmController">
+    <div class="row">
+        <h2 class="page-header">收货地址</h2>
+        <div class="row">
+            <!-- 收货地址 -->
+            <div class="address-box col-md-3" ng-repeat="address in addressList" onclick="selectAddress(this)">
+                <h4 class="page-header">{{address.receiveName}}
+                    <a href="#">
+                        <span class="delete-address glyphicon glyphicon-remove"></span>
+                    </a>
+                </h4>
+                <p class="address-phone">{{address.phone}}</p>
+                <p class="address-address">{{address.address}}</p>
+            </div>
+
+            <div class="address-box col-md-3" align="center">
+                <div style="margin-top: 30%">
+                    <img src="/resource/img/add_cart.png">
+                <p class="add-new-address">添加新的地址</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="page-header">确认订单信息</h3>
+        <div class="row">
+            <div class="col-md-10">
+                <table class="table">
+                    <tr>
+                        <th>商品名称</th>
+                        <th>购买数量</th>
+                        <th>商品单价</th>
+                        <th>小计(元)</th>
+                    </tr>
+                    <tr>
+                        <td>{{goodInfo.goodName}}</td>
+                        <td>{{goodInfo.goodCounts}}</td>
+                        <td>{{goodInfo.price}}</td>
+                        <td id="totalPrice"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    var app  = angular.module("myApp", []);
+    var goodInfo = {
+        userId : "${order.userId}",
+        goodId : "${order.goodId}",
+        goodCounts : "${order.counts}",
+        price : "${order.goodPrice}",
+        goodName : "${order.goodName}"
+    };
+    var totalPrice = $('#totalPrice')
+    app .controller("confirmController", function ($scope, $http){
+        $scope.goodInfo = goodInfo;
+
+        $http.get("/receiveAddress/" + $scope.goodInfo.userId).success(function (response) {
+            $scope.addressList = response.data;
+        })
+
+        $scope.$watch($scope.goodInfo, function () {
+            var number = $scope.goodInfo.goodCounts;
+            var price = $scope.goodInfo.price;
+            var total = parseInt(number) * parseInt(price)
+            totalPrice.val(parseInt(number) * parseInt(price));
+        })
+    });
+
+</script>
+</body>
+</html>

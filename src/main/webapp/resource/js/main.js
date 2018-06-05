@@ -10,6 +10,7 @@ $(function () {
 
 //修改用户的个人资料
 function alterData(){
+
     var username = localStorage.getItem("username");
     var loginToken = getCookie("loginToken");
     var url = 'alterData?loginToken=' + loginToken;

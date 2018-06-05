@@ -28,9 +28,33 @@
     <mvc:default-servlet-handler/>
 
     <!-- 3:配置jsp 显示VideoResolver -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/view/"/>
-        <property name="suffix" value=".html"/>
+
+    <bean id="viewResolverJsp" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+        <property name="order" value="1"/>
+    </bean>
+
+    <!-- 配置freeMarker视图解析器 -->
+    <bean id="viewResolverFtl" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="contentType" value="text/html; charset=UTF-8"/>
+        <property name="exposeRequestAttributes" value="true" />
+        <property name="exposeSessionAttributes" value="true" />
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <property name="cache" value="true" />
+        <property name="suffix" value=".html" />
+        <property name="order" value="0"/>
+    </bean>
+
+    <!-- 配置freeMarker的模板路径 -->
+    <bean id="freeMarkerConfig"
+          class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <!-- 模板根目录 -->
+        <property name="templateLoaderPaths" value="/WEB-INF/view/" />
+        <!-- 编码格式 -->
+        <property name="defaultEncoding" value="utf-8" />
     </bean>
 
     <!-- 4:扫描web相关的bean -->
@@ -39,7 +63,7 @@
     <!-- 拦截器配置 -->
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/createOrder" />
+            <mvc:mapping path="/order/*" />
             <bean class="cn.aliang.Interceptor.LoginInterceptor">
             </bean>
         </mvc:interceptor>

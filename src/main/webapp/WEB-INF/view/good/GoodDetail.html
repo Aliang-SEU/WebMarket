@@ -12,7 +12,7 @@
     <script src="/resource/js/lib/bootstrap.js"></script>
     <script src="/resource/js/lib/bootstrapValidator.js"></script>
     <script src="/resource/js/lib/angular.min.js"></script>
-    <script src="/resource/js/utils.js?t=20180604"></script>
+    <script src="/resource/js/utils.js?t=20180605"></script>
     <style>
         .detail-img {
             width: 20em;
@@ -111,6 +111,7 @@
     $(function () {
         getLoginState();
     })
+
     var href = location.href; //取得整个地址栏
     var goodId = href.substr(href.indexOf("=") + 1);
     var app = angular.module("myApp", []);
@@ -144,34 +145,27 @@
         }
         //购买商品页面
         $scope.buyConfirm = function () {
-            var loginToken = getCookie("loginToken");
 
-            //loginToken不为空
-            if(loginToken != null || loginToken != ""){
-                $.get("/getLoginState",{"loginToken":loginToken} , function(result){
-                    if(result != null && result.success == true){
-                        var orderData = {
-                            userId: result.data.userId,
-                            goodId: $scope.good.goodId,
-                            time: Date.now(),
-                            orderState: 0,
-                            goodPrice: $scope.good.price,
-                            counts:$scope.productCounts
-                        }
-                        $http.post("/order/createOrder",  orderData).success(function (response) {
-                            if(response != null && response.success == true){
-                                alter(response.message);
-                                location.href = "/toOrder";
-                            }
-                        })
-                    }else{
-                        alert("您还未登录，请登录后再操作")
-                        location.href = "/toLogin";
-                    }
-                });
+            var orderData = {
+                userId: localStorage.getItem("userId"),
+                goodId: $scope.good.goodId,
+                time: Date.now(),
+                orderState: 0,
+                goodPrice: $scope.good.price,
+                counts:$scope.productCounts
             }
+
+            StandardPost("/order/confirmOrder", {
+                userId: localStorage.getItem("userId"),
+                goodId: $scope.good.goodId,
+                goodName: $scope.good.name,
+                orderState: 0,
+                goodPrice: $scope.good.price,
+                counts:$scope.productCounts
+            });
         }
     })
+
 </script>
 </body>
 </html>

@@ -14,6 +14,19 @@ create TABLE user(
   primary key (user_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
+
+'收货地址表'
+create TABLE user_address(
+  `address_id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT COMMENT '地址id',
+  `user_id` int(10) unsigned zerofill NOT NULL COMMENT '用户id',
+  `receive_name` VARCHAR(40) DEFAULT '' COMMENT '收货人姓名',
+  `phone` VARCHAR(11) DEFAULT '' COMMENT '手机号码',
+  `address` VARCHAR(40) DEFAULT '' COMMENT '收货人地址',
+  `type` int not null DEFAULT 0 COMMENT '是否为默认地址0不是，1是',
+  primary key (address_id),
+  FOREIGN KEY (user_id) REFERENCES user(user_id)
+)ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='收货地址表';
+
 '商品描述表'
 CREATE TABLE good(
   `good_id` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT COMMENT '商品id',

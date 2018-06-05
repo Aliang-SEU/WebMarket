@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- UserDao的mybatis映射文件 -->
+<mapper namespace="cn.aliang.dao.ReceiveAddressDao">
+
+    <select id="queryAllReceiveAddressByUserId" resultType="cn.aliang.entity.ReceiveAddress">
+        select * from user_address where user_id = #{userId};
+    </select>
+
+    <insert id="insertReceiveAddress">
+        insert into user_address(user_id, receive_name, phone, address, type)
+                    values(#{receiveAddress.userId},
+                            #{receiveAddress.receiveName},
+                            #{receiveAddress.phone},
+                            #{receiveAddress.address},
+                            0);
+    </insert>
+
+    <delete id="deleteReceiveAddressById">
+        delete from user_address where address_id = #{addressId}
+    </delete>
+
+    <update id="changeDefaultReceiveAddress">
+      update user_address set type=0 where user_id = #{userId} and type = 1;
+      update user_address set type=1 where address_id = #{addressId};
+    </update>
+
+</mapper>

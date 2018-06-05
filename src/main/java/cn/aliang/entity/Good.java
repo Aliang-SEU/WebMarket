@@ -20,6 +20,9 @@ public class Good {
     //商品类型
     private int type;
 
+    public Good() {
+    }
+
     public int getGoodId() {
         return goodId;
     }

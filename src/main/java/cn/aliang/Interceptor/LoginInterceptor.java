@@ -46,7 +46,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         // cookie中是否有loginToken
         //如果cookie中没有loginToken 则转发到login界面进行验证
         if (!StringUtils.hasText(loginToken)) {
-            //request.getRequestDispatcher("/getLoginState").forward(request, response);
+            request.getRequestDispatcher("/toLogin").forward(request, response);
             //终止运行之后的拦截器和控制器
             return false;
         }
@@ -56,7 +56,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         // 根据loginToken是否能从redis中获取userId
         if (!StringUtils.hasText(userId)) {
-            //request.getRequestDispatcher("/getLoginState").forward(request, response);
+            request.getRequestDispatcher("/toLogin").forward(request, response);
             return false;
         }
         //用户通过验证

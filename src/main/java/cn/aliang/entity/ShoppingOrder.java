@@ -1,6 +1,8 @@
 package cn.aliang.entity;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.Date;
 
 public class ShoppingOrder {
@@ -32,6 +34,8 @@ public class ShoppingOrder {
     //订单数量
     private int counts;
 
+    public ShoppingOrder() {
+    }
 
     public String getGoodName() {
         return goodName;
@@ -108,8 +112,11 @@ public class ShoppingOrder {
 
     @Override
     public String toString() {
-        return "ShoppingOrder{" + "orderId=" + orderId + ", orderNumber='" + orderNumber + '\'' + ", userId=" + userId +
-               ", goodId=" + goodId + ", goodName='" + goodName + '\'' + ", goodPrice=" + goodPrice + ", time=" + time +
-               ", orderState=" + orderState + ", counts=" + counts + '}';
+        try{
+            return new ObjectMapper().writeValueAsString(this);
+        }catch (Exception e){
+            return "";
+        }
     }
+
 }

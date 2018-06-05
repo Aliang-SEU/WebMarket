@@ -35,3 +35,20 @@ function dueToLogin() {
     alert("请先登录");
     location.href="/toLogin";
 }
+
+StandardPost = function(url, args){
+    var body = $(document.body),
+        form = $("<form id='orderForm' method='post'></form>"),
+        input;
+    form.attr({"action":url});
+    for (arg in args){
+        var input = $("<input type='hidden'>");
+        input.attr({"name":arg});
+        input.val(args[arg]);
+        form.append(input);
+    }
+
+    form.appendTo(document.body);
+    form.submit();
+    document.body.removeChild(form[0]);
+}

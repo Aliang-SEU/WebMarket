@@ -22,6 +22,7 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
     public boolean createShoppingOrder(ShoppingOrder order) {
         String orderNumber = createOrderNumber(order.getUserId(), System.currentTimeMillis());
         order.setOrderNumber(orderNumber);
+        order.setTime(new Date());
         Integer result = shoppingOrderDao.insertShoppingOrder(order);
         if(result != 0) {
             return true;
