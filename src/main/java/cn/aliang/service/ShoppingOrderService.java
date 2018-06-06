@@ -9,4 +9,8 @@ public interface ShoppingOrderService {
     public boolean createShoppingOrder(ShoppingOrder order);
 
     public List<ShoppingOrder> queryShoppingOrderById(Integer userId);
+
+    public Boolean payOrder(Integer orderId);
+
+    public Boolean receiveOrder(Integer orderId);
 }

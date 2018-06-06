@@ -42,7 +42,7 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
     $scope.paginationConf = {
         currentPage: 1,
         totalItems: 0, // 一共多少条数据，和itemsPerPage决定一共会有几页
-        itemsPerPage: 20, // 每页几条数据，和totalItems决定一共会有几页
+        itemsPerPage: 12, // 每页几条数据，和totalItems决定一共会有几页
         pagesLength: 5,
     };
     $scope.$watch('paginationConf.currentPage',getAllGoods);

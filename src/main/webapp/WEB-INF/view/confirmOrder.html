@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<#setting number_format="#">
 <html>
 <head>
     <meta charset="UTF-8">
@@ -18,9 +19,13 @@
         .address-box{
             width: 18em;
             height: 12em;
-            border:1px solid grey;
+            border: 2px solid #ccc;
             margin: 0.5em;
         }
+        .active{
+            border: 2px solid #1b8dcc;
+        }
+
         .address-box:hover{
             background: #cacaca;
             cursor: pointer;
@@ -35,6 +40,34 @@
             background: white;
         }
 
+        .address-add{
+            margin: 0.5em;
+            width: 18em;
+            height: 12em;
+            border: 2px dashed #ccc;
+            cursor: pointer;
+        }
+        .address-add:hover{
+            background: #cacaca;
+        }
+        .address-add .address-new{
+            padding: 30% 0;
+            text-align: center;
+        }
+        .address-add .address-new .text{
+            font-size: 16px;
+        }
+
+        .order-box{
+
+        }
+        .order-box .order-table{
+            font-size: 20px;
+        }
+        #totalPrice{
+            color: #ff452e;
+        }
+
     </style>
 </head>
 <body ng-app="myApp">
@@ -44,9 +77,9 @@
         <h2 class="page-header">收货地址</h2>
         <div class="row">
             <!-- 收货地址 -->
-            <div class="address-box col-md-3" ng-repeat="address in addressList" onclick="selectAddress(this)">
+            <div class="address-box col-md-3" ng-class="{true: 'active', false: 'inactive'}[selectAddIndex == $index]" ng-repeat="address in addressList" ng-click="selectAddress($index)">
                 <h4 class="page-header">{{address.receiveName}}
-                    <a href="#">
+                    <a ng-click="deleteAddress(address.addressId)">
                         <span class="delete-address glyphicon glyphicon-remove"></span>
                     </a>
                 </h4>
@@ -54,22 +87,22 @@
                 <p class="address-address">{{address.address}}</p>
             </div>
 
-            <div class="address-box col-md-3" align="center">
-                <div style="margin-top: 30%">
+            <div class="address-add col-md-3" ng-click="addNewAddress()">
+                <div class="address-new">
                     <img src="/resource/img/add_cart.png">
-                <p class="add-new-address">添加新的地址</p>
+                    <p class="text">添加新的地址</p>
                 </div>
             </div>
         </div>
 
         <h3 class="page-header">确认订单信息</h3>
         <div class="row">
-            <div class="col-md-10">
-                <table class="table">
+            <div class="order-box col-md-10">
+                <table class="order-table table">
                     <tr>
                         <th>商品名称</th>
                         <th>购买数量</th>
-                        <th>商品单价</th>
+                        <th>商品单价(元)</th>
                         <th>小计(元)</th>
                     </tr>
                     <tr>
@@ -81,13 +114,19 @@
                 </table>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-2 pull-right">
+                <button class="btn btn-primary btn-lg" ng-click="confirmOrder()">确认订单</button>
+            </div>
+        </div>
     </div>
 
 </div>
 
-
+<script src="/resource/js/lib/ui-bootstrap-tpls.min.js"></script>
+<script src="/resource/js/utils.js"></script>
 <script>
-    var app  = angular.module("myApp", []);
+    var app  = angular.module("myApp",  ['ui.bootstrap']);
     var goodInfo = {
         userId : "${order.userId}",
         goodId : "${order.goodId}",
@@ -95,22 +134,133 @@
         price : "${order.goodPrice}",
         goodName : "${order.goodName}"
     };
-    var totalPrice = $('#totalPrice')
-    app .controller("confirmController", function ($scope, $http){
+    var totalPrice = angular.element('#totalPrice')
+    app .controller("confirmController", function ($scope, $http, $modal){
         $scope.goodInfo = goodInfo;
 
-        $http.get("/receiveAddress/" + $scope.goodInfo.userId).success(function (response) {
+        $http.get("/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
             $scope.addressList = response.data;
+
         })
 
         $scope.$watch($scope.goodInfo, function () {
             var number = $scope.goodInfo.goodCounts;
             var price = $scope.goodInfo.price;
             var total = parseInt(number) * parseInt(price)
-            totalPrice.val(parseInt(number) * parseInt(price));
+            totalPrice.text(parseInt(number) * parseInt(price));
         })
+
+        $scope.deleteAddress = function(addressId){
+            if (window.confirm('确认删除该地址？')) {
+                $http.get("/deleteAddress/" + addressId).success(function (response) {
+                    if (response.success == true) {
+                        $http.get("/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
+                            $scope.addressList = response.data;
+                        })
+                    }
+                })
+            }
+        }
+        $scope.selectAddress  = function(index){
+            //alert(index)
+            $scope.selectAddIndex = index;
+            $scope.selectAdd = $scope.addressList[index]
+            console.log( $scope.selectAdd )
+        }
+        //确认订单
+        $scope.confirmOrder = function(){
+            if($scope.addressList == null || $scope.addressList.length  == 0 || $scope.selectAddIndex == null){
+                alert("请先选择一个收货地址")
+                return;
+            }
+            if (window.confirm('确认提交订单？')){
+                //订单数据
+                var orderData = {
+                    userId: localStorage.getItem("userId"),
+                    goodId: $scope.goodInfo.goodId,
+                    orderState: 0,
+                    goodPrice: $scope.goodInfo.price,
+                    counts:$scope.goodInfo.goodCounts,
+                    goodName:$scope.goodInfo.goodName,
+                    orderAddress:$scope.selectAdd.address
+                }
+
+                StandardPost("/order/createOrder", orderData);
+            }
+        }
+        //添加一个新的地址
+        $scope.addNewAddress = function(){
+            var modalInstance = $modal.open({
+                templateUrl : 'addNewAdd.html',//script标签中定义的id
+                controller : 'modalCtrl',//modal对应的Controller
+                size:"xl",
+                resolve : {
+                    data : function() {//data作为modal的controller传入的参数
+                        return $scope.data;;//用于传递数据
+                    }
+                }
+            })
+
+            //确认之后向数据库添加地址信息
+            modalInstance.result.then(function(data){
+                console.log(data)
+                data.userId = $scope.goodInfo.userId;
+                $http.post("/addAddress", data).success(function(){
+                    $http.get("/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
+                        $scope.addressList = response.data;
+                    })
+                })
+            })
+        }
+    });
+    //模态框对应的Controller
+    app.controller('modalCtrl', function($scope, $modalInstance, data) {
+        $scope.data= data;
+
+        //在这里处理要进行的操作
+        $scope.ok = function(data) {
+            $scope.data= data;
+            $modalInstance.close( $scope.data);
+        };
+        $scope.cancel = function() {
+            $modalInstance.dismiss('cancel');
+        }
     });
 
+</script>
+
+<script type="text/ng-template" id="addNewAdd.html">
+    <div>
+        <div class="modal-header">
+            <h3 class="modal-title" align="center">
+                新增地址
+            </h3>
+        </div>
+        <div class="modal-body">
+            <form class="form">
+                <div class="input-group">
+                    <span class="input-group-addon glyphicon glyphicon-user"></span>
+                    <input type="text" class="form-control" placeholder="收货人姓名" ng-model="data.receiveName">
+                </div><br/>
+                <div class="input-group">
+                    <span class="input-group-addon glyphicon glyphicon-earphone"></span>
+                    <input type="text" class="form-control" placeholder="收货人电话" ng-model="data.phone">
+                </div><br/>
+                <div class="input-group">
+                    <span class="input-group-addon glyphicon glyphicon-tower"></span>
+                    <input type="text" class="form-control" placeholder="详细地址" ng-model="data.address">
+                </div><br/>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok(data)">
+                确认
+            </button>
+            <button class="btn btn-warning" ng-click="cancel()">
+                退出
+            </button>
+        </div>
+    </div>
 </script>
 </body>
 </html>

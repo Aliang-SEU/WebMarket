@@ -22,4 +22,16 @@ public class ReceiveAddressServiceImpl implements ReceiveAddressService {
         List<ReceiveAddress> list = receiveAddressDao.queryAllReceiveAddressByUserId(userId);
         return list;
     }
+
+    @Override
+    public Boolean deleteAddressById(Integer addressId) {
+        Integer result = receiveAddressDao.deleteReceiveAddressById(addressId);
+        return result == 1;
+    }
+
+    @Override
+    public Boolean insertAddress(ReceiveAddress receiveAddress) {
+        Integer result = receiveAddressDao.insertReceiveAddress(receiveAddress);
+        return result == 1;
+    }
 }

@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mmall" />
         <module name="seckill" />
         <module name="WebMarket" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.7">
+      <module name="mmall" target="1.7" />
       <module name="WebMarket" target="1.7" />
     </bytecodeTargetLevel>
   </component>

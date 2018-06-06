@@ -27,6 +27,7 @@ public class ReceiveAddress {
     public ReceiveAddress() {
     }
 
+
     public int getAddressId() {
         return addressId;
     }

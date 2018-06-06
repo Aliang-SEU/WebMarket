@@ -8,4 +8,7 @@ public interface ReceiveAddressService {
 
     public List<ReceiveAddress> queryAllAddressByUserId(Integer userId);
 
+    public Boolean deleteAddressById(Integer addressId);
+
+    public Boolean insertAddress(ReceiveAddress receiveAddress);
 }

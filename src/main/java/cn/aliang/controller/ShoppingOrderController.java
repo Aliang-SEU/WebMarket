@@ -7,13 +7,11 @@ import cn.aliang.service.ShoppingOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -29,12 +27,22 @@ public class ShoppingOrderController {
     private GoodTypeService goodTypeService;
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
-    public String createOrder(@RequestBody ShoppingOrder order) {
-        return "";
+    public String createOrder(ShoppingOrder order) {
+        Boolean result =shoppingOrderService.createShoppingOrder(order);
+        if(result == true){
+            return "redirect:toOrder";
+        }else{
+            return "orderError";
+        }
     }
 
+    /**
+     * 跳转到确认订单页面
+     * @param order
+     * @return
+     */
     @RequestMapping(value = "/confirmOrder", method = RequestMethod.POST)
-    public ModelAndView confirmOrder(ShoppingOrder order, HttpSession session) {
+    public ModelAndView confirmOrder(ShoppingOrder order) {
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("confirmOrder");
@@ -61,4 +69,29 @@ public class ShoppingOrderController {
             return new Response<>(false, "您暂时没有订单");
         }
     }
+
+    @RequestMapping(value="/pay/", method = RequestMethod.GET,
+                    produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Object> payOrder(Integer orderId){
+        Boolean result = shoppingOrderService.payOrder(orderId);
+        if(result == true){
+            return new Response<>(true, "支付成功");
+        }else{
+            return new Response<>(false, "订单支付失败");
+        }
+    }
+
+    @RequestMapping(value="/receive/", method = RequestMethod.GET,
+            produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Object> receiveOrder(Integer orderId){
+        Boolean result = shoppingOrderService.receiveOrder(orderId);
+        if(result == true){
+            return new Response<>(true, "支付成功");
+        }else{
+            return new Response<>(false, "订单支付失败");
+        }
+    }
+
 }

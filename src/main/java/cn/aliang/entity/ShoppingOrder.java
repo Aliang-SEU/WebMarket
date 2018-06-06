@@ -26,25 +26,33 @@ public class ShoppingOrder {
     private int goodPrice;
 
     //订单下达时间
-    private Date time;
+    private Date createTime;
+
+    //订单完成时间
+    private Date finishTime;
+
+    //订单总价
+    private int totalPrice;
 
     //订单状态
     private int orderState;
 
-    //订单数量
+    //商品数量
     private int counts;
+
+    //收货地址
+    private String orderAddress;
 
     public ShoppingOrder() {
     }
 
-    public String getGoodName() {
-        return goodName;
+    public String getOrderAddress() {
+        return orderAddress;
     }
 
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
+    public void setOrderAddress(String orderAddress) {
+        this.orderAddress = orderAddress;
     }
-
 
     public int getOrderId() {
         return orderId;
@@ -78,20 +86,12 @@ public class ShoppingOrder {
         this.goodId = goodId;
     }
 
-    public Date getTime() {
-        return time;
+    public String getGoodName() {
+        return goodName;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
-    public int getOrderState() {
-        return orderState;
-    }
-
-    public void setOrderState(int orderState) {
-        this.orderState = orderState;
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
     }
 
     public int getGoodPrice() {
@@ -100,6 +100,38 @@ public class ShoppingOrder {
 
     public void setGoodPrice(int goodPrice) {
         this.goodPrice = goodPrice;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getFinishTime() {
+        return finishTime;
+    }
+
+    public void setFinishTime(Date finishTime) {
+        this.finishTime = finishTime;
+    }
+
+    public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public int getOrderState() {
+        return orderState;
+    }
+
+    public void setOrderState(int orderState) {
+        this.orderState = orderState;
     }
 
     public int getCounts() {

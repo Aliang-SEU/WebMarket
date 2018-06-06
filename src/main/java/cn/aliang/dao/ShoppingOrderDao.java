@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author J10154
@@ -27,5 +26,11 @@ public interface ShoppingOrderDao {
      */
     public Integer insertShoppingOrder(@Param("shoppingOrder") ShoppingOrder shoppingOrder);
 
-    //public Map<String, Object> queryAllOrderByUserId(@Param("userId") Integer userId);
+    /**
+     * 更改order状态
+     * @param orderId
+     * @param state
+     * @return
+     */
+    public Integer changeOrderState(@Param("orderId") Integer orderId,@Param("state") Integer state);
 }
