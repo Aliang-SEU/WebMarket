@@ -20,6 +20,11 @@ public class GoodController {
     @Autowired
     private GoodService goodService;
 
+    /**
+     * 根据选定的页数来查询对应的商品信息
+     * @param map
+     * @return
+     */
     @RequestMapping(value="/GetResult", method = RequestMethod.POST,
             produces={"application/json; charset=utf-8"})
     @ResponseBody

@@ -34,21 +34,21 @@
 </head>
 <body ng-app="myApp">
 
-<div class="container-fluid" ng-controller="goodDetailCtrl">
+<div class="container" ng-controller="goodDetailCtrl">
     <div class="row">
         <div class="col-sm-1 col-md-1"></div>
         <div class="col-sm-6 col-md-6">
-            <h1>{{good.name}} </h1> <hr>
+            <h1>商品详情页面 </h1> <hr>
         </div>
         <div class="col-md-3" id="userState">
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-2 col-md-2"></div>
-        <div class="col-sm-4 col-md-4">
-            <img class="detail-img" src="/resource/img/mi5.jpg">
+        <div class="col-sm-1 col-md-1"></div>
+        <div class="col-sm-3 col-md-3">
+            <img class="detail-img" ng-src="{{'/resource/img/good/' + good.goodImage}}">
         </div>
-        <div class="col-sm-4 col-md-4 detail-x">
+        <div class="col-sm-6 col-md-6 detail-x">
             <table class="table table-striped">
                 <tr>
                     <th>商品名称</th>
@@ -105,7 +105,6 @@
     <br/>
     <p id="c1" style="text-align:center">Copyright &copy; 2018-2019 aliang-seu.cn 版权所有</p>
 </footer>
-
 
 <script>
     $(function () {

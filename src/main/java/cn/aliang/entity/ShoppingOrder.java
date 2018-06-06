@@ -23,7 +23,7 @@ public class ShoppingOrder {
     private String goodName;
 
     //商品名称价格
-    private int goodPrice;
+    private double goodPrice;
 
     //订单下达时间
     private Date createTime;
@@ -32,7 +32,7 @@ public class ShoppingOrder {
     private Date finishTime;
 
     //订单总价
-    private int totalPrice;
+    private double totalPrice;
 
     //订单状态
     private int orderState;
@@ -94,11 +94,11 @@ public class ShoppingOrder {
         this.goodName = goodName;
     }
 
-    public int getGoodPrice() {
+    public double getGoodPrice() {
         return goodPrice;
     }
 
-    public void setGoodPrice(int goodPrice) {
+    public void setGoodPrice(double goodPrice) {
         this.goodPrice = goodPrice;
     }
 
@@ -118,11 +118,11 @@ public class ShoppingOrder {
         this.finishTime = finishTime;
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
+    public void setTotalPrice(double totalPrice) {
         this.totalPrice = totalPrice;
     }
 

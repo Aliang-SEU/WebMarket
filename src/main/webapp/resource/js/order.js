@@ -11,7 +11,6 @@ myApp.controller("checkController", function ($scope, $http) {
     //支付
     $scope.pay = function(index){
         //原先弹出一个对话框来确认该支付信息
-        if()
 
         $http.get("/order/pay/?orderId=" + $scope.ordersUnPay[index].orderId)
             .success(function (response) {

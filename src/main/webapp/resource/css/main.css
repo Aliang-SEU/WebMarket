@@ -17,7 +17,59 @@
     margin-right: 0.5em;
     color: white;
 }
-li{
+
+ul.goodWrapper{
+    list-style: none;
+    margin-left: -20px;
+    width: 100%;
+}
+
+li.good-box.ng-scope{
+    float: left;
+    width: 25%;
+    position: relative;
+}
+
+.goodBlock{
+    position: relative;
+    background-color: white;
+    padding: 10px 6px;
+    border: 1px solid white;
+}
+img.goodPicture {
+    height: 220px;
+}
+.pPic {
+    text-align: center;
+}
+.pName.ng-binding {
+    text-align: center;
+    font-size: 1.2em;
+    color: #ff3640;
+    margin-top: 1em;
+}
+.pDescription.ng-binding {
+    height: 40px;
+    line-height: 20px;
+    text-align: center;
+    overflow: hidden;
+    margin-top: 0.5em;
+}
+.pPrice {
+    text-align: center;
+    color: #ff4025;
+    margin-top: 0.5em;
+    font-size: 18px;
+}
+
+.goodBlock:hover{
+    cursor: pointer;
+    border: 1px solid red;
+}
+.page-list.ng-isolate-scope {
+    clear: both;
+}
+.nav>li{
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -33,44 +85,20 @@ table tr:nth-child(even) {
     background-color: #ffffff;
 }
 
-img.goodPicture{
-    height: 10em;
-    width: 10em;
-}
-.goodBlock p{
-    text-align:center;
-}
-p.pPic{
-    padding-top: 1em;
-}
-p.pName{
-    margin-top: 1em;
-    font-size: 1.5em;
-}
-p.pPrice{
-    color: #ff6700;
-    font-size: 1.5em;
-}
-p.pDescription{
-    color: grey;
-}
-p.pCounts{
-    font-size: 1.2em;
-}
-span.goodNum{
-    color:  #ff6700;
-    margin-bottom: 1em;
-}
-.goodBlock{
-    background-color: white;
-}
 body{
-    background-color: #f1f1f1;
+    background-color: white;
 }
 #changePage{
     margin-top: 1.5em;
 }
 
+span.navbar-brand.ng-binding.selected {
+    background-color: #129ede;
+    color: white;
+}
+span.navbar-brand.ng-binding{
+    cursor: pointer;
+}
 .page-list .pagination {float:right;}
 .page-list .pagination span {cursor: pointer;}
 .page-list .pagination .separate span{cursor: default; border-top:none;border-bottom:none;}
@@ -81,10 +109,6 @@ body{
 .page-list .page-total select {width: 50px;}
 .page-list .pagination .am-active span{background-color: #248cff; color: white;}
 
-.goodBlock:hover{
-    cursor: pointer;
-    background-color: rgb(255, 247, 236);
-}
 
 #userName{
     cursor: pointer;

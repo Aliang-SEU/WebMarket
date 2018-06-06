@@ -33,8 +33,9 @@ CREATE TABLE good(
   `name` varchar(50) NOT NULL COMMENT '商品的名称',
   `description` varchar(1000) NOT NULL COMMENT '商品描述',
   `key_word` varchar(1000) NOT NULL COMMENT '商品的关键字',
-  `price` int NOT NULL COMMENT '商品的价格',
+  `price` decimal(20,2) NOT NULL COMMENT '商品的价格',
   `counts` int NOT NULL COMMENT '商品的数量',
+  `good_image` VARCHAR(255) COMMENT '商品的图片地址',
   `type` int NOT NULL COMMENT '商品的分类',
   primary key (good_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='商品表';
@@ -43,7 +44,7 @@ CREATE TABLE good(
 CREATE TABLE shopping_cart(
   `user_id` int(10) unsigned zerofill NOT NULL COMMENT '用户id',
   `good_id` int(10) unsigned zerofill NOT NULL COMMENT '商品id',
-  `good_price` int NOT NULL COMMENT '商品价格',
+  `good_price` decimal(20,2) NOT NULL COMMENT '商品价格',
   `counts` int NOT NULL COMMENT '商品的数量',
   primary key (user_id, good_id),
   foreign key (good_id) references good(good_id),
@@ -59,9 +60,9 @@ CREATE TABLE shopping_order(
   `create_time` timestamp not null COMMENT '订单提交时间',
   `finish_time` timestamp COMMENT '订单完成时间',
   `order_state` int not null COMMENT '订单状态',
-  `good_price` int not null COMMENT '商品价格',
+  `good_price` decimal(20,2) not null COMMENT '商品价格',
   `counts` int not null COMMENT '商品数量',
-  `total_price` int not null COMMENT '订单总价格',
+  `total_price` decimal(20,2) not null COMMENT '订单总价格',
   `order_address` VARCHAR(50) not NULL COMMENT '订单地址',
   primary key (order_id),
   key(user_id),
@@ -88,69 +89,6 @@ insert into good_type(type, name) values(8, '图书');
 insert into good_type(type, name) values(9, '玩具');
 insert into good_type(type, name) values(10, '办公');
 
-insert into good(name, description, key_word, price, counts, type)
-values ('小米5s', '小米公司最新产品', '手机 智能机 安卓', 5000, 100, 1);
-insert into good(name, description, key_word, price, counts, type)
-values ('iphoneX', '苹果2017年旗舰产品', '手机 ios', 10000, 100, 1);
-
-insert into good(name, description, key_word, price, counts, type)
-values ('男鞋', '衣服', '男鞋', 100, 100, 2);
-insert into good(name, description, key_word, price, counts, type)
-values ('女鞋', '衣服', '女鞋', 100, 100, 2);
-
-insert into good(name, description, key_word, price, counts, type)
-values ('书包', '双肩背包', '学生', 200, 100, 3);
-insert into good(name, description, key_word, price, counts, type)
-values ('拉杆箱', '拉杆旅行箱 超大容量', '旅行', 500, 100, 3);
-
-insert into good(name, description, key_word, price, counts, type)
-values ('小米笔记本电脑', '超薄 笔记本中的超韧', '便携', 200, 100, 4);
-insert into good(name, description, key_word, price, counts, type)
-values ('神州笔记本', '超性价比', 'gtx1080', 500, 100, 4);
-insert into good(name, description, key_word, price, counts, type)
-values ('macbok', 'mac系统', '便携', 500, 100, 4);
-
-insert into good(name, description, key_word, price, counts, type)
-values ('小米笔记本电脑', '超薄 笔记本中的超韧', '便携', 200, 100, 5);
-insert into good(name, description, key_word, price, counts, type)
-values ('神州笔记本', '超性价比', 'gtx1080', 500, 100, 5);
-insert into good(name, description, key_word, price, counts, type)
-values ('macbok', 'mac系统', '便携', 500, 100, 5);
-
-insert into good(name, description, key_word, price, counts, type)
-values ('小米笔记本电脑', '超薄 笔记本中的超韧', '便携', 200, 100, 6);
-insert into good(name, description, key_word, price, counts, type)
-values ('神州笔记本', '超性价比', 'gtx1080', 500, 100, 6);
-insert into good(name, description, key_word, price, counts, type)
-values ('macbok', 'mac系统', '便携', 500, 100, 6);
-
-insert into good(name, description, key_word, price, counts, type)
-values ('小米笔记本电脑', '超薄 笔记本中的超韧', '便携', 200, 100, 7);
-insert into good(name, description, key_word, price, counts, type)
-values ('神州笔记本', '超性价比', 'gtx1080', 500, 100, 7);
-insert into good(name, description, key_word, price, counts, type)
-values ('macbok', 'mac系统', '便携', 500, 100, 7);
-
-insert into good(name, description, key_word, price, counts, type)
-values ('java编程思想', 'java编程入门系列', 'java 编程', 100, 100, 8);
-insert into good(name, description, key_word, price, counts, type)
-values ('java从入门到精通', 'java编程入门系列', 'java 编程', 100, 100, 8);
-insert into good(name, description, key_word, price, counts, type)
-values ('深入理解java虚拟机', 'java编程入门系列', 'java 编程', 100, 100, 8);
-
-insert into good(name, description, key_word, price, counts, type)
-values ('小米笔记本电脑', '超薄 笔记本中的超韧', '便携', 200, 100, 9);
-insert into good(name, description, key_word, price, counts, type)
-values ('神州笔记本', '超性价比', 'gtx1080', 500, 100, 9);
-insert into good(name, description, key_word, price, counts, type)
-values ('macbok', 'mac系统', '便携', 500, 100, 9);
-
-insert into good(name, description, key_word, price, counts, type)
-values ('java编程思想', 'java编程入门系列', 'java 编程', 100, 100, 10);
-insert into good(name, description, key_word, price, counts, type)
-values ('java从入门到精通', 'java编程入门系列', 'java 编程', 100, 100, 10);
-insert into good(name, description, key_word, price, counts, type)
-values ('深入理解java虚拟机', 'java编程入门系列', 'java 编程', 100, 100, 10);
 
 
 CREATE TABLE `address_info` (

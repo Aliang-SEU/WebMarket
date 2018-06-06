@@ -66,7 +66,7 @@
                                 <ul class="nav navbar-nav">
                                     <li ng-repeat="type in goodTypes">
                                         <!-- 显示对应的商品分类 -->
-                                       <span class="navbar-brand" style="cursor:pointer" ng-click="ShowPages(type.type)">{{type.name}}</span>
+                                       <span class="navbar-brand" ng-class="{true:'selected', false:'unselected'}[$root.selType == goodTypes[$index].type]"  ng-click="ShowPages(type.type)">{{type.name}}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -77,18 +77,19 @@
         </div>
 
             <!-- 分页网格 显示对于分类下的商品详情-->
-        <div ng-controller="goodListCtrl">
-            <div class="row">
-                <div class="col-md-3 col-sm-3 col-xs-4" ng-repeat="item in items" >
+        <div class="main" ng-controller="goodListCtrl">
+            <ul class="goodWrapper">
+                <li class="good-box" ng-repeat="item in items" >
                     <div class="goodBlock" ng-click="toDetailPage(item.goodId)">
-                        <p class="pPic"><a href="#"><img class="goodPicture" src="resource/img/mi5.jpg" ></a></p>
-                        <p class="pName">{{item.name}}</p>
-                        <p class="pDescription">{{item.description}}</p>
-                        <p class="pPrice"><span>{{item.price}}元</span></p>
-                        <p class="pCounts">数量:<span class="goodNum">{{item.counts}}</span></p>
+                        <div class="pPic"><img class="goodPicture" ng-src="{{'/resource/img/good/'+ item.goodImage}}" ></div>
+                        <div class="pName">{{item.name}}</div>
+                        <div class="pDescription">{{item.description}}</div>
+                        <div class="pPrice"><span>{{item.price}}元</span></div>
+                        <!--<p class="pCounts">数量:<span class="goodNum">{{item.counts}}</span></p>-->
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
+
             <!-- 换页js脚本 -->
             <tm-pagination conf="paginationConf"></tm-pagination>
         </div>
@@ -107,8 +108,8 @@
 <link href="resource/css/main.css?t=20180602" rel="stylesheet">
 <script src="resource/js/lib/tm.pagination.js"></script>
 <script src="resource/js/utils.js"></script>
-<script src="resource/js/mainController.js?t=20180602"></script>
-<script src="resource/js/main.js?t=2018060"></script>
+<script src="resource/js/mainController.js?t=20180606"></script>
+<script src="resource/js/main.js?t=20180606"></script>
 </body>
 
 </html>

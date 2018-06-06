@@ -28,7 +28,7 @@ public class ShoppingOrderController {
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     public String createOrder(ShoppingOrder order) {
-        Boolean result =shoppingOrderService.createShoppingOrder(order);
+        Boolean result = shoppingOrderService.createShoppingOrder(order);
         if(result == true){
             return "redirect:toOrder";
         }else{

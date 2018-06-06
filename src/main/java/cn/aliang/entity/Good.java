@@ -14,13 +14,24 @@ public class Good {
     //商品关键字
     private String keyWord;
     //商品价格
-    private int price;
+    private double price;
     //商品数量
     private int counts;
+
+    //商品图片
+    private String goodImage;
     //商品类型
     private int type;
 
     public Good() {
+    }
+
+    public String getGoodImage() {
+        return goodImage;
+    }
+
+    public void setGoodImage(String goodImage) {
+        this.goodImage = goodImage;
     }
 
     public int getGoodId() {
@@ -55,11 +66,11 @@ public class Good {
         this.keyWord = keyWord;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/WebMarket.iml" filepath="$PROJECT_DIR$/WebMarket.iml" />
-      <module fileurl="file://$USER_HOME$/Desktop/shopping/MMall_JAVA-master/mmall.iml" filepath="$USER_HOME$/Desktop/shopping/MMall_JAVA-master/mmall.iml" />
     </modules>
   </component>
 </project>

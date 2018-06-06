@@ -1,5 +1,6 @@
 package cn.aliang.service.impl;
 
+import cn.aliang.dao.GoodDao;
 import cn.aliang.dao.ShoppingOrderDao;
 import cn.aliang.entity.OrderState;
 import cn.aliang.entity.ShoppingOrder;
@@ -18,7 +19,8 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
 
     @Autowired
     private ShoppingOrderDao shoppingOrderDao;
-
+    @Autowired
+    private GoodDao goodDao;
     /**
      * 创建一个订单
      * @param order
@@ -32,12 +34,21 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
         order.setCreateTime(new Date());
         order.setTotalPrice(order.getCounts()*order.getGoodPrice());
         order.setFinishTime(order.getCreateTime());
-        Integer result = shoppingOrderDao.insertShoppingOrder(order);
-        if(result != 0) {
-            return true;
-        }else{
+        /*
+            首先需要检查库存的情况，防止
+         */
+        Integer goodNumber = goodDao.reduceGoodNumberByOrder(order);
+        if(goodNumber <= 0)
             return false;
+        else{
+            Integer result = shoppingOrderDao.insertShoppingOrder(order);
+            if(result != 0) {
+                return true;
+            }else{
+                return false;
+            }
         }
+
     }
 
     private String createOrderNumber(int userId, long time){

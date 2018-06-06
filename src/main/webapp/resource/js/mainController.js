@@ -20,7 +20,21 @@ app.controller('goodTypeCtrl', function ($scope, $http, $rootScope) {
 // 在controller初始化的时候，注册ListFactory服务
 app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, GoodService) {
 
-
+    var getFirstPage = function(){
+        $scope.paginationConf.currentPage = 1;
+        var postData = {
+            type:$rootScope.selType,
+            curPage: $scope.paginationConf.currentPage,
+            pageSize: $scope.paginationConf.itemsPerPage
+        }
+        GoodService.getListCount($rootScope.selType).success(function (response) {
+            $scope.paginationConf.totalItems = response.data;
+        })
+        GoodService.getList(postData).success(function (response) {
+            console.log($scope.paginationConf.currentPage);
+            $scope.items = response.data;
+        });
+    }
     var getAllGoods = function () {
 
         var postData = {
@@ -46,7 +60,7 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
         pagesLength: 5,
     };
     $scope.$watch('paginationConf.currentPage',getAllGoods);
-    $scope.$watch('selType', getAllGoods);
+    $scope.$watch('selType', getFirstPage);
 
     $scope.toDetailPage = function (id) {
         var href = '/good/GoodDetail?goodId=' + id;

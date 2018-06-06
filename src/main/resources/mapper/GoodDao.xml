@@ -20,4 +20,10 @@
     <select id="getGoodDetailById" resultType="Good">
         select * from good where good.good_id = #{goodId}
     </select>
+
+    <update id="reduceGoodNumberByOrder" >
+        update good set counts = counts - #{order.counts}
+              where good_id = #{order.goodId}
+              and counts >= #{order.counts}
+    </update>
 </mapper>

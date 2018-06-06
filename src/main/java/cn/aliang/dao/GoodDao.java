@@ -1,6 +1,7 @@
 package cn.aliang.dao;
 
 import cn.aliang.entity.Good;
+import cn.aliang.entity.ShoppingOrder;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -21,4 +22,6 @@ public interface GoodDao {
     public Integer getGoodCountByType(@Param("type") Integer type);
 
     public Good getGoodDetailById(@Param("goodId") Integer goodId);
+
+    public Integer reduceGoodNumberByOrder(@Param("order")ShoppingOrder order);
 }
