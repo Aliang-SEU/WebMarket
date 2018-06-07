@@ -2,18 +2,19 @@ package cn.aliang.controller;
 
 import cn.aliang.entity.User;
 import cn.aliang.service.UserService;
+import cn.aliang.Util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-import cn.aliang.Util.Response;
-import redis.clients.jedis.Jedis;
 
 /**
  * @author: aliang
@@ -75,9 +76,9 @@ public class UserController {
     @RequestMapping(value = "/checkUsername", method = RequestMethod.GET,
                 produces = {"application/json; charset=UTF-8"})
     @ResponseBody
-    public Map<String, Boolean> checkUsername(String username){
+    public Map<String, Object> checkUsername(String username){
 
-        Map<String, Boolean> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
 
         if(username == null || username.equals("")){
             map.put("valid", false);
@@ -103,12 +104,13 @@ public class UserController {
     @RequestMapping(value="/checkEmail", method={RequestMethod.GET},
             produces = {"application/json; charset=UTF-8"})
     @ResponseBody
-    public Map<String, Boolean> checkEmail(String email){
-        Map<String, Boolean> map = new HashMap<>();
+    public Map<String, Object> checkEmail(String email){
+        Map<String, Object> map = new HashMap<>();
 
-        Boolean result = userService.checkEmail(email);
-        if(result == true){
+        Map<String, Object> queryResult = userService.checkEmail(email);
+        if(queryResult.get("error") != null){
             map.put("valid", false);
+            map.put("error", queryResult.get("error"));
             return map;
         }else{
             map.put("valid", true);
@@ -124,7 +126,7 @@ public class UserController {
             produces={"application/json;charset=UTF-8;"})
     @ResponseBody
     public Response<Object> getLoginState(String loginToken){
-        if(loginToken == null || !StringUtils.hasText(loginToken)){
+        if(loginToken == null || !StringUtils.hasText(loginToken) || loginToken.equals("")){
             return new Response<>(false, "用户未登录");
         }else{
             Map<String, Object> map = userService.queryUserIdByLoginToken(loginToken);
@@ -182,6 +184,11 @@ public class UserController {
         return "alterData";
     }
 
+    /**
+     *  获取用户的个人信息
+     * @param map
+     * @return
+     */
     @RequestMapping(value = "/getUserData", method = RequestMethod.POST,
             produces={"application/json;charset=UTF-8"})
     @ResponseBody
@@ -195,6 +202,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 修改用户的信息
+     * @param user
+     * @return
+     */
     @RequestMapping(value = "/alterUserData", method = RequestMethod.POST,
             produces={"application/json;charset=UTF-8"})
     @ResponseBody

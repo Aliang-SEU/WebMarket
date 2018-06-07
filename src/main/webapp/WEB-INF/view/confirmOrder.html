@@ -14,7 +14,7 @@
     <script src="/resource/js/lib/bootstrap.js"></script>
     <script src="/resource/js/lib/bootstrapValidator.js"></script>
     <script src="/resource/js/lib/angular.min.js"></script>
-
+    <script src="/resource/js/utils.js?t=20180608"></script>
     <style>
         .address-box{
             width: 18em;
@@ -71,7 +71,19 @@
     </style>
 </head>
 <body ng-app="myApp">
-
+<div class="container-fluid" id="loginState">
+    <nav class="navbar navbar-inverse" role="navigation" id="topBar">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-1">
+                <a href="/"><img src="/resource/img/logo.jpg" alt="logo"></a>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4  pull-right" id="userState">
+            </div>
+        </div>
+    </nav>
+</div>
 <div class="container" ng-controller="confirmController">
     <div class="row">
         <h2 class="page-header">收货地址</h2>
@@ -108,8 +120,8 @@
                     <tr>
                         <td>{{goodInfo.goodName}}</td>
                         <td>{{goodInfo.goodCounts}}</td>
-                        <td>{{goodInfo.price}}</td>
-                        <td id="totalPrice"></td>
+                        <td>{{goodInfo.price | number: 2}}</td>
+                        <td id="totalPrice" ng-bing="totalPrice">{{totalPrice | number: 2}}</td>
                     </tr>
                 </table>
             </div>
@@ -126,16 +138,18 @@
 <script src="/resource/js/lib/ui-bootstrap-tpls.min.js"></script>
 <script src="/resource/js/utils.js"></script>
 <script>
+
     var app  = angular.module("myApp",  ['ui.bootstrap']);
     var goodInfo = {
         userId : "${order.userId}",
         goodId : "${order.goodId}",
         goodCounts : "${order.counts}",
-        price : "${order.goodPrice}",
+        price : "${order.goodPrice?string('#.##')}",
         goodName : "${order.goodName}"
     };
     var totalPrice = angular.element('#totalPrice')
     app .controller("confirmController", function ($scope, $http, $modal){
+
         $scope.goodInfo = goodInfo;
 
         $http.get("/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
@@ -146,8 +160,8 @@
         $scope.$watch($scope.goodInfo, function () {
             var number = $scope.goodInfo.goodCounts;
             var price = $scope.goodInfo.price;
-            var total = parseInt(number) * parseInt(price)
-            totalPrice.text(parseInt(number) * parseInt(price));
+            $scope.totalPrice = parseFloat(number) * parseFloat(price)
+
         })
 
         $scope.deleteAddress = function(addressId){

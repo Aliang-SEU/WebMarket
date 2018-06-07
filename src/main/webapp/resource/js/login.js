@@ -16,10 +16,11 @@ $(function(){
                 if($.trim(prevLink)==''){
                     location.href = '/';
                 }else{
-                    if(prevLink.indexOf('toRegister.html') != -1){      //来自注册页面
+                    if(prevLink.indexOf('toRegister') != -1){      //来自注册页面
                         location.href = '/';
+                    }else{
+                        location.href = prevLink;
                     }
-                    location.href = prevLink;
                 }
             }else{
                 alert("登录信息错误");

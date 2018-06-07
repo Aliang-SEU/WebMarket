@@ -22,6 +22,12 @@ public class ReceiveAddressController {
     private ReceiveAddressService receiveAddressService;
 
 
+    /**
+     * 查询对应用户的查询地址
+     * @param userId
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/queryAddress/{userId}", method = RequestMethod.GET,
             produces = {"application/json; charset=utf-8"})
     @ResponseBody
@@ -32,6 +38,12 @@ public class ReceiveAddressController {
 
     }
 
+    /**
+     * 删除地址
+     * @param addressId
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "/deleteAddress/{addressId}", method = RequestMethod.GET,
             produces = {"application/json; charset=utf-8"})
     @ResponseBody
@@ -42,11 +54,18 @@ public class ReceiveAddressController {
 
     }
 
+    /**
+     * 增加一个地址
+     * @param receiveAddress
+     * @return
+     */
     @RequestMapping(value = "/addAddress", method = RequestMethod.POST,
             produces = {"application/json; charset=utf-8"})
     @ResponseBody
     public Response<Object> addAddress(@RequestBody  ReceiveAddress receiveAddress){
+
         boolean result = receiveAddressService.insertAddress(receiveAddress);
         return new Response<Object>(result, "");
+
     }
 }

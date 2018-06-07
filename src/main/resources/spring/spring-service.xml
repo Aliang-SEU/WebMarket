@@ -31,9 +31,6 @@
         <!--Redis密码-->
     </bean>
 
-    <!--
-    <bean id="userService" class="cn.aliang.service.impl.UserServiceImpl"/>
-    -->
     <!-- 4:扫描web相关的bean -->
     <context:component-scan base-package="cn.aliang.service"/>
 

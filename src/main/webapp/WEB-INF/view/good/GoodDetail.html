@@ -12,10 +12,11 @@
     <script src="/resource/js/lib/bootstrap.js"></script>
     <script src="/resource/js/lib/bootstrapValidator.js"></script>
     <script src="/resource/js/lib/angular.min.js"></script>
-    <script src="/resource/js/utils.js?t=20180605"></script>
+    <script src="/resource/js/utils.js?t=20180608"></script>
+    <script src="/resource/js/goodDetail.js?t=20180608"></script>
     <style>
         .detail-img {
-            width: 20em;
+            width: 280px;
         }
         .detail-x {
             font-size: 18px;
@@ -28,27 +29,51 @@
         .sep{
             margin-left:0.5em;
             margin-right: 0.5em;
-            color: black;
+            color: white;
+        }
+        th {
+            width: 90px;
+        }
+        td.ng-binding {
+            width: 400px;
+        }
+        td.good-price.ng-binding {
+            color: red;
+        }
+        td.good-counts.ng-binding {
+            color: red;
         }
     </style>
 </head>
-<body ng-app="myApp">
+<body ng-app="myApp" ng-controller="goodDetailCtrl">
 
-<div class="container" ng-controller="goodDetailCtrl">
-    <div class="row">
-        <div class="col-sm-1 col-md-1"></div>
-        <div class="col-sm-6 col-md-6">
-            <h1>商品详情页面 </h1> <hr>
+<!-- 顶端状态栏 -->
+<div class="container-fluid" id="loginState">
+    <nav class="navbar navbar-inverse" role="navigation" id="topBar">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-1">
+                <a href="/"><img src="/resource/img/logo.jpg" alt="logo"></a>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4  pull-right" id="userState">
+            </div>
         </div>
-        <div class="col-md-3" id="userState">
+    </nav>
+</div>
+
+<div class="container" >
+    <div class="row">
+        <div class="col-sm-8 col-md-8">
+            <h1>商品详情页面 </h1> <hr>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-1 col-md-1"></div>
-        <div class="col-sm-3 col-md-3">
-            <img class="detail-img" ng-src="{{'/resource/img/good/' + good.goodImage}}">
+        <div class="col-sm-2 col-md-2">
+            <img class="goodPicture" ng-src="{{'/resource/img/good/' + good.goodImage}}">
         </div>
-        <div class="col-sm-6 col-md-6 detail-x">
+        <div class="col-sm-1 col-md-1"> {{item.goodImage}}</div>
+        <div class="col-sm-7 col-md-7 detail-x">
             <table class="table table-striped">
                 <tr>
                     <th>商品名称</th>
@@ -56,7 +81,7 @@
                 </tr>
                 <tr>
                     <th>商品价格</th>
-                    <td>{{good.price}}元</td>
+                    <td class="good-price">{{good.price | number : 2}}元</td>
                 </tr>
                 <tr>
                     <th>商品描述</th>
@@ -64,11 +89,11 @@
                 </tr>
                 <tr>
                     <th>商品类别</th>
-                    <td>{{type}}</td>
+                    <td class="good-type">{{type}}</td>
                 </tr>
                 <tr>
                     <th>商品库存</th>
-                    <td>{{good.counts}}</td>
+                    <td class="good-counts">{{good.counts}} (件)</td>
                 </tr>
                 <tr>
                     <th>购买数量</th>
@@ -106,65 +131,5 @@
     <p id="c1" style="text-align:center">Copyright &copy; 2018-2019 aliang-seu.cn 版权所有</p>
 </footer>
 
-<script>
-    $(function () {
-        getLoginState();
-    })
-
-    var href = location.href; //取得整个地址栏
-    var goodId = href.substr(href.indexOf("=") + 1);
-    var app = angular.module("myApp", []);
-
-    app.controller("goodDetailCtrl", function ($scope, $http) {
-        $http.get("/good/GoodDetail/"+goodId).success(function (response) {
-            $scope.good = response.data;
-
-            $http.get("/queryGoodType/" + $scope.good.type).success(function (response) {
-                $scope.type = response.data;
-            });
-
-            console.log(response.data)
-        }).error(function (resposne) {
-            alert("数据库错误");
-        })
-
-        $scope.addCounts = function (){
-            if($scope.productCounts == $scope.good.counts){
-                return;
-            }else {
-                $scope.productCounts += 1;
-            }
-        }
-        $scope.subCounts = function () {
-            if($scope.productCounts == 1){
-                return;
-            }else{
-                $scope.productCounts -= 1;
-            }
-        }
-        //购买商品页面
-        $scope.buyConfirm = function () {
-
-            var orderData = {
-                userId: localStorage.getItem("userId"),
-                goodId: $scope.good.goodId,
-                time: Date.now(),
-                orderState: 0,
-                goodPrice: $scope.good.price,
-                counts:$scope.productCounts
-            }
-
-            StandardPost("/order/confirmOrder", {
-                userId: localStorage.getItem("userId"),
-                goodId: $scope.good.goodId,
-                goodName: $scope.good.name,
-                orderState: 0,
-                goodPrice: $scope.good.price,
-                counts:$scope.productCounts
-            });
-        }
-    })
-
-</script>
 </body>
 </html>

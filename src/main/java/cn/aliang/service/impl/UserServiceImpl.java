@@ -15,11 +15,10 @@ import redis.clients.jedis.JedisPool;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -71,29 +70,25 @@ public class UserServiceImpl implements UserService {
             map.put("error", "用户名或密码错误");
             return map;
         }
-
-        // 设置登录cookie (利用生成的随机数保证生成的Cookie唯一)，并设置过期时间为10min
+        int timeout = 60 * 60 * 24; //10min
+        // 设置登录cookie (利用生成的随机数保证生成的Cookie唯一)，不设置过期时间
         String loginToken = MyUtil.createRandomCode();
         Cookie cookie = new Cookie("loginToken", loginToken);
         cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 10);
+        cookie.setMaxAge(-1);
         response.addCookie(cookie);
 
-        // 将token:userId存入redis，并设置过期时间为10min
+        // 将token:userId存入redis，并设置过期时间为5min
         // 通常需要进行异常验证
         Jedis jedis = jedisPool.getResource();
-        /**
-         * EX seconds -- Set the specified expire time, in seconds.
-         * PX milliseconds -- Set the specified expire time, in milliseconds.
-         * NX -- Only set the key if it does not already exist.
-         * XX -- Only set the key if it already exist.
-         */
-        jedis.set(loginToken, userId.toString(), "NX", "EX", 60 * 60 * 10);
+
+        //更新loginToken对应的用户Id,并且在服务端设置对应的过期时间
+        jedis.set(loginToken, userId.toString(), "NX", "EX", timeout);
+        //登录之后取到用户的ID与账户名
         User user = userDao.selectUserInfoByUserId(userId);
         byte[] bytes = ProtostuffIOUtil.toByteArray(user, schema,
                 LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
         String key = "userId:" + userId.toString();
-        int timeout = 60 * 10; //10min
         String result = jedis.setex(key.getBytes(), timeout, bytes);
         jedis.close();
 
@@ -104,18 +99,60 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
+    /**
+     * ajax 校验用户名是否已经被注册
+     * @param username
+     * @return
+     */
     @Override
     public boolean checkUsername(String username) {
         Integer count = userDao.checkByUsername(username);
         return count == 1;
     }
 
+    /**
+     * ajax校验邮箱是否已经被注册
+     * @param email
+     * @return
+     */
     @Override
-    public boolean checkEmail(String email) {
-        Integer count = userDao.checkByEmail(email);
-        return count == 1;
+    public Map<String, Object> checkEmail(String email) {
+        /**
+         * 首先验证email格式
+         */
+
+        Map<String, Object> map = new HashMap<>();
+        boolean flag;
+        try{
+            String check = "^([a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$)";
+            Pattern regex = Pattern.compile(check);
+            Matcher matcher = regex.matcher(email);
+            flag = matcher.matches();
+        }catch(Exception e){
+            flag = false;
+        }
+        /**
+         * 邮箱格式不正确
+         */
+        if(flag == false){
+            map.put("error", "邮箱格式不正确");
+        }else {
+            /**
+             * 验证邮箱是否已经被注册过
+             */
+            Integer count = userDao.checkByEmail(email);
+            if(count == 1){
+                map.put("error", "邮箱已经被注册");
+            }
+        }
+        return map;
     }
 
+    /**
+     * 根据loginToken查询对应的用户Id
+     * @param loginToken
+     * @return
+     */
     @Override
     public Map<String, Object> queryUserIdByLoginToken(String loginToken) {
         Map<String, Object> map = new HashMap<>();
@@ -126,17 +163,22 @@ public class UserServiceImpl implements UserService {
 
         if(userId != null) {
             map.put("userId", userId);
-            User user = userDao.selectUserInfoByUserId(Integer.parseInt(userId));
-            map.put("username", user.getUserName());
+        }else{
+            map.put("error", "用户已经登出");
         }
         return map;
     }
 
+    /**
+     * 通过loginToken查询用户的信息
+     * @param loginToken
+     * @return
+     */
     @Override
     public Map<String, Object> queryUserInfoByLoginToken(String loginToken) {
         Map<String, Object> map = new HashMap<>();
 
-        //redis查询
+        //redis查询 用户的Id
         Jedis jedis = jedisPool.getResource();
         String userId = jedis.get(loginToken);
 
@@ -159,6 +201,12 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
+    /**
+     * 用户登出
+     * @param request
+     * @param response
+     * @return
+     */
     @Override
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         /**
@@ -182,11 +230,10 @@ public class UserServiceImpl implements UserService {
         /**
          * 清除客户端的cookie
          */
-        Cookie cookie = new Cookie("loginToken", "");
+        Cookie cookie = new Cookie("loginToken",null);
         cookie.setPath("/");
-        cookie.setMaxAge(60 * 60 * 10);
+        cookie.setMaxAge(-1);
         response.addCookie(cookie);
-
         return loginToken;
     }
 

@@ -38,6 +38,11 @@ public class GoodController {
 
     }
 
+    /**
+     * 查询商品的总数量，用来给分页做准备
+     * @param type
+     * @return
+     */
     @RequestMapping(value="/GetResultCount/{type}", method = RequestMethod.GET,
             produces={"application/json; charset=utf-8"})
     @ResponseBody
@@ -48,6 +53,11 @@ public class GoodController {
         return new Response<Integer>(true, "", resultCount);
     }
 
+    /**
+     * 商品详情查询
+     * @param goodId
+     * @return
+     */
     @RequestMapping(value="/GoodDetail/{goodId}", method = RequestMethod.GET,
             produces={"application/json; charset=utf-8"})
     @ResponseBody
@@ -55,6 +65,11 @@ public class GoodController {
         Good result= goodService.queryGoodDetailById(goodId);
         return new Response<Good>(true, "", result);
     }
+
+    /**
+     * 商品详情页面
+     * @return
+     */
     @RequestMapping(value="/GoodDetail", method = RequestMethod.GET)
     public String toGoodDetail(){
         return "good/GoodDetail";

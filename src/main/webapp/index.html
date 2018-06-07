@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-1">
-                <a href="/"><img src="resource/img/logo.jpg" alt="logo"></a>
+                <a href="/"><img src="/resource/img/logo.jpg" alt="logo"></a>
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-4 " style="margin-top: 1em;">
@@ -81,10 +81,10 @@
             <ul class="goodWrapper">
                 <li class="good-box" ng-repeat="item in items" >
                     <div class="goodBlock" ng-click="toDetailPage(item.goodId)">
-                        <div class="pPic"><img class="goodPicture" ng-src="{{'/resource/img/good/'+ item.goodImage}}" ></div>
+                        <div class="pPic"><img class="goodPicture" ng-src="{{'/resource/img/good/' + item.goodImage}}" ></div>
                         <div class="pName">{{item.name}}</div>
                         <div class="pDescription">{{item.description}}</div>
-                        <div class="pPrice"><span>{{item.price}}元</span></div>
+                        <div class="pPrice"><span>{{item.price | number:2}}元</span></div>
                         <!--<p class="pCounts">数量:<span class="goodNum">{{item.counts}}</span></p>-->
                     </div>
                 </li>

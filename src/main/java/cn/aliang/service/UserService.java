@@ -1,14 +1,9 @@
 package cn.aliang.service;
 
-import cn.aliang.Util.MyUtil;
 import cn.aliang.entity.User;
-import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 import java.util.Map;
 
 public interface UserService {
@@ -57,7 +52,7 @@ public interface UserService {
      * @param email
      * @return
      */
-    public boolean checkEmail(String email);
+    public Map<String, Object> checkEmail(String email);
 
     /**
      * 获取用户信息

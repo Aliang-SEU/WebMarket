@@ -46,7 +46,7 @@
         <result column="cab_name" property="cabName"/>
         <result column="speed" property="speed" />
     </resultMap>
-    <select id="selectLoopSpeed"  parameterType="java.util.Map"  resultMap="shoppingOrderResult">
+    <select id="selectLoopSpeed"  parameterType="java.Util.Map"  resultMap="shoppingOrderResult">
         SELECT B.cab_name as cab_name, round(avg(speed),2) as speed
         FROM table1 as A, table2 as B
         Where left(right(B.unit_name,3),2) = '__'
