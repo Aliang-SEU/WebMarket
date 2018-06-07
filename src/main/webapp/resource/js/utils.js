@@ -17,8 +17,7 @@ function getLoginState(){
     if(loginToken != null ){
         $.get("/getLoginState",{"loginToken":loginToken} , function(result){
             if(result != null && result.success == true){
-                localStorage.setItem("username", result.data.username);
-                $("#userState").html("欢迎您:<a onclick=\"alterData()\" id='userName'>" + result.data.username  + " <span class='sep'> | </span>  \
+                $("#userState").html("欢迎您:<a onclick=\"alterData()\" id='userName'>" + localStorage.getItem("userName")  + " <span class='sep'> | </span>  \
                             <a href=\"/logOut\"> 注销 </a> " + " <span class='sep'> | </span> \
                             <a href=\"/order/toOrder\" target='_blank'>我的订单</a>");
             }else{

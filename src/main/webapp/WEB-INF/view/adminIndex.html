@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理页面</title>
+    <link href="/resource/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/resource/js/lib/jquery3.2.1.js"></script>
+    <script src="/resource/js/lib/bootstrap.js"></script>
+    <script src="/resource/js/lib/angular.min.js"></script>
+    <style>
+        .row.top {
+            height: 80px;
+            background-color: #4786d2;
+        }
+        .logo-img {
+            height: 100%;
+            width: 80%;
+            font-size: 30px;
+            color: white;
+            padding: 20px;
+            float: left;
+        }
+        .time-show {
+            float: left;
+            color: white;
+            width: 20%;
+            height: 80px;
+            font-size: 20px;
+            color: #44ff4b;
+            line-height: 80px;
+        }
+
+        .left-container {
+            background-color: #000000;
+            width: 200px;
+            height: 802px;
+            padding-top: 40px;
+        }
+
+        div.left-list-item{
+            height: 50px;
+            width: 200px;
+            color: rgb(255, 251, 255);
+            cursor: pointer;
+            text-align:center;
+            font-size: 20px;
+            line-height: 50px;
+        }
+        div.left-list-item:hover{
+            background-color: #0063a1;
+            color: rgb(255, 103, 73);
+        }
+        div.left-list-item.select{
+            background-color: #0063a1;
+            color: rgb(255, 103, 73);
+        }
+        div.left-list-item.unselect{
+
+        }
+        /*右侧css*/
+        div.right-container{
+            width: auto;
+
+        }
+
+    </style>
+
+</head>
+<body ng-app="adminApp" ng-controller="adminController">
+
+<div class="container-fluid">
+    <div class="row top">
+        <div class="logo-img">网上商城后台管理系统</div>
+        <div class="time-show">{{current_time | date:'yyyy-MM-dd hh:mm:ss'}}</div>
+    </div>
+    <div class="row main-body">
+        <div class="left-container" style="align:center" ng-init="selectMenu=1">
+                <div class="left-list-item" ng-class="{true:'select', false:'unselect'}[selectMenu == '1']" ng-click="chSelectMenu(1)">订单管理</div>
+                <div class="left-list-item" ng-class="{true:'select', false:'unselect'}[selectMenu == '2']" ng-click="chSelectMenu(2)">商品分类管理</div>
+                <div class="left-list-item" ng-class="{true:'select', false:'unselect'}[selectMenu == '3']" ng-click="chSelectMenu(3)">商品管理</div>
+                <div class="left-list-item" ng-class="{true:'select', false:'unselect'}[selectMenu == '4']" ng-click="chSelectMenu(4)">用户管理</div>
+        </div>
+        <div class="right-container container">
+
+        </div>
+    </div>
+</div>
+<script>
+    var myApp = angular.module('adminApp', []);
+    
+    myApp.controller("adminController", function ($scope, $http, $timeout, $interval) {
+
+        $scope.current_time = new Date();
+        var timer = $interval(function () {
+            $scope.current_time = new Date();
+        }, 1000);
+
+        $scope.chSelectMenu = function (index) {
+            $scope.selectMenu= index;
+            //console.log( $scope.selectMenu);
+            //切换页面
+        }
+    })
+    
+    
+    
+</script>
+</body>
+</html>

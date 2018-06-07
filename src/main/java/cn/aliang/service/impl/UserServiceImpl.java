@@ -55,13 +55,14 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 用户登录(SSO单点登录模块)
+     * 用户登录(登录模块)
      * @param userName
      * @param password
      * @return
      */
     @Override
     public Map<String, Object> userLogin(String userName, String password, HttpServletResponse response){
+
         Map<String, Object> map = new HashMap<>();
 
         // 校验用户名和密码是否正确
@@ -70,15 +71,16 @@ public class UserServiceImpl implements UserService {
             map.put("error", "用户名或密码错误");
             return map;
         }
-        int timeout = 60 * 60 * 24; //10min
-        // 设置登录cookie (利用生成的随机数保证生成的Cookie唯一)，不设置过期时间
+        int timeout = 60 * 60 * 24; //过期时间 单位:秒
+
+        // 设置登录cookie (利用生成的随机数保证生成的Cookie唯一)，不设置过期时间 随着浏览器关闭即销毁
         String loginToken = MyUtil.createRandomCode();
         Cookie cookie = new Cookie("loginToken", loginToken);
         cookie.setPath("/");
         cookie.setMaxAge(-1);
         response.addCookie(cookie);
 
-        // 将token:userId存入redis，并设置过期时间为5min
+        // 将token:userId存入redis，并设置过期时间
         // 通常需要进行异常验证
         Jedis jedis = jedisPool.getResource();
 
@@ -86,10 +88,13 @@ public class UserServiceImpl implements UserService {
         jedis.set(loginToken, userId.toString(), "NX", "EX", timeout);
         //登录之后取到用户的ID与账户名
         User user = userDao.selectUserInfoByUserId(userId);
+
+        //用户信息序列化到redis中
         byte[] bytes = ProtostuffIOUtil.toByteArray(user, schema,
                 LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
         String key = "userId:" + userId.toString();
         String result = jedis.setex(key.getBytes(), timeout, bytes);
+
         jedis.close();
 
         // 将用户信息返回，存入localStorage
@@ -208,40 +213,66 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public Boolean logout(HttpServletRequest request, HttpServletResponse response) {
         /**
          * 先清除服务端的cookie
          */
-        String loginToken = null;
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("loginToken")) {
-                loginToken = cookie.getValue();
-                // 从缓存中清除loginToken
-                Jedis jedis = jedisPool.getResource();
-                String key = "userId:" +  jedis.get(loginToken);
-                Long state = jedis.del(key);
-                state = jedis.del(loginToken);
-                jedis.close();
-                break;
+        Map<String, Object> map = new HashMap<>();
+        try{
+            String loginToken = null;
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("loginToken")) {
+                    //获取request内的loginToken
+                    loginToken = cookie.getValue();
+                    //获取redis连接
+                    Jedis jedis = jedisPool.getResource();
+                    //从redis内查找对应的userId
+                    String userId =  jedis.get(loginToken);
+                    if(userId != null){
+                        String key = "userId:" +  userId;
+                        //删除userInfo
+                        jedis.del(key.getBytes());
+                    }
+                    //删除loginToken
+                    jedis.del(loginToken);
+                    jedis.close();
+                    break;
+                }
             }
-        }
 
-        /**
-         * 清除客户端的cookie
-         */
-        Cookie cookie = new Cookie("loginToken",null);
-        cookie.setPath("/");
-        cookie.setMaxAge(-1);
-        response.addCookie(cookie);
-        return loginToken;
+            /**
+             * 清除客户端的cookie
+             */
+            Cookie cookie = new Cookie("loginToken",null);
+            cookie.setPath("/");
+            cookie.setMaxAge(-1);
+            response.addCookie(cookie);
+            return true;
+
+        }catch (Exception e){
+            return false;
+        }
     }
 
+    /**
+     * 修改用户的信息
+     * @param user
+     * @return
+     */
     @Override
     public boolean alterUserInfo(User user) {
 
         Integer result = userDao.alterUserInfo(user);
+
         if(result != 0){
+            //修改成功 将用户的信息放到redis内
+            Jedis jedis = jedisPool.getResource();
+            byte[] bytes = ProtostuffIOUtil.toByteArray(user, schema,
+                    LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
+            String key = "userId:" + user.getUserId();
+            jedis.set(key.getBytes(), bytes);
+            jedis.close();
             return true;
         }else{
             return false;

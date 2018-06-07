@@ -38,7 +38,7 @@ public interface UserService {
      * @param response
      * @return
      */
-    public String logout(HttpServletRequest request, HttpServletResponse response);
+    public Boolean logout(HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 验证用户的姓名

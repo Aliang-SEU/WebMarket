@@ -126,7 +126,7 @@ public class UserController {
             produces={"application/json;charset=UTF-8;"})
     @ResponseBody
     public Response<Object> getLoginState(String loginToken){
-        if(loginToken == null || !StringUtils.hasText(loginToken) || loginToken.equals("")){
+        if(loginToken == null || !StringUtils.hasText(loginToken) || loginToken.equals("\"\"")){
             return new Response<>(false, "用户未登录");
         }else{
             Map<String, Object> map = userService.queryUserIdByLoginToken(loginToken);
@@ -146,8 +146,14 @@ public class UserController {
      */
     @RequestMapping("/logOut")
     public String logOut(HttpServletRequest request, HttpServletResponse response){
-        userService.logout(request, response);
-        return "redirect:/toLogin";
+        Boolean result = userService.logout(request, response);
+        if(result == true){
+            //注销成功，跳转到登录界面
+            return "redirect:/toLogin";
+        }else{
+            //应该不会失败，跳转到登录界面
+            return "redirect:/toLogin";
+        }
     }
 
     /**
@@ -171,7 +177,6 @@ public class UserController {
         }
         map = userService.userLogin(username, password, response);
 
-        System.out.println(map);
         if (map.get("error") == null) {
             return new Response<Object>(true, "", map);
         } else {

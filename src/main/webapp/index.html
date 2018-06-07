@@ -27,8 +27,8 @@
             <div class="col-md-2"></div>
             <div class="col-md-4 " style="margin-top: 1em;">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="请输入要查询的内容"/>
-                    <span class="input-group-addon">
+                    <input type="text" required class="form-control" ng-model="keyWords" placeholder="请输入要查询的内容"/>
+                    <span class="input-group-addon" ng-click="searchGood(keyWords)">
                         <i class="glyphicon glyphicon-search"></i></span>
                 </div>
             </div>
@@ -98,18 +98,18 @@
 </div>
 
 
-<link href="resource/css/bootstrap.min.css" rel="stylesheet">
-<link href="resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
-<script src="resource/js/lib/jquery3.2.1.js"></script>
-<script src="resource/js/lib/bootstrap.js"></script>
-<script src="resource/js/lib/bootstrapValidator.js"></script>
-<script src="resource/js/lib/angular.min.js"></script>
+<link href="/resource/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
+<script src="/resource/js/lib/jquery3.2.1.js"></script>
+<script src="/resource/js/lib/bootstrap.js"></script>
+<script src="/resource/js/lib/bootstrapValidator.js"></script>
+<script src="/resource/js/lib/angular.min.js"></script>
 
-<link href="resource/css/main.css?t=20180602" rel="stylesheet">
-<script src="resource/js/lib/tm.pagination.js"></script>
-<script src="resource/js/utils.js"></script>
-<script src="resource/js/mainController.js?t=20180606"></script>
-<script src="resource/js/main.js?t=20180606"></script>
+<link href="/resource/css/main.css?t=20180602" rel="stylesheet">
+<script src="/resource/js/lib/tm.pagination.js"></script>
+<script src="/resource/js/utils.js"></script>
+<script src="/resource/js/mainController.js?t=20180606"></script>
+<script src="/resource/js/main.js?t=20180606"></script>
 </body>
 
 </html>
