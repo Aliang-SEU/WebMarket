@@ -43,7 +43,40 @@ public class ShoppingOrder {
     //收货地址
     private String orderAddress;
 
+    //收货人姓名
+    private String receiveName;
+
+    //收货人电话号码
+    private String phone;
+
+    //用户姓名
+    private String userName;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public ShoppingOrder() {
+    }
+
+    public String getReceiveName() {
+        return receiveName;
+    }
+
+    public void setReceiveName(String receiveName) {
+        this.receiveName = receiveName;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getOrderAddress() {

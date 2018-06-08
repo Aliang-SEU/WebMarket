@@ -4,6 +4,8 @@ import cn.aliang.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * 用户操作接口
  */
@@ -66,5 +68,11 @@ public interface UserDao {
      * @return
      */
     Integer alterUserInfo(@Param("user") User user);
+
+    /**
+     * 查询所有用户的信息
+     * @return
+     */
+    List<User> queryAllUser();
 }
 

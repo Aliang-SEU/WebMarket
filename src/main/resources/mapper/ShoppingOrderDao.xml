@@ -18,13 +18,16 @@
               a.good_price as good_price,
               a.counts as counts,
               a.total_price as total_price,
-              a.order_address as order_address
+              a.order_address as order_address,
+              a.receive_name as receive_name,
+              a.phone as phone
                from shopping_order as a inner join good as b on(a.good_id=b.good_id)
                where  user_id = #{userId}
     </select>
 
     <insert id="insertShoppingOrder">
-        insert into shopping_order(order_number,user_id,good_id,create_time,finish_time,order_state,good_price,counts,total_price,order_address)
+        insert into shopping_order(order_number,user_id,good_id,create_time,finish_time,
+                      order_state,good_price,counts,total_price,order_address,receive_name,phone)
                     values(#{shoppingOrder.orderNumber},
                            #{shoppingOrder.userId},
                            #{shoppingOrder.goodId},
@@ -34,13 +37,37 @@
                            #{shoppingOrder.goodPrice},
                            #{shoppingOrder.counts},
                            #{shoppingOrder.totalPrice},
-                           #{shoppingOrder.orderAddress})
+                           #{shoppingOrder.orderAddress},
+                           #{shoppingOrder.receiveName},
+                           #{shoppingOrder.phone})
     </insert>
 
     <update id="changeOrderState">
         update shopping_order set order_state = #{state} where order_id = #{orderId}
 
     </update>
+
+    <select id="queryAllShoppingOrder" resultType="ShoppingOrder">
+       select a.order_id as order_id,
+              a.order_number as order_number,
+              a.user_id as user_id,
+              a.good_id as good_id,
+              b.name as good_name,
+			  c.user_name as user_name,
+              a.create_time as create_time,
+              a.finish_time as finish_time,
+              a.order_state as order_state,
+              a.good_price as good_price,
+              a.counts as counts,
+              a.total_price as total_price,
+              a.order_address as order_address,
+              a.receive_name as receive_name,
+              a.phone as phone
+              from shopping_order as a
+              inner join good as b on(a.good_id = b.good_id)
+	          inner join user as c on(a.user_id = c.user_id)
+              order by CREATE_time desc
+    </select>
     <!-- 联合查询
     <resultMap id="shoppingOrderResult" type="HashMap">
         <result column="cab_name" property="cabName"/>

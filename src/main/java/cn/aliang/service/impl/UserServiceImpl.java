@@ -15,7 +15,9 @@ import redis.clients.jedis.JedisPool;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,7 +50,7 @@ public class UserServiceImpl implements UserService {
             map.put("error", "该用户已被注册");
             return map;
         }else{
-            userDao.insertUser(new User(userName, passwordMD5, email));
+            userDao.insertUser(new User(userName, passwordMD5, email, new Date()));
             map.put("success", "注册成功");
         }
         return map;
@@ -277,5 +279,16 @@ public class UserServiceImpl implements UserService {
         }else{
             return false;
         }
+    }
+
+
+    /**
+     * 查询所有用户的信息
+     * @return
+     */
+    @Override
+    public List<User> queryAllUser() {
+        List<User> list = userDao.queryAllUser();
+        return list;
     }
 }

@@ -196,7 +196,9 @@
                     goodPrice: $scope.goodInfo.price,
                     counts:$scope.goodInfo.goodCounts,
                     goodName:$scope.goodInfo.goodName,
-                    orderAddress:$scope.selectAdd.address
+                    orderAddress:$scope.selectAdd.address,
+                    receiveName:$scope.selectAdd.receiveName,
+                    phone:$scope.selectAdd.phone
                 }
 
                 StandardPost("/order/createOrder", orderData);

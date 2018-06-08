@@ -8,8 +8,8 @@
 
     <!-- 添加用户 -->
     <insert id="insertUser">
-       insert into user(user_name,real_name,password,email,phone,address)
-        values(#{user.userName},#{user.realName},#{user.password},#{user.email},#{user.phone},#{user.address})
+       insert into user(user_name,real_name,password,email,phone,address,register_time)
+        values(#{user.userName},#{user.realName},#{user.password},#{user.email},#{user.phone},#{user.address},#{user.registerTime})
     </insert>
 
     <!-- 删除用户 -->
@@ -49,4 +49,15 @@
                         address = #{user.address}
                         where user_id = #{user.userId}
     </update>
+
+    <select id="queryAllUser" resultType="User">
+        SELECT user_id,
+               user_name,
+               real_name,
+               email,
+               phone,
+               address,
+               register_time
+               from user
+    </select>
 </mapper>

@@ -11,6 +11,7 @@ create TABLE user(
   `email` VARCHAR(40) NOT NULL COMMENT '邮箱',
   `phone` VARCHAR(11) DEFAULT '' COMMENT '手机号码',
   `address` VARCHAR(40) DEFAULT '' COMMENT '地址',
+  `register_time` TIMESTAMP not null COMMENT '注册时间',
   primary key (user_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
@@ -64,6 +65,8 @@ CREATE TABLE shopping_order(
   `counts` int not null COMMENT '商品数量',
   `total_price` decimal(20,2) not null COMMENT '订单总价格',
   `order_address` VARCHAR(50) not NULL COMMENT '订单地址',
+  `receive_name` VARCHAR(10) NOT NULL COMMENT '收货人姓名',
+  `phone` VARCHAR(11) NOT NULL COMMENT '收货人手机号',
   primary key (order_id),
   key(user_id),
   foreign key (good_id) references good(good_id),

@@ -8,6 +8,7 @@ import cn.aliang.service.ShoppingOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
         order.setTotalPrice(order.getCounts()*order.getGoodPrice());
         order.setFinishTime(order.getCreateTime());
         /*
-            首先需要检查库存的情况，防止
+            首先需要检查库存的情况
          */
         Integer goodNumber = goodDao.reduceGoodNumberByOrder(order);
         if(goodNumber <= 0)
@@ -51,6 +52,12 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
 
     }
 
+    /**
+     * 订单号内部调用函数
+     * @param userId
+     * @param time
+     * @return
+     */
     private String createOrderNumber(int userId, long time){
         String orderNumber = "";
         orderNumber += String.format("%010d", userId);
@@ -74,5 +81,11 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
     public Boolean receiveOrder(Integer orderId) {
         Integer result = shoppingOrderDao.changeOrderState(orderId, OrderState.RECEIVED.getState());
         return result == 1;
+    }
+
+    @Override
+    public List<ShoppingOrder> queryAllShoppingOrder() {
+        List<ShoppingOrder> list = shoppingOrderDao.queryAllShoppingOrder();
+        return list;
     }
 }

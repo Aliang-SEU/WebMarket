@@ -33,4 +33,10 @@ public interface ShoppingOrderDao {
      * @return
      */
     public Integer changeOrderState(@Param("orderId") Integer orderId,@Param("state") Integer state);
+
+    /**
+     * 查询所有的订单情况
+     * @return
+     */
+    public List<ShoppingOrder> queryAllShoppingOrder();
 }

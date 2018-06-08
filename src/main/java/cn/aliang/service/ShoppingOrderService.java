@@ -13,4 +13,6 @@ public interface ShoppingOrderService {
     public Boolean payOrder(Integer orderId);
 
     public Boolean receiveOrder(Integer orderId);
+
+    public List<ShoppingOrder> queryAllShoppingOrder();
 }

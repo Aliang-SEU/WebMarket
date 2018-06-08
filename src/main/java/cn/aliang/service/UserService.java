@@ -4,6 +4,7 @@ import cn.aliang.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -67,4 +68,11 @@ public interface UserService {
      * @return
      */
     public boolean alterUserInfo(User user);
+
+    /**
+     * 查询所有用户的信息
+     * @return
+     */
+    public List<User> queryAllUser();
+
 }

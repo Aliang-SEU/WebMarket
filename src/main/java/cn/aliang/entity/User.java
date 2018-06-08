@@ -1,5 +1,7 @@
 package cn.aliang.entity;
 
+import java.util.Date;
+
 /**
  * 用户信息, 对应于数据库的user表
  */
@@ -21,6 +23,16 @@ public class User {
     //地址
     private String address;
 
+    private Date registerTime;
+
+    public Date getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
+    }
+
     public User() {
     }
 
@@ -28,6 +40,13 @@ public class User {
         this.userName = userName;
         this.password = password;
         this.email = email;
+    }
+
+    public User(String userName, String password, String email, Date registerTime) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.registerTime = registerTime;
     }
 
     public User(int userId, String userName, String realName, String password, String email, String phone, String address) {

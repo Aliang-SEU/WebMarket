@@ -27,5 +27,14 @@ public class ShoppingOrderDaoTest {
         }
 
     }
+    @Test
+    public void queryOrder() throws Exception {
+
+        List<ShoppingOrder> list = shoppingOrderDao.queryAllShoppingOrder();
+        for(ShoppingOrder order : list) {
+            System.out.println(order);
+        }
+
+    }
 
 }
