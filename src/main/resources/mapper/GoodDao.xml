@@ -30,4 +30,13 @@
     <select id="queryAllGood" resultType="Good">
         select * from good;
     </select>
+
+    <select id="getGoodCount" resultType="int">
+      SELECT count(*) from good;
+    </select>
+
+    <select id="queryGoodsByPageAdmin" resultType="Good">
+        select * from good order by good_id limit #{curPage}, #{pageSize};
+    </select>
+
 </mapper>

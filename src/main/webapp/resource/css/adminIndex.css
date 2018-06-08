@@ -55,10 +55,11 @@ div.right-container{
     float: left;
 }
 .good-img{
+    height:120px;
     width: 100px;
 }
 td.good-name.ng-binding {
-    width: 100px;
+    width: 160px;
 }
 td.good-desc.ng-binding {
     width: 300px;
@@ -71,7 +72,7 @@ thead {
 }
 td.good-name.ng-binding {
     text-align:center;
-    line-height: 90px;
+
 }
 td.good-desc.ng-binding {
     padding-top: 30px;
@@ -106,4 +107,20 @@ button.btn.btn-primary {
     margin-top: 30px;
     width: 80px;
     margin-left: 20px;
+}
+
+.page-list .pagination {float:right;}
+.page-list .pagination span {cursor: pointer;}
+.page-list .pagination .separate span{cursor: default; border-top:none;border-bottom:none;}
+.page-list .pagination .separate span:hover {background: none;}
+.page-list .page-total {float:right; margin: 0px 0px;}
+.page-list .page-total input, .page-list .page-total select{height: 26px; border: 0px solid #ddd;}
+.page-list .page-total input {width: 40px; padding-left:3px;}
+.page-list .page-total select {width: 50px;}
+.page-list .pagination .am-active span{background-color: #248cff; color: white;}
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+     margin: 0 0;
+    border-radius: 4px;
 }

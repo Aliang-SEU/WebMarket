@@ -9,9 +9,9 @@
     <script src="/resource/js/lib/angular.min.js"></script>
     <script src="/resource/js/lib/angular-ui-router.min.js"></script>
     <script src="/resource/js/lib/ui-bootstrap-tpls.min.js"></script>
-    <link href="/resource/css/adminIndex.css" rel="stylesheet">
-
-    <script src="/resource/js/adminIndex.js"></script>
+    <link href="/resource/css/adminIndex.css?t=20180608" rel="stylesheet">
+    <script src="/resource/js/lib/tm.pagination.js"></script>
+    <script src="/resource/js/adminIndex.js?t=2018212"></script>
 </head>
 
 <body ng-app="adminApp" ng-controller="adminController">
@@ -29,9 +29,9 @@
             </div>
         </div>
         <div class="right-container container" >
-            <ui-view>
+            <ui-view></ui-view>
+            <!-- 换页js脚本 -->
 
-            </ui-view>
         </div>
     </div>
 </div>

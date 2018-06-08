@@ -10,6 +10,10 @@ public interface GoodService {
 
     public Integer getGoodCountByType(Integer type);
 
+    public Integer getGoodCount();
+
+    public List<Good>  queryGoodsByPageAdmin(Integer curPage, Integer pageSize);
+
     public List<Good>  queryGoodsByPage(Integer type, Integer curPage, Integer pageSize);
 
     public Good queryGoodDetailById(Integer goodId);

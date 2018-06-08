@@ -53,6 +53,27 @@ public class GoodController {
         return new Response<Integer>(true, "", resultCount);
     }
 
+    @RequestMapping(value="/GetGoodCount", method = RequestMethod.GET,
+            produces={"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Integer> queryGoodCount(){
+
+        Integer count = goodService.getGoodCount();
+        return new Response<Integer>(true, "", count);
+    }
+
+    @RequestMapping(value="/GetGoodList", method = RequestMethod.POST,
+            produces={"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<List<Good>> getGoodList(@RequestBody Map<String, Integer> map){
+
+        if(map == null) {
+            return new Response<List<Good>>(false, "页面请求错误");
+        }
+        List<Good> list= goodService.queryGoodsByPageAdmin(map.get("curPage"), map.get("pageSize"));
+        return new Response<List<Good>>(true, "", list);
+
+    }
     /**
      * 商品详情查询
      * @param goodId

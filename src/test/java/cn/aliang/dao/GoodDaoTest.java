@@ -26,7 +26,7 @@ public class GoodDaoTest {
 
     @Test
     public void test(){
-        List<Good> result = goodDao.queryGoodsByPage(1,1,5);
+        List<Good> result = goodDao.queryGoodsByPageAdmin(1,5);
         System.out.println(result);
     }
 }

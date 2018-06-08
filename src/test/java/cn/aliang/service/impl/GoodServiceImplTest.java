@@ -9,9 +9,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-*.xml"})
@@ -29,7 +26,7 @@ public class GoodServiceImplTest {
 
     @Test
     public void listGoodsByType1() {
-        List<Good> list = goodService.queryGoodsByPage(1,1,5);
+        List<Good> list = goodService.queryGoodsByPageAdmin(1,5);
         for(Good i : list)
             System.out.println(i);
     }

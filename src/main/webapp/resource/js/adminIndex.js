@@ -1,5 +1,5 @@
 //应用
-var myApp = angular.module('adminApp', ['ui.bootstrap', 'ui.router']);
+var myApp = angular.module('adminApp', ['ui.bootstrap', 'ui.router','tm.pagination']);
 
 //路由重定向
 myApp.config(function($stateProvider){
@@ -7,6 +7,7 @@ myApp.config(function($stateProvider){
             .state('0', {
                 url:'/orderManager',
                 templateUrl: 'tmpl/orderManager.html',
+
             })
             .state('1', {
                 url: '/userManager',
@@ -14,7 +15,8 @@ myApp.config(function($stateProvider){
             })
             .state('2', {
                 url: '/goodManager',
-                templateUrl: 'tmpl/goodManager.html'
+                templateUrl: 'tmpl/goodManager.html',
+                controller: 'goodManagerController'
             })
             .state('welcome', {
                 url: '/welcome',
@@ -24,14 +26,16 @@ myApp.config(function($stateProvider){
 );
 
 
-myApp.controller("adminController", function ($rootScope, $modal, $scope, $http, $timeout, $interval, $state, $injector) {
+myApp.controller("adminController", function ($rootScope, $modal, $scope, $http, $timeout, $interval, $state, $injector,GoodService) {
     $state.go('welcome');
     $injector.get('$templateCache').removeAll();
 
     $scope.orderState = {0:"待付款", 1:"订单已付款,待发货", 2:"订单已发货", 3:"订单已完成"}
     //左侧栏菜单页面
     $scope.menuArray = new Array('订单管理', '用户管理', '商品管理' );
-
+    $http.get("/queryGoodType").success(function (response) {
+        $scope.GoodType = response.data;
+    })
     //时间模块
     $scope.current_time = new Date();
     $interval(function () {
@@ -58,15 +62,14 @@ myApp.controller("adminController", function ($rootScope, $modal, $scope, $http,
                 })
                 break;
             case 2:
-                $http.get("/queryGoodType").success(function (response) {
-                    $scope.GoodType = response.data;
-                })
-                $http.get("/adminIndex/queryAllGood").success(function (response) {
+                /*$http.get("/adminIndex/queryAllGood").success(function (response) {
                     $scope.goodlist = response.data;
-                })
+                })*/
                 break;
         }
     }
+
+
 
     //修改商品的信息
     $scope.alterGoodInfo = function(index){
@@ -88,6 +91,45 @@ myApp.controller("adminController", function ($rootScope, $modal, $scope, $http,
     }
 });
 
+myApp.factory('GoodService', function ($http) {
+    return {
+        getList: function (condition) {
+            return $http.post("/good/GetGoodList", condition);
+        },
+        getListCount: function (name) {
+            return $http.get(name);
+        }
+    };
+});
+
+myApp.controller('goodManagerController', function ($scope, GoodService) {
+
+    var getAllGoods = function () {
+
+        var postData = {
+            curPage: $scope.paginationConf.currentPage,
+            pageSize: $scope.paginationConf.itemsPerPage
+        }
+        GoodService.getListCount("/good/GetGoodCount").success(function (response) {
+            $scope.paginationConf.totalItems = response.data;
+        })
+        GoodService.getList(postData).success(function (response) {
+            console.log($scope.paginationConf.currentPage);
+            $scope.goodlist = response.data;
+        });
+
+    }
+
+    // 配置分页的基本参数，分页控件的初始化
+    $scope.paginationConf = {
+        currentPage: 1,
+        totalItems: 0, // 一共多少条数据，和itemsPerPage决定一共会有几页
+        itemsPerPage: 5, // 每页几条数据，和totalItems决定一共会有几页
+        pagesLength: 5
+    };
+    $scope.$watch('paginationConf.currentPage',getAllGoods);
+
+})
 myApp.controller('modalCtrl', function($scope, $modalInstance, data) {
     $scope.data= data;
 

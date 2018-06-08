@@ -26,4 +26,8 @@ public interface GoodDao {
     public Integer reduceGoodNumberByOrder(@Param("order")ShoppingOrder order);
 
     public List<Good> queryAllGood();
+
+    public Integer getGoodCount();
+
+    public List<Good>  queryGoodsByPageAdmin(@Param("curPage") Integer curPage, @Param("pageSize") Integer pageSize);
 }

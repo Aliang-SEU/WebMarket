@@ -43,4 +43,15 @@ public class GoodServiceImpl implements GoodService {
     public List<Good> queryAllGood() {
         return goodDao.queryAllGood();
     }
+
+    @Override
+    public Integer getGoodCount() {
+        return goodDao.getGoodCount();
+    }
+
+    @Override
+    public List<Good> queryGoodsByPageAdmin(Integer curPage, Integer pageSize) {
+        Integer rows = (curPage - 1) * (pageSize);
+        return goodDao.queryGoodsByPageAdmin(rows, pageSize);
+    }
 }
