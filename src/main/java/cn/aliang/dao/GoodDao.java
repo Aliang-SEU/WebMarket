@@ -24,4 +24,6 @@ public interface GoodDao {
     public Good getGoodDetailById(@Param("goodId") Integer goodId);
 
     public Integer reduceGoodNumberByOrder(@Param("order")ShoppingOrder order);
+
+    public List<Good> queryAllGood();
 }

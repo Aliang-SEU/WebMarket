@@ -1,10 +1,28 @@
-<div class = "order-manager-body">
-<table>
-    <tr>
-        <th>商品分类管理</th>
-    </tr>
-    <tr>
-    </tr>
-</table>
+<div class = "good-manager-body">
+    <table class="table table-striped center table-bordered">
+        <thead>
+            <tr >
+                <th>商品名称</th>
+                <th>商品图片</th>
+                <th>商品描述</th>
+                <th>关键字</th>
+                <th>商品价格</th>
+                <th>库存</th>
+                <th>商品分类</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="good in goodlist">
+                <td class="good-name">{{good.name}}</td>
+                <td class="good-img"><img class="good-img" ng-src="{{'/resource/img/good/' + good.goodImage}}"> </td>
+                <td class="good-desc">{{good.description}}</td>
+                <td class="good-keyword">{{good.keyWord}}</td>
+                <td class="good-price">{{good.price | number:2}}元</td>
+                <td class="good-count">{{good.counts}}件</td>
+                <td class="good-type">{{GoodType[good.type - 1].name}}</td>
+                <td class="good-alter"><button class="btn btn-primary" ng-click="alterGoodInfo($index)">修改</button> </td>
+            </tr>
+        </tbody>
+    </table>
 
 </div>

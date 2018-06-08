@@ -1,0 +1,109 @@
+.row.top {
+    height: 80px;
+    background-color: #4786d2;
+}
+.logo-img {
+    height: 100%;
+    width: 75%;
+    font-size: 30px;
+    color: white;
+    padding: 20px;
+    float: left;
+}
+.time-show {
+    float: left;
+    width: 25%;
+    height: 80px;
+    font-size: 20px;
+    color: #44ff4b;
+    line-height: 80px;
+}
+.main-body{
+
+}
+.left-container {
+    background-color: #000000;
+    width: 15%;
+    height: 802px;
+    padding-top: 40px;
+    float: left;
+}
+
+div.left-list-item{
+    height: 50px;
+    width: 100%;
+    color: rgb(255, 251, 255);
+    cursor: pointer;
+    text-align:center;
+    font-size: 20px;
+    line-height: 50px;
+}
+div.left-list-item:hover{
+    background-color: #0063a1;
+    color: rgb(255, 103, 73);
+}
+div.left-list-item.select{
+    background-color: #0063a1;
+    color: rgb(255, 103, 73);
+}
+div.left-list-item.unselect{
+
+}
+/*右侧css*/
+div.right-container{
+    width: 85%;
+    float: left;
+}
+.good-img{
+    width: 100px;
+}
+td.good-name.ng-binding {
+    width: 100px;
+}
+td.good-desc.ng-binding {
+    width: 300px;
+}
+td.good-keyword.ng-binding {
+    width: 300px;
+}
+thead {
+    font-size: 18px;
+}
+td.good-name.ng-binding {
+    text-align:center;
+    line-height: 90px;
+}
+td.good-desc.ng-binding {
+    padding-top: 30px;
+}
+td.good-keyword.ng-binding {
+    padding-top: 30px;
+}
+td.good-price.ng-binding {
+    text-align:center;
+    line-height: 90px;
+    width:120px;
+    color: red;
+}
+div.good-manager-body th{
+    text-align: center;
+}
+td.good-count.ng-binding{
+    width:120px;
+    text-align:center;
+    line-height: 90px;
+}
+td.good-type.ng-binding{
+    width:120px;
+    text-align:center;
+    line-height: 90px;
+}
+td.good-alter.ng-binding{
+    text-align:center;
+    line-height: 90px;
+}
+button.btn.btn-primary {
+    margin-top: 30px;
+    width: 80px;
+    margin-left: 20px;
+}

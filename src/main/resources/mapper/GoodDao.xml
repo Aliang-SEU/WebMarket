@@ -26,4 +26,8 @@
               where good_id = #{order.goodId}
               and counts >= #{order.counts}
     </update>
+
+    <select id="queryAllGood" resultType="Good">
+        select * from good;
+    </select>
 </mapper>

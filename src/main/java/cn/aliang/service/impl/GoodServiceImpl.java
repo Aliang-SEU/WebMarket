@@ -38,4 +38,9 @@ public class GoodServiceImpl implements GoodService {
     public Good queryGoodDetailById(Integer goodId) {
         return goodDao.getGoodDetailById(goodId);
     }
+
+    @Override
+    public List<Good> queryAllGood() {
+        return goodDao.queryAllGood();
+    }
 }

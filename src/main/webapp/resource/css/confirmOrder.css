@@ -1,0 +1,51 @@
+.address-box{
+    width: 18em;
+    height: 12em;
+    border: 2px solid #ccc;
+    margin: 0.5em;
+}
+.active{
+    border: 2px solid #1b8dcc;
+}
+
+.address-box:hover{
+    background: #cacaca;
+    cursor: pointer;
+}
+.address-address{
+    color: #a1a1a1;
+}
+.delete-address{
+    float:right;
+}
+.delete-address:hover{
+    background: white;
+}
+
+.address-add{
+    margin: 0.5em;
+    width: 18em;
+    height: 12em;
+    border: 2px dashed #ccc;
+    cursor: pointer;
+}
+.address-add:hover{
+    background: #cacaca;
+}
+.address-add .address-new{
+    padding: 30% 0;
+    text-align: center;
+}
+.address-add .address-new .text{
+    font-size: 16px;
+}
+
+.order-box{
+
+}
+.order-box .order-table{
+    font-size: 20px;
+}
+#totalPrice{
+    color: #ff452e;
+}

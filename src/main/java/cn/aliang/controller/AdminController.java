@@ -2,8 +2,10 @@ package cn.aliang.controller;
 
 
 import cn.aliang.Util.Response;
+import cn.aliang.entity.Good;
 import cn.aliang.entity.ShoppingOrder;
 import cn.aliang.entity.User;
+import cn.aliang.service.GoodService;
 import cn.aliang.service.ShoppingOrderService;
 import cn.aliang.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private GoodService goodService;
 
     @RequestMapping(value = "/queryShoppingOrder", method = RequestMethod.GET,
                     produces = {"application/json; charset=utf-8"})
@@ -44,7 +49,19 @@ public class AdminController {
         if(list != null && !list.isEmpty()){
             return new Response<Object>(true, "", list);
         }else{
-            return new Response<Object>(false, "还没有订单");
+            return new Response<Object>(false, "还没有商品");
+        }
+    }
+
+    @RequestMapping(value = "/queryAllGood", method = RequestMethod.GET,
+            produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Object> queryAllGood(){
+        List<Good> list =  goodService.queryAllGood();
+        if(list != null && !list.isEmpty()){
+            return new Response<Object>(true, "", list);
+        }else{
+            return new Response<Object>(false, "还没有商品");
         }
     }
 }

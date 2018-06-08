@@ -21,7 +21,6 @@ public class ReceiveAddressController {
     @Autowired
     private ReceiveAddressService receiveAddressService;
 
-
     /**
      * 查询对应用户的查询地址
      * @param userId
@@ -31,7 +30,7 @@ public class ReceiveAddressController {
     @RequestMapping(value = "/queryAddress/{userId}", method = RequestMethod.GET,
             produces = {"application/json; charset=utf-8"})
     @ResponseBody
-    public Response<Object> confirmOrder(@PathVariable("userId") Integer userId, HttpSession session) {
+    public Response<Object> queryAddress(@PathVariable("userId") Integer userId, HttpSession session) {
 
         List<ReceiveAddress> list = receiveAddressService.queryAllAddressByUserId(userId);
         return new Response<Object>(true,"", list);
