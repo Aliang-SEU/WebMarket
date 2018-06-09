@@ -2,6 +2,7 @@ package cn.aliang.service.impl;
 
 import cn.aliang.dao.GoodDao;
 import cn.aliang.dao.ShoppingOrderDao;
+import cn.aliang.entity.Good;
 import cn.aliang.entity.OrderState;
 import cn.aliang.entity.ShoppingOrder;
 import cn.aliang.service.ShoppingOrderService;
@@ -39,17 +40,18 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
             首先需要检查库存的情况
          */
         Integer goodNumber = goodDao.reduceGoodNumberByOrder(order);
+        Good good = goodDao.getGoodDetailById(order.getGoodId());
         if(goodNumber <= 0)
             return false;
         else{
-            Integer result = shoppingOrderDao.insertShoppingOrder(order);
+            Integer result = shoppingOrderDao.insertShoppingOrder(order, good);
+            result += shoppingOrderDao.insertOrderDetail(order, good);
             if(result != 0) {
                 return true;
             }else{
                 return false;
             }
         }
-
     }
 
     /**

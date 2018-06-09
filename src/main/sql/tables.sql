@@ -48,7 +48,6 @@ CREATE TABLE shopping_cart(
   `good_price` decimal(20,2) NOT NULL COMMENT '商品价格',
   `counts` int NOT NULL COMMENT '商品的数量',
   primary key (user_id, good_id),
-  foreign key (good_id) references good(good_id),
   foreign key (user_id) references user(user_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='购物车表';
 
@@ -69,9 +68,19 @@ CREATE TABLE shopping_order(
   `phone` VARCHAR(11) NOT NULL COMMENT '收货人手机号',
   primary key (order_id),
   key(user_id),
-  foreign key (good_id) references good(good_id),
   foreign key (user_id) references user(user_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='订单表';
+
+'订单商品详情表'
+create table order_detail(
+  `order_detail_id` int(10) unsigned zerofill AUTO_INCREMENT COMMENT '订单id',
+  `order_id` int(10) unsigned zerofill COMMENT '订单id',
+  `good_id` int(10) unsigned zerofill NOT NULL COMMENT '商品id',
+  `good_name` varchar(50) NOT NULL COMMENT '商品的名称',
+  `good_price` decimal(20,2) NOT NULL COMMENT '商品的价格',
+  primary key (order_detail_id),
+  key(order_number)
+)ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='订单商品详情表';
 
 '商品分类表'
 CREATE TABLE good_type(
@@ -92,14 +101,3 @@ insert into good_type(type, name) values(8, '图书');
 insert into good_type(type, name) values(9, '玩具');
 insert into good_type(type, name) values(10, '办公');
 
-
-
-CREATE TABLE `address_info` (
-  `address` varchar(20) DEFAULT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL COMMENT '是否为默认地址,1为默认地址,0为非默认地址',
-  `tel_phone` varchar(11) DEFAULT NULL COMMENT '联系电话',
-  `address_id` varchar(100) NOT NULL COMMENT '地址的id用来区分地址',
-  `receiver_name` varchar(11) DEFAULT NULL COMMENT '接受者姓名',
-  PRIMARY KEY (`address_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;

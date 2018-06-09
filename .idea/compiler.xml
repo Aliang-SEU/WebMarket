@@ -12,7 +12,6 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="1.7">
       <module name="mmall" target="1.7" />
-      <module name="WebMarket" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

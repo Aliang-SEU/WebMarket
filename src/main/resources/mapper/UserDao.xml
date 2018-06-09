@@ -19,7 +19,7 @@
 
     <!-- 查询用户ID 这里可以使用索引加快查找的速度 -->
     <select id="selectUserIdByUserNameAndPassword" resultType="int">
-      select user_id from user where user_name = #{userName} and password = #{password}
+      select user_id from user where BINARY user_name = #{userName} and password = #{password}
     </select>
 
     <!-- 根据用户ID查询用户的信息 -->
