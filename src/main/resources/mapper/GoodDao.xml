@@ -48,7 +48,7 @@
                         description = #{good.description},
                         key_word = #{good.keyWord},
                         price = #{good.price},
-                        counts = #{good.price},
+                        counts = #{good.counts},
                         good_image = #{good.goodImage},
                         type = #{good.type}
                 where good_id = #{good.goodId}
@@ -57,6 +57,10 @@
     <insert id="addGoodInfo" >
         insert into good(name, description, key_word, price, counts, good_image, type)
                 values(#{good.name}, #{good.description}, #{good.keyWord}, #{good.price},
-                #{good.price}, #{good.goodImage}, #{good.type})
+                #{good.counts}, #{good.goodImage}, #{good.type})
     </insert>
+
+    <delete id="deleteGoodInfo">
+        delete from good where good_id = #{good.goodId}
+    </delete>
 </mapper>

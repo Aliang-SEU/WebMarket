@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -63,5 +64,25 @@ public class AdminController {
         }else{
             return new Response<Object>(false, "还没有商品");
         }
+    }
+
+    /**
+     * 上传商品的图片
+     * @param file
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/uploadFile",
+            produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Object> uploadFile(MultipartFile file) throws Exception {
+           return new Response<Object>(true, "");
+    }
+
+    @RequestMapping(value = "/adminLogin",
+            produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Object> adminLogin() {
+        return new Response<Object>(true, "");
     }
 }

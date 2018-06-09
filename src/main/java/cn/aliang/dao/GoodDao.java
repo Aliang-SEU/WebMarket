@@ -36,4 +36,6 @@ public interface GoodDao {
     public Integer alterGoodInfo(@Param("good") Good good);
 
     public Integer addGoodInfo(@Param("good") Good good);
+
+    public Integer deleteGoodInfo(@Param("good") Good good);
 }

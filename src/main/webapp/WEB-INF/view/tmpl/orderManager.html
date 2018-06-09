@@ -1,4 +1,4 @@
-<div class = "order-manager-body">
+<div class = "order-manager-body" ng-controller="orderManager">
 <table class="table table-striped center">
     <thead>
         <tr >
@@ -7,9 +7,9 @@
             <th>购买商品</th>
             <th>下单时间</th>
             <th>订单状态</th>
-            <th>商品单价</th>
+            <th>商品单价(元)</th>
             <th>购买数量</th>
-            <th>商品总价</th>
+            <th>商品总价(元)</th>
             <th>收货人电话</th>
             <th>收货人姓名</th>
             <th>配送地址</th>
@@ -23,13 +23,13 @@
             <td>{{order.goodName}}</td>
             <td>{{order.createTime | date:'yyyy-MM-dd hh:mm:ss'}}</td>
             <td>{{orderState[order.orderState]}}</td>
-            <td>{{order.goodPrice}}</td>
+            <td>{{order.goodPrice | number:2}}</td>
             <td>{{order.counts}}</td>
-            <td>{{order.totalPrice}}</td>
+            <td>{{order.totalPrice | number:2}}</td>
             <td>{{order.phone}}</td>
             <td>{{order.receiveName}}</td>
             <td>{{order.orderAddress}}</td>
-            <td><button class="btn btn-primary" ng-click="send($index)" ng-hide="order.orderState != 1">发货</button> </td>
+            <td><button class="btn btn-primary" ng-click="sendOrder($index)" ng-hide="order.orderState != 1">发货</button> </td>
         </tr>
     </tbody>
 

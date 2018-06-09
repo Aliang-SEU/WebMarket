@@ -65,24 +65,54 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
         return orderNumber;
     }
 
+    /**
+     * 根据订单号查询订单的信息
+     * @param userId
+     * @return
+     */
     @Override
     public List<ShoppingOrder> queryShoppingOrderById(Integer userId) {
         List<ShoppingOrder> list = shoppingOrderDao.queryOrderByUserId(userId);
         return list;
     }
 
+    /**
+     * 支付订单
+     * @param orderId
+     * @return
+     */
     @Override
     public Boolean payOrder(Integer orderId) {
         Integer result = shoppingOrderDao.changeOrderState(orderId, OrderState.TOSEND.getState());
         return result == 1;
     }
 
+    /**
+     * 接收订单
+     * @param orderId
+     * @return
+     */
+    @Override
+    public Boolean sendOrder(Integer orderId) {
+        Integer result = shoppingOrderDao.changeOrderState(orderId, OrderState.TRANSPORTING.getState());
+        return result == 1;
+    }
+
+    /**
+     * 接收订单
+     * @param orderId
+     * @return
+     */
     @Override
     public Boolean receiveOrder(Integer orderId) {
         Integer result = shoppingOrderDao.changeOrderState(orderId, OrderState.RECEIVED.getState());
         return result == 1;
     }
 
+    /**
+     * 查询所有的订单信息
+     * @return
+     */
     @Override
     public List<ShoppingOrder> queryAllShoppingOrder() {
         List<ShoppingOrder> list = shoppingOrderDao.queryAllShoppingOrder();

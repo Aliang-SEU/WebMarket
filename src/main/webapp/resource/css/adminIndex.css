@@ -113,6 +113,9 @@ button.btn.btn-warning{
     width: 80px;
     margin-left: 20px;
 }
+select.ng-pristine.ng-valid.ng-touched {
+    height: 30px;
+}
 .page-list .pagination {float:right;}
 .page-list .pagination span {cursor: pointer;}
 .page-list .pagination .separate span{cursor: default; border-top:none;border-bottom:none;}

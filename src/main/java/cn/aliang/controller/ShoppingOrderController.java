@@ -88,10 +88,26 @@ public class ShoppingOrderController {
     public Response<Object> receiveOrder(Integer orderId){
         Boolean result = shoppingOrderService.receiveOrder(orderId);
         if(result == true){
-            return new Response<>(true, "支付成功");
+            return new Response<>(true, "订单已收货");
         }else{
-            return new Response<>(false, "订单支付失败");
+            return new Response<>(false, "确认收货失败");
         }
     }
 
+    /**
+     * 发货
+     * @param orderId
+     * @return
+     */
+    @RequestMapping(value="/sendOrder", method = RequestMethod.GET,
+            produces = {"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Object> sendOrder(Integer orderId){
+        Boolean result = shoppingOrderService.sendOrder(orderId);
+        if(result == true){
+            return new Response<>(true, "订单发货成功");
+        }else{
+            return new Response<>(false, "订单发货失败");
+        }
+    }
 }

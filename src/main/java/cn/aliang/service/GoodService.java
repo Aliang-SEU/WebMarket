@@ -1,6 +1,7 @@
 package cn.aliang.service;
 
 import cn.aliang.entity.Good;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -25,4 +26,8 @@ public interface GoodService {
     public Boolean alterGoodInfo(Good good);
 
     public Boolean addGoodInfo(Good good);
+
+    public Boolean deleteGoodInfo(Good good);
+
+    public void fileUpload(MultipartFile file);
 }

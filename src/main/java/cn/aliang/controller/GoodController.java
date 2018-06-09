@@ -53,6 +53,10 @@ public class GoodController {
         return new Response<Integer>(true, "", resultCount);
     }
 
+    /**
+     * 查询所有类型的商品的总数量
+     * @return
+     */
     @RequestMapping(value="/GetGoodCount", method = RequestMethod.GET,
             produces={"application/json; charset=utf-8"})
     @ResponseBody
@@ -62,6 +66,11 @@ public class GoodController {
         return new Response<Integer>(true, "", count);
     }
 
+    /**
+     * 查询所有商品中的分页商品信息
+     * @param map
+     * @return
+     */
     @RequestMapping(value="/GetGoodList", method = RequestMethod.POST,
             produces={"application/json; charset=utf-8"})
     @ResponseBody
@@ -106,6 +115,9 @@ public class GoodController {
     @ResponseBody
     public Response<Object> queryAllWithKeyWords(String keyWords,String page, String pageSize){
         List<Good> list =  goodService.queryGoodWithKeywords(keyWords);
+        /**
+         * 这里应该封装到Service中
+         */
         int curpage = Integer.parseInt(page);
         int curpageSize = Integer.parseInt(pageSize);
         int start = (curpage - 1) * curpageSize;
@@ -116,6 +128,41 @@ public class GoodController {
         }else{
             return new Response<Object>(false,"");
         }
+    }
 
+    @RequestMapping(value="/alterGoodInfo", method = RequestMethod.POST,
+                    produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public Response<Object> alterGoodInfo(@RequestBody  Good good){
+        Boolean result = goodService.alterGoodInfo(good);
+        if (result == true){
+            return new Response<Object>(true, "商品信息修改成功");
+        }else{
+            return new Response<Object>(false, "商品信息修改失败");
+        }
+    }
+
+    @RequestMapping(value="/addGoodInfo", method = RequestMethod.POST,
+            produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public Response<Object> addGoodInfo(@RequestBody Good good){
+        Boolean result = goodService.addGoodInfo(good);
+        if (result == true){
+            return new Response<Object>(true, "商品信息增加成功");
+        }else{
+            return new Response<Object>(false, "商品信息增加失败");
+        }
+    }
+
+    @RequestMapping(value="/deleteGoodInfo", method = RequestMethod.POST,
+            produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public Response<Object> deleteGoodInfo(@RequestBody Good good){
+        Boolean result = goodService.deleteGoodInfo(good);
+        if (result == true){
+            return new Response<Object>(true, "商品信息删除成功");
+        }else{
+            return new Response<Object>(false, "商品信息删除失败");
+        }
     }
 }

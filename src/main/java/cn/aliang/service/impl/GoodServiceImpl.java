@@ -5,7 +5,9 @@ import cn.aliang.entity.Good;
 import cn.aliang.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
@@ -71,5 +73,20 @@ public class GoodServiceImpl implements GoodService {
     public Boolean addGoodInfo(Good good) {
         Integer result = goodDao.addGoodInfo(good);
         return result == 1;
+    }
+
+    @Override
+    public Boolean deleteGoodInfo(Good good) {
+        Integer result = goodDao.deleteGoodInfo(good);
+        return result == 1;
+    }
+
+    /**
+     * 商品图片上传(未实现)
+     * @param file
+     */
+    @Override
+    public void fileUpload(MultipartFile file) {
+
     }
 }

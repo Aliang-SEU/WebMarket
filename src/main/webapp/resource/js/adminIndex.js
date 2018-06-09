@@ -25,7 +25,6 @@ myApp.config(function($stateProvider){
     }
 );
 
-
 myApp.controller("adminController", function ($rootScope, $modal, $scope, $http, $timeout, $interval, $state, $injector,GoodService) {
     $state.go('welcome');
 
@@ -69,6 +68,16 @@ myApp.controller("adminController", function ($rootScope, $modal, $scope, $http,
     }
 });
 
+myApp.controller('orderManager', function ($rootScope, $modal, $scope, $http, $timeout, $interval, $state, $injector,GoodService){
+        $scope.sendOrder = function (index) {
+            $http.get("/order/sendOrder?orderId=" + $scope.orderlist[index].orderId).success(function (resposne) {
+                if(resposne.success=true){
+                    $scope.orderlist[index].orderState += 1;
+                }alert(resposne.message);
+            })
+        }
+})
+
 myApp.factory('GoodService', function ($http) {
     return {
         getList: function (condition) {
@@ -80,7 +89,8 @@ myApp.factory('GoodService', function ($http) {
     };
 });
 
-myApp.controller('goodManagerController', function ($scope, $modal, GoodService) {
+myApp.controller('goodManagerController', function ($scope, $modal, GoodService, $http) {
+
 
     var getAllGoods = function () {
 
@@ -110,21 +120,82 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService)
 
     //修改商品的信息模态框
     $scope.alterGoodInfo = function(index){
+        var good = Object.assign({},$scope.goodlist[index]);
+        good.types = $scope.GoodType;
         var modalInstance = $modal.open({
             templateUrl : 'alterGoodInfo.html',//script标签中定义的id
             controller : 'modalCtrl',//modal对应的Controller
             size:"lg",
             resolve : {
                 data : function() {//data作为modal的controller传入的参数
-                    return Object.assign({},$scope.goodlist[index]);//用于传递数据,注意传递拷贝值
+                    return good;//用于传递数据,注意传递拷贝值
                 }
             }
         })
         //确认之后向数据库修改商品信息
         modalInstance.result.then(function(data){
-            $scope.goodlist[index] = data;
             //修改数据库的值
-            $http.post("")
+            data.type = data.type.type
+            $http.post("/good/alterGoodInfo", data).success(function (response) {
+                if(response.success = true){
+                    $scope.goodlist[index] = data;
+                }
+                alert(response.message);
+            })
+        })
+    }
+
+    $scope.deleteGoodInfo = function(index){
+        if(window.confirm("你确定要删除该商品的吗")){
+            var good = Object.assign({},$scope.goodlist[index]);
+           $http.post("/good/deleteGoodInfo", good).success(function(response){
+               if(response.success = true){
+                   alert(response.message)
+                   $scope.goodlist.splice(index,1);
+                   if($scope.goodlist.length == 0) {
+                       var postData = {
+                           curPage: $scope.paginationConf.currentPage - 1,
+                           pageSize: $scope.paginationConf.itemsPerPage
+                       }
+                       GoodService.getListCount("/good/GetGoodCount").success(function (response) {
+                           $scope.paginationConf.totalItems = response.data;
+                       })
+                       GoodService.getList(postData).success(function (response) {
+                           $scope.goodlist = response.data;
+                       });
+                   }else{
+                       getAllGoods();
+                   }
+               }else{
+                   alert("该商品已有订单加入，无法删除")
+               }
+           })
+        }
+
+    }
+
+    $scope.addGoodInfo = function(){
+        var good = new Object();
+        good.types = $scope.GoodType;
+        var modalInstance = $modal.open({
+            templateUrl : 'alterGoodInfo.html',//script标签中定义的id
+            controller : 'modalCtrl',//modal对应的Controller
+            size:"lg",
+            resolve : {
+                data : function() {//data作为modal的controller传入的参数
+                    return good;//用于传递数据,注意传递拷贝值
+                }
+            }
+        })
+
+        //确认之后向数据库修改商品信息
+        modalInstance.result.then(function(data){
+            //修改数据库的值
+            data.type = data.type.type
+            $http.post("/good/addGoodInfo", data).success(function (response) {
+
+                alert(response.message);
+            })
         })
     }
 })

@@ -57,6 +57,12 @@
         <property name="defaultEncoding" value="utf-8" />
     </bean>
 
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="2000000" /><!-- 允许上传的最大文件大小 -->
+        <property name="maxInMemorySize" value="4000000" /><!-- 允许写到内存中的最大值 -->
+    </bean>
+
     <!-- 4:扫描web相关的bean -->
     <context:component-scan base-package="cn.aliang.controller"/>
 

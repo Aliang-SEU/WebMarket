@@ -1,6 +1,5 @@
 package cn.aliang.Interceptor;
 
-import com.mchange.v1.util.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,7 +10,6 @@ import redis.clients.jedis.JedisPool;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * 权限拦截，验证登录的状态
@@ -29,8 +27,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        //String requestUri = request.getRequestURI();
+        String requestUri = request.getRequestURI();
 
+        if(requestUri.indexOf("/order/sendOrder") != -1){
+            return true;
+        }
         String loginToken = null;
         // 是否有cookie
         Cookie[] cookies = request.getCookies();
