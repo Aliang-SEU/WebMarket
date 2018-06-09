@@ -30,4 +30,6 @@ public interface GoodDao {
     public Integer getGoodCount();
 
     public List<Good>  queryGoodsByPageAdmin(@Param("curPage") Integer curPage, @Param("pageSize") Integer pageSize);
+
+    public List<Good> queryWithKeyWords(@Param("keywords") String keywords);
 }

@@ -16,12 +16,24 @@ insert into good(name, description, key_word, price, counts, good_image, type)
 values ('滋涩棉麻连衣裙', '滋涩棉麻连衣裙2018夏季新款韩版女装名媛衣服两件套套装裙时尚套装女短袖中长款包臀裙子a字裙G63 黄色 L', '滋涩棉麻连衣裙2018夏季新款韩版女装名媛衣服两件套套装裙时尚套装女短袖中长款包臀裙子a字裙G63 黄色 L', 109.00, 100,'clothes02.jpg',2);
 insert into good(name, description, key_word, price, counts, good_image, type)
 values ('雪中飞运动户外羽绒服男', '雪中飞运动户外羽绒服男中长款 连帽修身显瘦加厚羽绒衣X1701727 青靛蓝5047 175/92A 黄色 L', '雪中飞运动户外羽绒服男中长款 连帽修身显瘦加厚羽绒衣X1701727 青靛蓝5047 175/92A 黄色 L', 699.00, 99,'clothes03.jpg',2);
+insert into good(name, description, key_word, price, counts, good_image, type)
+values ('滋涩棉麻连衣裙', '滋涩棉麻连衣裙2018夏季新款韩版女装名媛衣服两件套套装裙时尚套装女短袖中长款包臀裙子a字裙G63 黄色 L', '滋涩棉麻连衣裙2018夏季新款韩版女装名媛衣服两件套套装裙时尚套装女短袖中长款包臀裙子a字裙G63 黄色 L', 109.00, 100,'clothes02.jpg',2);
+insert into good(name, description, key_word, price, counts, good_image, type)
+values ('雪中飞运动户外羽绒服男', '雪中飞运动户外羽绒服男中长款 连帽修身显瘦加厚羽绒衣X1701727 青靛蓝5047 175/92A 黄色 L', '雪中飞运动户外羽绒服男中长款 连帽修身显瘦加厚羽绒衣X1701727 青靛蓝5047 175/92A 黄色 L', 699.00, 99,'clothes03.jpg',2);
 
 
 insert into good(name, description, key_word, price, counts, good_image, type)
 values ('爱华仕拉杆箱', '爱华仕（OIWAS）飞机轮拉杆箱6182 商务出差旅行箱 男女休闲旅游登机箱20英寸灰色', '爱华仕（OIWAS）飞机轮拉杆箱6182 商务出差旅行箱 男女休闲旅游登机箱20英寸灰色', 299.00, 100, 'bag01.jpg', 3);
 insert into good(name, description, key_word, price, counts, good_image, type)
 values ('GCE新款行李箱女拉', 'GCE新款行李箱女拉杆箱男旅行箱登机箱子母箱万向轮密码箱学生拉杆箱子旅行箱女 蓝色子母套 22英寸', 'GCE新款行李箱女拉杆箱男旅行箱登机箱子母箱万向轮密码箱学生拉杆箱子旅行箱女 蓝色子母套 22英寸', 238.00, 100, 'bag02.jpg',3);
+
+insert into good(name, description, key_word, price, counts, good_image, type)
+values ('小米90分旅行箱', '小米（MI）90分旅行箱拉杆箱 男女万向轮登机行李箱 20英寸 星空灰', '小米（MI）90分旅行箱拉杆箱 男女万向轮登机行李箱 20英寸 星空灰', 299.00, 100, 'bag03.jpg',3);
+insert into good(name, description, key_word, price, counts, good_image, type)
+values ('瑞士军刀威戈电脑包', '瑞士军刀威戈Wenger双肩包商务笔记本电脑包14.4英寸 时尚休闲双肩背包男女书包防泼水 黑色SGB10516109044', '瑞士军刀威戈Wenger双肩包商务笔记本电脑包14.4英寸 时尚休闲双肩背包男女书包防泼水 黑色SGB10516109044', 128.00, 100, 'bag04.jpg',3);
+insert into good(name, description, key_word, price, counts, good_image, type)
+values ('GCE新款行李箱女拉', '瑞士军刀威戈Wenger双肩包商务笔记本电脑包14.4英寸 时尚休闲双肩背包男女书包防泼水 黑色SGB10516109044', '瑞士军刀威戈Wenger双肩包商务笔记本电脑包14.4英寸 时尚休闲双肩背包男女书包防泼水 黑色SGB10516109044', 238.00, 100, 'bag02.jpg',3);
+
 
 insert into good(name, description, key_word, price, counts, good_image, type)
 values ('ThinkPad翼480', '联想ThinkPad 翼480（04CD）英特尔8代酷睿14英寸轻薄窄边框笔记本电脑（i5-8250U 8G 256SSD Office）冰原银', '联想ThinkPad 翼480（04CD）英特尔8代酷睿14英寸轻薄窄边框笔记本电脑（i5-8250U 8G 256SSD Office）冰原银', 4799.00, 100, 'computer01.jpg',4);

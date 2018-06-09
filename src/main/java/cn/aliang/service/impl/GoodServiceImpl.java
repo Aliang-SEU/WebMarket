@@ -54,4 +54,9 @@ public class GoodServiceImpl implements GoodService {
         Integer rows = (curPage - 1) * (pageSize);
         return goodDao.queryGoodsByPageAdmin(rows, pageSize);
     }
+
+    @Override
+    public List<Good> queryGoodWithKeywords(String keywords) {
+        return goodDao.queryWithKeyWords("%" + keywords + "%");
+    }
 }

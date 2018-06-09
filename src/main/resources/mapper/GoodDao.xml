@@ -39,4 +39,7 @@
         select * from good order by good_id limit #{curPage}, #{pageSize};
     </select>
 
+    <select id="queryWithKeyWords" resultType="Good">
+        SELECT * from good where key_word like #{keywords}
+    </select>
 </mapper>

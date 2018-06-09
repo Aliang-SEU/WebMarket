@@ -29,4 +29,11 @@ public class GoodDaoTest {
         List<Good> result = goodDao.queryGoodsByPageAdmin(1,5);
         System.out.println(result);
     }
+
+    @Test
+    public void test2(){
+        List<Good> result = goodDao.queryWithKeyWords("%手机%");
+        for(Good item : result)
+         System.out.println(item);
+    }
 }

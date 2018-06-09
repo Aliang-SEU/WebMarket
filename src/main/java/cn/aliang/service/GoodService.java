@@ -19,4 +19,6 @@ public interface GoodService {
     public Good queryGoodDetailById(Integer goodId);
 
     public List<Good> queryAllGood();
+
+    public List<Good> queryGoodWithKeywords(String keywords);
 }

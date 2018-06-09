@@ -5,7 +5,10 @@ app.run(function ($rootScope) {
     //初始化一个选择商品类型的全局变量
     $rootScope.selType = 1;
 });
-app.controller('goodTypeCtrl', function ($scope, $http, $rootScope) {
+
+// 在controller初始化的时候，注册ListFactory服务
+app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, GoodService) {
+
 
     $http.get("/queryGoodType").success(function (response) {
         $scope.goodTypes = response.data;
@@ -13,13 +16,33 @@ app.controller('goodTypeCtrl', function ($scope, $http, $rootScope) {
 
     $scope.ShowPages = function (type) {
         //广播选中的商品类型
+        $scope.itemsToShow = 'typeResult';
         $rootScope.selType = type;
     }
-});
 
-// 在controller初始化的时候，注册ListFactory服务
-app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, GoodService) {
+    $scope.searchGood = function (keyWords) {
+        $scope.searchKeyWords = keyWords;
+        $http.get('/good/searchGood/?keyWords=' + keyWords + "&page=1&pageSize=12").success(function (response) {
+            $scope.paginationConf.currentPage = 1;
+            $scope.itemsToShow = 'searchResult';
+            $scope.paginationConf.totalItems = parseInt(response.message);
+            $scope.items = response.data;
+        })
+    }
+    var getSearchGood = function(){
 
+        var postData = {
+            type:$rootScope.selType,
+            curPage: $scope.paginationConf.currentPage,
+            pageSize: $scope.paginationConf.itemsPerPage
+        }
+        $http.get('/good/searchGood/?keyWords=' + $scope.searchKeyWords + "&page="
+            +  $scope.paginationConf.currentPage
+            + "&pageSize=" + $scope.paginationConf.itemsPerPage).success(function (response) {
+            $scope.paginationConf.totalItems = parseInt(response.message);
+            $scope.items = response.data;
+        })
+    }
     var getFirstPage = function(){
         $scope.paginationConf.currentPage = 1;
         var postData = {
@@ -59,12 +82,17 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
         itemsPerPage: 12, // 每页几条数据，和totalItems决定一共会有几页
         pagesLength: 5,
     };
-    $scope.$watch('paginationConf.currentPage',getAllGoods);
+    $scope.$watch('paginationConf.currentPage', function(){
+        if($scope.itemsToShow === 'typeResult'){
+            getAllGoods();
+        }else if($scope.itemsToShow === 'searchResult'){
+            getSearchGood();
+        }
+    });
     $scope.$watch('selType', getFirstPage);
 
     $scope.toDetailPage = function (id) {
         var href = '/good/GoodDetail?goodId=' + id;
-        //location.href = href;
         window.open(href);
     }
 });

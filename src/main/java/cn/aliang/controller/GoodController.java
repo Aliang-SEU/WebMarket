@@ -95,4 +95,27 @@ public class GoodController {
     public String toGoodDetail(){
         return "good/GoodDetail";
     }
+
+    /**
+     * 关键字搜索
+     * @param keyWords
+     * @return
+     */
+    @RequestMapping(value = "/searchGood", method = RequestMethod.GET,
+            produces={"application/json; charset=utf-8"})
+    @ResponseBody
+    public Response<Object> queryAllWithKeyWords(String keyWords,String page, String pageSize){
+        List<Good> list =  goodService.queryGoodWithKeywords(keyWords);
+        int curpage = Integer.parseInt(page);
+        int curpageSize = Integer.parseInt(pageSize);
+        int start = (curpage - 1) * curpageSize;
+        int end = curpage * curpageSize;
+        end = end > list.size() ? list.size() : end;
+        if(list != null && !list.isEmpty()){
+            return new Response<Object>(true, String.valueOf(list.size()), list.subList(start, end));
+        }else{
+            return new Response<Object>(false,"");
+        }
+
+    }
 }
