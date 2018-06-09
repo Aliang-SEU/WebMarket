@@ -42,4 +42,21 @@
     <select id="queryWithKeyWords" resultType="Good">
         SELECT * from good where key_word like #{keywords}
     </select>
+
+    <update id="alterGoodInfo">
+        update good set name = #{good.name},
+                        description = #{good.description},
+                        key_word = #{good.keyWord},
+                        price = #{good.price},
+                        counts = #{good.price},
+                        good_image = #{good.goodImage},
+                        type = #{good.type}
+                where good_id = #{good.goodId}
+    </update>
+
+    <insert id="addGoodInfo" >
+        insert into good(name, description, key_word, price, counts, good_image, type)
+                values(#{good.name}, #{good.description}, #{good.keyWord}, #{good.price},
+                #{good.price}, #{good.goodImage}, #{good.type})
+    </insert>
 </mapper>

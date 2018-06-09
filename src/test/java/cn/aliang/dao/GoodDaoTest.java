@@ -36,4 +36,28 @@ public class GoodDaoTest {
         for(Good item : result)
          System.out.println(item);
     }
+    @Test
+    public void test3(){
+        Good good = new Good();
+        good.setCounts(100);
+        good.setDescription("手机");
+        good.setKeyWord("手机");
+        good.setName("小米");
+        good.setPrice(1000.00);
+        good.setType(1);
+        System.out.println(goodDao.addGoodInfo(good));
+
+    }
+    @Test
+    public void test4(){
+        Good good = new Good();
+        good.setGoodId(676);
+        good.setCounts(100);
+        good.setDescription("手机");
+        good.setKeyWord("手机");
+        good.setName("小米111");
+        good.setPrice(1000.00);
+        good.setType(1);
+        System.out.println(goodDao.alterGoodInfo(good));
+    }
 }

@@ -28,7 +28,6 @@ myApp.config(function($stateProvider){
 
 myApp.controller("adminController", function ($rootScope, $modal, $scope, $http, $timeout, $interval, $state, $injector,GoodService) {
     $state.go('welcome');
-    $injector.get('$templateCache').removeAll();
 
     $scope.orderState = {0:"待付款", 1:"订单已付款,待发货", 2:"订单已发货", 3:"订单已完成"}
     //左侧栏菜单页面
@@ -68,27 +67,6 @@ myApp.controller("adminController", function ($rootScope, $modal, $scope, $http,
                 break;
         }
     }
-
-
-
-    //修改商品的信息
-    $scope.alterGoodInfo = function(index){
-        var modalInstance = $modal.open({
-            templateUrl : 'adminController.html',//script标签中定义的id
-            controller : 'modalCtrl',//modal对应的Controller
-            size:"xl",
-            resolve : {
-                data : function() {//data作为modal的controller传入的参数
-                    return "213";//用于传递数据
-                }
-            }
-        })
-
-        //确认之后向数据库修改商品信息
-        modalInstance.result.then(function(data){
-
-        })
-    }
 });
 
 myApp.factory('GoodService', function ($http) {
@@ -102,7 +80,7 @@ myApp.factory('GoodService', function ($http) {
     };
 });
 
-myApp.controller('goodManagerController', function ($scope, GoodService) {
+myApp.controller('goodManagerController', function ($scope, $modal, GoodService) {
 
     var getAllGoods = function () {
 
@@ -124,20 +102,40 @@ myApp.controller('goodManagerController', function ($scope, GoodService) {
     $scope.paginationConf = {
         currentPage: 1,
         totalItems: 0, // 一共多少条数据，和itemsPerPage决定一共会有几页
-        itemsPerPage: 5, // 每页几条数据，和totalItems决定一共会有几页
+        itemsPerPage: 4, // 每页几条数据，和totalItems决定一共会有几页
         pagesLength: 5
     };
     $scope.$watch('paginationConf.currentPage',getAllGoods);
 
+
+    //修改商品的信息模态框
+    $scope.alterGoodInfo = function(index){
+        var modalInstance = $modal.open({
+            templateUrl : 'alterGoodInfo.html',//script标签中定义的id
+            controller : 'modalCtrl',//modal对应的Controller
+            size:"lg",
+            resolve : {
+                data : function() {//data作为modal的controller传入的参数
+                    return Object.assign({},$scope.goodlist[index]);//用于传递数据,注意传递拷贝值
+                }
+            }
+        })
+        //确认之后向数据库修改商品信息
+        modalInstance.result.then(function(data){
+            $scope.goodlist[index] = data;
+            //修改数据库的值
+            $http.post("")
+        })
+    }
 })
 myApp.controller('modalCtrl', function($scope, $modalInstance, data) {
-    $scope.data= data;
+    $scope.good= data;
 
     //在这里处理要进行的操作
-    $scope.ok = function(data) {
-        $scope.data= data;
-        $modalInstance.close( $scope.data);
+    $scope.ok = function() {
+        $modalInstance.close($scope.good);
     };
+
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     }

@@ -21,4 +21,8 @@ public interface GoodService {
     public List<Good> queryAllGood();
 
     public List<Good> queryGoodWithKeywords(String keywords);
+
+    public Boolean alterGoodInfo(Good good);
+
+    public Boolean addGoodInfo(Good good);
 }

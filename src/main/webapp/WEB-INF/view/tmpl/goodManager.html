@@ -26,3 +26,64 @@
     </table>
     <tm-pagination conf="paginationConf"></tm-pagination>
 </div>
+
+
+<!-- 修改商品的模板 -->
+<script type="text/ng-template" id="alterGoodInfo.html">
+    <div >
+        <div class="modal-header">
+            <h3 class="modal-title" align="center">
+                商品信息修改
+            </h3>
+        </div>
+        <div class="modal-body">
+            <form class="form form-horizontal">
+                <div class="form-group">
+                    <label for="good-name" class="col-sm-2 control-label">商品名称</label>
+                    <div class="col-sm-10">
+                        <input id="good-name" type="text" class="form-control" placeholder="商品名称" ng-model="good.name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="good-image" class="col-sm-2 control-label">商品图片</label>
+                    <div class="col-sm-10">
+                        <input id="good-image" type="text" class="form-control" placeholder="商品图片" ng-model="good.goodImage">
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="good-desc" class="col-sm-2 control-label">商品描述</label>
+                    <div class="col-sm-10">
+                        <input id="good-desc" type="text" class="form-control" placeholder="商品描述" ng-model="good.description">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="good-key" class="col-sm-2 control-label">商品关键字</label>
+                    <div class="col-sm-10">
+                        <input id="good-key" type="text" class="form-control" placeholder="商品关键字" ng-model="good.keyWord">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="good-price" class="col-sm-2 control-label">商品价格</label>
+                    <div class="col-sm-10">
+                        <input id="good-price" type="text" class="form-control" placeholder="商品价格" ng-model="good.price">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="good-counts" class="col-sm-2 control-label">商品库存</label>
+                    <div class="col-sm-10">
+                        <input id="good-counts" type="text" class="form-control" placeholder="商品库存" ng-model="good.counts">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">
+                确认
+            </button>
+            <button class="btn btn-warning" ng-click="cancel()">
+                退出
+            </button>
+        </div>
+    </div>
+</script>

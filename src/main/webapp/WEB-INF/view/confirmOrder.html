@@ -84,7 +84,6 @@
 </div>
 
 <script src="/resource/js/lib/ui-bootstrap-tpls.min.js"></script>
-<script src="/resource/js/utils.js"></script>
 <script>
 
     var app  = angular.module("myApp",  ['ui.bootstrap']);
@@ -160,7 +159,7 @@
                 size:"xl",
                 resolve : {
                     data : function() {//data作为modal的controller传入的参数
-                        return $scope.data;;//用于传递数据
+                        return $scope.data;//用于传递数据
                     }
                 }
             })

@@ -6,6 +6,7 @@ import cn.aliang.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,5 +59,17 @@ public class GoodServiceImpl implements GoodService {
     @Override
     public List<Good> queryGoodWithKeywords(String keywords) {
         return goodDao.queryWithKeyWords("%" + keywords + "%");
+    }
+
+    @Override
+    public Boolean alterGoodInfo(Good good) {
+        Integer result = goodDao.alterGoodInfo(good);
+        return result == 1;
+    }
+
+    @Override
+    public Boolean addGoodInfo(Good good) {
+        Integer result = goodDao.addGoodInfo(good);
+        return result == 1;
     }
 }
