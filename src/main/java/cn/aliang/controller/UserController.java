@@ -184,6 +184,29 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value="/checkPassword", method=RequestMethod.POST,
+            produces={"application/json;charset=UTF-8"})
+    @ResponseBody
+    public Response<Object> checkPassword(@RequestBody Map<String, String> userInfo){
+        Map<String, Object> map = new HashMap<>();
+        /*
+            检验参数的正确性
+         */
+        String username = userInfo.get("username");
+        String password = userInfo.get("password");
+        if(username == null || password == null){
+            map.put("error", "用户名或密码不合法！");
+            return new Response<>(false, map.get("error").toString());
+        }
+        Boolean result = userService.checkPassword(username, password);
+
+        if (result == true) {
+            return new Response<Object>(true, "密码验证成功");
+        } else {
+            return new Response<Object>(false, "密码验证失败");
+        }
+    }
+
     @RequestMapping(value = "/alterData", method = RequestMethod.GET)
     public String alterData(){
         return "alterData";

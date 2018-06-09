@@ -1,26 +1,43 @@
-$(function(){
-
-});
-
-
 var myApp = angular.module("myApp", []);
 
 myApp.controller("checkController", function ($scope, $http) {
 
-
+    $scope.getOrderInfo = function(index){
+        $scope.orderInfo = $scope.ordersUnPay[index];
+        $scope.password = "";
+        $scope.errorInfo = "";
+    }
     //支付
-    $scope.pay = function(index){
+    $scope.pay = function(){
         //原先弹出一个对话框来确认该支付信息
-
-        $http.get("/order/pay/?orderId=" + $scope.ordersUnPay[index].orderId)
-            .success(function (response) {
-                alert(response.message);
-                $http.get("/order/queryAllOrder/" + userId).success(function (response) {
-                    if(response != null && response.success == true){
-                        wrapperData($scope, response);
-                    }
-                })
-            })
+        var username = localStorage.getItem("userName")
+        var password = $scope.password;
+        if(password == null || password === ""){
+            $scope.errorInfo = "密码不能为空";
+            return;
+        }
+        var data = {
+            "username": username,
+            "password": password
+        }
+        //先进行
+        $http.post("/checkPassword", data).success(function(response){
+            if(response.success == true){
+                $http.get("/order/pay/?orderId=" + $scope.orderInfo.orderId)
+                    .success(function (response) {
+                        alert(response.message);
+                        $http.get("/order/queryAllOrder/" + userId).success(function (response) {
+                            if(response != null && response.success == true){
+                                wrapperData($scope, response);
+                            }
+                        })
+                    })
+                var close = angular.element("#closeModal");
+                close.click();
+            }else{
+                $scope.errorInfo = response.message;
+            }
+        })
     }
 
     //确认收货

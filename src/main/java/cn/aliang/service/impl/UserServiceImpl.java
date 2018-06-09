@@ -106,6 +106,17 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
+    @Override
+    public Boolean checkPassword(String username, String password) {
+        Integer userId = userDao.selectUserIdByUserNameAndPassword(username, MyUtil.md5(password));
+        if(userId != null){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     /**
      * ajax 校验用户名是否已经被注册
      * @param username

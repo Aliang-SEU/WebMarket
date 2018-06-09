@@ -13,7 +13,7 @@
     <script src="/resource/js/lib/bootstrap.js"></script>
     <script src="/resource/js/lib/bootstrapValidator.js"></script>
     <script src="/resource/js/lib/angular.min.js"></script>
-    <script src="/resource/js/order.js?t=20180606"></script>
+    <script src="/resource/js/order.js?t=20118011606"></script>
     <style>
         td.order-address.ng-binding {
             width: 220px;
@@ -30,179 +30,173 @@
                 </div>
             </div>
 
-        </button>
-        <!-- 模态框（Modal） -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">
-                            模态框（Modal）标题
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        在这里添加一些文本
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                        </button>
-                        <button type="button" class="btn btn-primary">
-                            提交更改
-                        </button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
+            <div class="row">
+                <div class="col-sm-12  col-md-12">
+                    <div class="row">
+                        <ul class="nav nav-tabs list-group-diy" role="tablist">
+                            <li role="presentation" class="list-group-item-diy"><a href="#unPay" aria-controls="unPay" role="tab" data-toggle="tab">待支付订单&nbsp;<span class="badge" ng-init="unPayCount=0">{{unPayCount}}</span></a></li>
+                            <li role="presentation" class="list-group-item-diy"><a href="#unHandle" aria-controls="unHandle" role="tab" data-toggle="tab">待发货订单&nbsp;<span class="badge" ng-init="unHandleCount=0">{{unHandleCount}}</span></a></li>
+                            <li role="presentation" class="list-group-item-diy"><a href="#transport" aria-controls="transport" role="tab" data-toggle="tab">配送中订单&nbsp;<span class="badge" ng-init="transportCount=0">{{transportCount}}</span></a></li>
+                            <li role="presentation" class="list-group-item-diy"><a href="#receive" aria-controls="receive" role="tab" data-toggle="tab">已完成订单&nbsp;<span class="badge" ng-init="receiveCount=0">{{receiveCount}}</span></a></li>
+                            <li role="presentation" class="list-group-item-diy active "><a href="#all" aria-controls="all" role="tab" data-toggle="tab">全部订单&nbsp;<span class="badge" ng-init="allCount=0">{{allCount}}</span></a></li>
+                        </ul>
 
-        <div class="row">
-            <div class="col-sm-12  col-md-12">
-                <div class="row">
-                    <ul class="nav nav-tabs list-group-diy" role="tablist">
-                        <li role="presentation" class="list-group-item-diy"><a href="#unPay" aria-controls="unPay" role="tab" data-toggle="tab">待支付订单&nbsp;<span class="badge" ng-init="unPayCount=0">{{unPayCount}}</span></a></li>
-                        <li role="presentation" class="list-group-item-diy"><a href="#unHandle" aria-controls="unHandle" role="tab" data-toggle="tab">待发货订单&nbsp;<span class="badge" ng-init="unHandleCount=0">{{unHandleCount}}</span></a></li>
-                        <li role="presentation" class="list-group-item-diy"><a href="#transport" aria-controls="transport" role="tab" data-toggle="tab">配送中订单&nbsp;<span class="badge" ng-init="transportCount=0">{{transportCount}}</span></a></li>
-                        <li role="presentation" class="list-group-item-diy"><a href="#receive" aria-controls="receive" role="tab" data-toggle="tab">已完成订单&nbsp;<span class="badge" ng-init="receiveCount=0">{{receiveCount}}</span></a></li>
-                        <li role="presentation" class="list-group-item-diy active "><a href="#all" aria-controls="all" role="tab" data-toggle="tab">全部订单&nbsp;<span class="badge" ng-init="allCount=0">{{allCount}}</span></a></li>
-                    </ul>
+                        <div class="tab-content" style="font-size: 18px;">
+                            <div role="tabpanel" class="tab-pane fade" id="unPay">
+                                <table class="table table-hover center" id="unPayTable">
+                                    <div class="row">
+                                        <tr >
+                                            <th>订单号</th>
+                                            <th>商品名称</th>
+                                            <th>商品数量</th>
+                                            <th>商品单价(元)</th>
+                                            <th>下单时间</th>
+                                            <th>配送地址</th>
+                                            <th>待支付总价(元)</th>
+                                        </tr>
+                                        <tr ng-repeat="order in ordersUnPay | orderBy:'time'">
+                                            <td>{{order.orderNumber}}</td>
+                                            <td>{{order.goodName}}</td>
+                                            <td>{{order.counts}}</td>
+                                            <td>{{order.goodPrice| number : 2}}</td>
+                                            <td>{{order.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                                            <td class="order-address">{{order.orderAddress}}</td>
+                                            <td>{{order.counts * order.goodPrice | number : 2}}</td>
+                                            <td><button class="btn btn-primary"  data-toggle="modal" data-target="#confirmPassword" ng-click="getOrderInfo($index)">付款</button> </td>
+                                            <!-- 模态框（Modal） -->
+                                            <div class="modal fade" id="confirmPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" id="closeModal" aria-hidden="true">&times;</button>
+                                                            <h4 class="modal-title" id="myModalLabel">请输入您的密码进行确认</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <input type="password" required placeholder="请输入你的密码" ng-model="password">
+                                                            <span ng-model="errorInfo" style="color: red">{{errorInfo}}</span>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" ng-click="pay()">确认支付</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">取消支付</button>
+                                                        </div>
+                                                    </div><!-- /.modal-content -->
+                                                </div><!-- /.modal -->
+                                            </div>
 
-                    <div class="tab-content" style="font-size: 18px;">
-                        <div role="tabpanel" class="tab-pane fade" id="unPay">
-                            <table class="table table-hover center" id="unPayTable">
-                                <div class="row">
-                                    <tr >
-                                        <th>订单号</th>
-                                        <th>商品名称</th>
-                                        <th>商品数量</th>
-                                        <th>商品单价(元)</th>
-                                        <th>下单时间</th>
-                                        <th>配送地址</th>
-                                        <th>待支付总价(元)</th>
-                                    </tr>
-                                    <tr ng-repeat="order in ordersUnPay | orderBy:'time'">
-                                        <td>{{order.orderNumber}}</td>
-                                        <td>{{order.goodName}}</td>
-                                        <td>{{order.counts}}</td>
-                                        <td>{{order.goodPrice| number : 2}}</td>
-                                        <td>{{order.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
-                                        <td class="order-address">{{order.orderAddress}}</td>
-                                        <td>{{order.counts * order.goodPrice | number : 2}}</td>
-                                        <td><button class="btn btn-primary" ng-click="pay($index)">付款</button> </td>
-                                    </tr>
-                                </div>
-                            </table>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="unHandle">
-                            <table class="table table-hover center" id="unHandleTable">
-                                <div class="row">
-                                    <tr >
-                                        <th>订单号</th>
-                                        <th>商品名称</th>
-                                        <th>商品数量</th>
-                                        <th>商品单价(元)</th>
-                                        <th>下单时间</th>
-                                        <th>配送地址</th>
-                                        <th>总价(元)</th>
-                                    </tr>
-                                    <tr ng-repeat="order in ordersUnHandle | orderBy:'time'">
-                                        <td>{{order.orderNumber}}</td>
-                                        <td>{{order.goodName}}</td>
-                                        <td>{{order.counts}}</td>
-                                        <td>{{order.goodPrice | number : 2}}</td>
-                                        <td>{{order.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
-                                        <td class="order-address">{{order.orderAddress}}</td>
-                                        <td>{{order.counts * order.goodPrice | number : 2}}</td>
-                                    </tr>
-                                </div>
-                            </table>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="transport">
-                            <table class="table table-hover center" id="transportTable">
-                                <div class="row">
-                                    <tr >
-                                        <th>订单号</th>
-                                        <th>商品名称</th>
-                                        <th>商品数量</th>
-                                        <th>商品单价(元)</th>
-                                        <th>下单时间</th>
-                                        <th>配送地址</th>
-                                        <th>总价(元)</th>
-                                    </tr>
-                                    <tr ng-repeat="order in ordersTransport | orderBy:'time'">
-                                        <td>{{order.orderNumber}}</td>
-                                        <td>{{order.goodName}}</td>
-                                        <td>{{order.counts}}</td>
-                                        <td>{{order.goodPrice| number : 2}}</td>
-                                        <td>{{order.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
-                                        <td class="order-address">{{order.orderAddress}}</td>
-                                        <td>{{order.counts * order.goodPrice| number : 2}}</td>
-                                        <td><button class="btn btn-primary" ng-click="receive($index)">确认收货</button> </td>
-                                    </tr>
-                                </div>
-                            </table>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="receive">
-                            <table class="table table-hover center" id="receiveTable">
-                                <div class="row">
-                                    <tr >
-                                        <th>订单号</th>
-                                        <th>商品名称</th>
-                                        <th>商品数量</th>
-                                        <th>商品单价(元)</th>
-                                        <th>完成时间</th>
-                                        <th>配送地址</th>
-                                        <th>总价(元)</th>
-                                    </tr>
-                                    <tr ng-repeat="order in ordersReceive | orderBy:'time'">
-                                        <td>{{order.orderNumber}}</td>
-                                        <td>{{order.goodName}}</td>
-                                        <td>{{order.counts}}</td>
-                                        <td>{{order.goodPrice | number : 2}}</td>
-                                        <td>{{order.finishTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
-                                        <td class="order-address">{{order.orderAddress}}</td>
-                                        <td>{{order.counts * order.goodPrice | number : 2 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <p ng-if="ordersReceive==null"> 没有订单 </p>
-                                    </tr>
-                                </div>
-                            </table>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade in active" id="all">
-                            <table class="table table-hover center" id="allTable">
-                                <div class="row">
-                                    <tr >
-                                        <th>订单号</th>
-                                        <th>商品名称</th>
-                                        <th>商品数量</th>
-                                        <th>商品单价(元)</th>
-                                        <th>下单时间</th>
-                                        <th>配送地址</th>
-                                        <th>总价(元)</th>
-                                        <th>订单状态</th>
-                                    </tr>
-                                    <tr ng-repeat="order in ordersAll | orderBy:'time'">
-                                        <td>{{order.orderNumber}}</td>
-                                        <td>{{order.goodName}}</td>
-                                        <td>{{order.counts}}</td>
-                                        <td>{{order.goodPrice | number : 2}}</td>
-                                        <td>{{order.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
-                                        <td class="order-address">{{order.orderAddress}}</td>
-                                        <td>{{order.counts * order.goodPrice | number : 2}}</td>
-                                        <td>{{orderState[order.orderState]}}</td>
-                                    </tr>
-                                    <p ng-if="ordersAll==null"> 没有订单 </p>
-                                </div>
-                            </table>
+                                        </tr>
+                                    </div>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="unHandle">
+                                <table class="table table-hover center" id="unHandleTable">
+                                    <div class="row">
+                                        <tr >
+                                            <th>订单号</th>
+                                            <th>商品名称</th>
+                                            <th>商品数量</th>
+                                            <th>商品单价(元)</th>
+                                            <th>下单时间</th>
+                                            <th>配送地址</th>
+                                            <th>总价(元)</th>
+                                        </tr>
+                                        <tr ng-repeat="order in ordersUnHandle | orderBy:'time'">
+                                            <td>{{order.orderNumber}}</td>
+                                            <td>{{order.goodName}}</td>
+                                            <td>{{order.counts}}</td>
+                                            <td>{{order.goodPrice | number : 2}}</td>
+                                            <td>{{order.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                                            <td class="order-address">{{order.orderAddress}}</td>
+                                            <td>{{order.counts * order.goodPrice | number : 2}}</td>
+                                        </tr>
+                                    </div>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="transport">
+                                <table class="table table-hover center" id="transportTable">
+                                    <div class="row">
+                                        <tr >
+                                            <th>订单号</th>
+                                            <th>商品名称</th>
+                                            <th>商品数量</th>
+                                            <th>商品单价(元)</th>
+                                            <th>下单时间</th>
+                                            <th>配送地址</th>
+                                            <th>总价(元)</th>
+                                        </tr>
+                                        <tr ng-repeat="order in ordersTransport | orderBy:'time'">
+                                            <td>{{order.orderNumber}}</td>
+                                            <td>{{order.goodName}}</td>
+                                            <td>{{order.counts}}</td>
+                                            <td>{{order.goodPrice| number : 2}}</td>
+                                            <td>{{order.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                                            <td class="order-address">{{order.orderAddress}}</td>
+                                            <td>{{order.counts * order.goodPrice| number : 2}}</td>
+                                            <td><button class="btn btn-primary" ng-click="receive($index)">确认收货</button> </td>
+                                        </tr>
+                                    </div>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="receive">
+                                <table class="table table-hover center" id="receiveTable">
+                                    <div class="row">
+                                        <tr >
+                                            <th>订单号</th>
+                                            <th>商品名称</th>
+                                            <th>商品数量</th>
+                                            <th>商品单价(元)</th>
+                                            <th>完成时间</th>
+                                            <th>配送地址</th>
+                                            <th>总价(元)</th>
+                                        </tr>
+                                        <tr ng-repeat="order in ordersReceive | orderBy:'time'">
+                                            <td>{{order.orderNumber}}</td>
+                                            <td>{{order.goodName}}</td>
+                                            <td>{{order.counts}}</td>
+                                            <td>{{order.goodPrice | number : 2}}</td>
+                                            <td>{{order.finishTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                                            <td class="order-address">{{order.orderAddress}}</td>
+                                            <td>{{order.counts * order.goodPrice | number : 2 }}</td>
+                                        </tr>
+                                        <tr>
+                                            <p ng-if="ordersReceive==null"> 没有订单 </p>
+                                        </tr>
+                                    </div>
+                                </table>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade in active" id="all">
+                                <table class="table table-hover center" id="allTable">
+                                    <div class="row">
+                                        <tr >
+                                            <th>订单号</th>
+                                            <th>商品名称</th>
+                                            <th>商品数量</th>
+                                            <th>商品单价(元)</th>
+                                            <th>下单时间</th>
+                                            <th>配送地址</th>
+                                            <th>总价(元)</th>
+                                            <th>订单状态</th>
+                                        </tr>
+                                        <tr ng-repeat="order in ordersAll | orderBy:'time'">
+                                            <td>{{order.orderNumber}}</td>
+                                            <td>{{order.goodName}}</td>
+                                            <td>{{order.counts}}</td>
+                                            <td>{{order.goodPrice | number : 2}}</td>
+                                            <td>{{order.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</td>
+                                            <td class="order-address">{{order.orderAddress}}</td>
+                                            <td>{{order.counts * order.goodPrice | number : 2}}</td>
+                                            <td>{{orderState[order.orderState]}}</td>
+                                        </tr>
+                                        <p ng-if="ordersAll==null"> 没有订单 </p>
+                                    </div>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
 
 </div>
 </body>

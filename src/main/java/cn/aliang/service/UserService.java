@@ -27,6 +27,14 @@ public interface UserService {
     public Map<String, Object> userLogin(String userName, String password, HttpServletResponse response);
 
     /**
+     * 校验密码
+     * @param username
+     * @param password
+     * @return
+     */
+    public Boolean checkPassword(String username, String password);
+
+    /**
      * 通过loginToken到redis缓存当中查询用户的ID信息
      * @param loginToken
      * @return
