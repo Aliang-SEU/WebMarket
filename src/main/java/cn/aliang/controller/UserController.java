@@ -184,6 +184,11 @@ public class UserController {
         }
     }
 
+    /**
+     * 校验密码
+     * @param userInfo
+     * @return
+     */
     @RequestMapping(value="/checkPassword", method=RequestMethod.POST,
             produces={"application/json;charset=UTF-8"})
     @ResponseBody
@@ -207,6 +212,10 @@ public class UserController {
         }
     }
 
+    /**
+     * 返回修改信息的页面
+     * @return
+     */
     @RequestMapping(value = "/alterData", method = RequestMethod.GET)
     public String alterData(){
         return "alterData";

@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/tmpl")
 public class PageController {
 
+    /**
+     * 返回对应的页面
+     * @param pageName
+     * @return
+     */
     @RequestMapping("/{name}")
     public String getTemplatePage(@PathVariable(value = "name") String pageName){
         return "tmpl/" + pageName;

@@ -30,6 +30,10 @@ public class AdminController {
     @Autowired
     private GoodService goodService;
 
+    /**
+     * 查询所有的订单
+     * @return
+     */
     @RequestMapping(value = "/queryShoppingOrder", method = RequestMethod.GET,
                     produces = {"application/json; charset=utf-8"})
     @ResponseBody
@@ -42,6 +46,10 @@ public class AdminController {
         }
     }
 
+    /**
+     * 查询所有用户的信息
+     * @return
+     */
     @RequestMapping(value = "/queryUserInfo", method = RequestMethod.GET,
             produces = {"application/json; charset=utf-8"})
     @ResponseBody
@@ -54,6 +62,10 @@ public class AdminController {
         }
     }
 
+    /**
+     * 查询所有的商品
+     * @return
+     */
     @RequestMapping(value = "/queryAllGood", method = RequestMethod.GET,
             produces = {"application/json; charset=utf-8"})
     @ResponseBody
@@ -79,10 +91,23 @@ public class AdminController {
            return new Response<Object>(true, "");
     }
 
+    /**
+     * 管理员登录
+     * @return
+     */
     @RequestMapping(value = "/adminLogin",
             produces = {"application/json; charset=utf-8"})
     @ResponseBody
     public Response<Object> adminLogin() {
         return new Response<Object>(true, "");
+    }
+
+    /**
+     * 进入到管理员界面
+     * @return
+     */
+    @RequestMapping("/adminIndex")
+    public String adminIndex(){
+        return "adminIndex";
     }
 }

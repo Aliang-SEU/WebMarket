@@ -26,6 +26,11 @@ public class ShoppingOrderController {
     @Autowired
     private GoodTypeService goodTypeService;
 
+    /**
+     * 确认一个订单后新建订单
+     * @param order
+     * @return
+     */
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     public String createOrder(ShoppingOrder order) {
         Boolean result = shoppingOrderService.createShoppingOrder(order);
@@ -52,11 +57,20 @@ public class ShoppingOrderController {
     }
 
 
+    /**
+     * 跳转到订单页面
+     * @return
+     */
     @RequestMapping("/toOrder")
     public String toOrder(){
         return "/toOrder";
     }
 
+    /**
+     * 查询所有的订单
+     * @param userId
+     * @return
+     */
     @RequestMapping(value = "/queryAllOrder/{userId}", method = RequestMethod.GET,
             produces = {"application/json; charset=utf-8"})
     @ResponseBody
@@ -70,6 +84,11 @@ public class ShoppingOrderController {
         }
     }
 
+    /**
+     * 支付一个订单
+     * @param orderId
+     * @return
+     */
     @RequestMapping(value="/pay/", method = RequestMethod.GET,
                     produces = {"application/json; charset=utf-8"})
     @ResponseBody
@@ -82,6 +101,11 @@ public class ShoppingOrderController {
         }
     }
 
+    /**
+     * 订单确认收货
+     * @param orderId
+     * @return
+     */
     @RequestMapping(value="/receive/", method = RequestMethod.GET,
             produces = {"application/json; charset=utf-8"})
     @ResponseBody

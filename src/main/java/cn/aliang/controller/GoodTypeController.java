@@ -19,6 +19,10 @@ public class GoodTypeController {
     @Autowired
     private GoodTypeService goodTypeService;
 
+    /**
+     * 查询商品的分类信息
+     * @return
+     */
     @RequestMapping(value="/queryGoodType", method = RequestMethod.GET,
             produces={"application/json; charset=utf-8"})
     @ResponseBody
@@ -29,6 +33,11 @@ public class GoodTypeController {
 
     }
 
+    /**
+     * 查询对应类型的商品的名称
+     * @param type
+     * @return
+     */
     @RequestMapping(value="/queryGoodType/{type}", method = RequestMethod.GET,
             produces={"application/json; charset=utf-8"})
     @ResponseBody

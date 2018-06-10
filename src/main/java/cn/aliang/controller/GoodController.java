@@ -132,6 +132,11 @@ public class GoodController {
         }
     }
 
+    /**
+     * 修改商品的信息
+     * @param good
+     * @return
+     */
     @RequestMapping(value="/alterGoodInfo", method = RequestMethod.POST,
                     produces = {"application/json;charset=utf-8"})
     @ResponseBody
@@ -144,6 +149,11 @@ public class GoodController {
         }
     }
 
+    /**
+     * 新增加一个商品
+     * @param good
+     * @return
+     */
     @RequestMapping(value="/addGoodInfo", method = RequestMethod.POST,
             produces = {"application/json;charset=utf-8"})
     @ResponseBody
@@ -156,6 +166,11 @@ public class GoodController {
         }
     }
 
+    /**
+     * 删除一个商品
+     * @param good
+     * @return
+     */
     @RequestMapping(value="/deleteGoodInfo", method = RequestMethod.POST,
             produces = {"application/json;charset=utf-8"})
     @ResponseBody
@@ -168,6 +183,12 @@ public class GoodController {
         }
     }
 
+    /**
+     * 上传商品的图片
+     * @param file
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping(value="/uploadImage", method = RequestMethod.POST,
             produces = {"application/json;charset=utf-8"})
     @ResponseBody
