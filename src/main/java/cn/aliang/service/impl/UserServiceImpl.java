@@ -152,6 +152,7 @@ public class UserServiceImpl implements UserService {
         /**
          * 邮箱格式不正确
          */
+        flag = true; //由于bootstrapValidator插件的缺陷 这里不得不 不使用后端验证 bug点
         if(flag == false){
             map.put("error", "邮箱格式不正确");
         }else {

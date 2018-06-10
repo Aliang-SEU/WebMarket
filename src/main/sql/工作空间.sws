@@ -4,6 +4,7 @@
 
 <Workspace>
 	<Local Expanded="Yes">
+		<Model Expanded="Yes" ID="{21EC47B6-0B85-43BC-8213-03AB434BBDB9}" Loaded="No" Name="webmarket" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="webmarket.pdm"/>
 		<Model Expanded="Yes" ID="{21EC47B6-0B85-43BC-8213-03AB434BBDB9}" Name="webmarket" Selected="Yes" Type="{CDE44E21-9669-11D1-9914-006097355D9B}" URL="webmarket.pdm"/>
 	</Local>
 	<BrowserModule Name="Repository"/>
