@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>网上商城设计文档.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<center style="font-size: 30px"> 网上商城设计文档 </center>
+<h2 id="%E4%B8%80%E3%80%81%E9%9C%80%E6%B1%82%E6%A6%82%E8%BF%B0">一、<strong>需求概述</strong></h2>
+<hr>
+<p>网上商城是一个简化的电子商务系统，它包括完整的网上销售功能；普通用户的浏览和购买功能、产品销售商的产品维护功能，网站管理员后台管理功能。<br>
+普通用户登录网站后，浏览商品，并选择购买，购买提交后，系统生成订单，由产品销售商负责处理确认订单，完成购买流程。产品销售商产品处理功能为可选功能。<br>
+同时，为满足后续移动客户端的开发需求，系统需要预留部分的服务接口。<br>
+为了简化实现，本商城总共只有1个销售商，最多销售10中商品。每种商品数量100件。用户登录后，一次订单只能购买一件商品(选择所需的商品后，直接购买)。<br>
+系统的用户包含三种角色：</p>
+<ol>
+<li>普通用户: 网上商城的浏览用户和潜在购买者</li>
+<li>产品销售商: 管理商品的种类，各类商品数量，修改产品的信息(价格，描述)等，负责处理用户订单。</li>
+<li>系统管理员：负责网站的维护，添加/删除用户。本系统不提供用户注册功能。
+P</li>
+</ol>
+<h2 id="%E4%BA%8C%E3%80%81%E9%9C%80%E6%B1%82%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90">二、<strong>需求场景分析</strong></h2>
+<h3 id="21-%E5%8A%9F%E8%83%BD%E5%88%86%E6%9E%90">2.1 <strong>功能分析</strong></h3>
+<hr>
+<p>根据对该系统的分析，该系统应该具有如下的功能</p>
+<ul>
+<li>
+<p>普通用户使用功能</p>
+</li>
+<li>
+<p>产品销售商的功能</p>
+</li>
+<li>
+<p>系统管理员的功能</p>
+</li>
+</ul>
+<h3 id="22-%E5%9C%BA%E6%99%AF%E6%B1%87%E6%80%BB">2.2 <strong>场景汇总</strong></h3>
+<hr>
+<ol>
+<li>登录</li>
+<li>注销</li>
+<li>设置用户信息(可选功能)</li>
+<li>浏览目录</li>
+<li>搜索产品(可选功能)</li>
+<li>查看产品</li>
+<li>结账</li>
+<li>提交订单</li>
+<li>查看订单</li>
+<li>设置产品信息</li>
+<li>设置商品信息</li>
+<li>订单处理(可选功能)</li>
+<li>添加/删除用户</li>
+</ol>
+<h2 id="%E4%B8%89%E3%80%81%E5%BA%94%E7%94%A8%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1">三、<strong>应用模块设计</strong></h2>
+<hr>
+<h3 id="31-%E7%94%A8%E6%88%B7%E6%A8%A1%E5%9D%97">3.1 <strong>用户模块</strong></h3>
+<p>3.1.1 用户注册<br>
+用户在登录之前需要先进行注册</p>
+<pre><code>1、表单校验
+</code></pre>
+<p>传统的登录方式将用户的登录信息放到session里面，这样做会发生的一个问题就是在集群环境当中，我们通常需要把同一份代码部署到多台服务器上，这样每个工程的都有自己独立的session。</p>
+<div>
+<img src="./图片/集群环境下面的登录问题.png"　title="集群环境下面的登录问题">  
+<center>2.1 集群环境下面的登录问题</center>  
+</div>  
+<p>而由于每个工程都有自己的session，如果把用户信息写入session而不共享的话，会出现用户反复登录的情况。<br>
+　　常用的解决方案有两种:<br>
+　　1. 配置Tomcat的集群共享<br>
+　　　配置tomcat集群。Tomcat配置好集群后，会不停的向集群中其他的tomcat广播自己的session信息。其他的tomcat做session同步。可以保证所有的tomcatsession中的内容都是一致的。<br>
+　　　优点：不用修改代码就可以实现session共享。<br>
+　　　缺点：tomcat 是全局session复制，集群内每个tomcat的session完全同步（也就是任何时候都完全一样的) 在大规模应用的时候，用户过多，集群内tomcat数量过多，session的全局复制会导致集群性能下降， 因此，tomcat的数量不能太多，5个以下为好。它不能解决分布式工程的session共享问题。<br>
+　　2. 实现单点登录系统，提供服务接口。把session数据存放在redis。<br>
+　　　Redis可以设置key的生存时间、访问速度快效率高。<br>
+　　　优点：redis存取速度快，不会出现多个节点session复制的问题。效率高。</p>
+<div>
+<img src="./图片/SSO流程.png" title="SSO登录流程">
+<center>2.2 SSO登录流程 </center>
+</div>
+<ol start="2">
+<li>接口设计<br>
+登录页面发送一个post请求，包含用户和密码。应用层接收用户名和密码，首先进行用户名和密码的校验，校验成功之后到数据库中查询，根据用户名查询用户信息，查到之后进行密码比对，这个过程需要对密码进行md5加密后进行比对。比对成功后说明登录成功，需要生成一个token可以使用UUID。需要把用户信息写入redis，key就是token，value就是用户信息。返回token字符串保存在客户端的cookie中用来检查用户的登录状态。</li>
+</ol>
+<p>2.3.2 注销</p>
+<ol>
+<li>功能分析</li>
+</ol>
+
+</body>
+</html>
