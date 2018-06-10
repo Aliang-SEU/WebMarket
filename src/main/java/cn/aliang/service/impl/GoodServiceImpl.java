@@ -1,5 +1,6 @@
 package cn.aliang.service.impl;
 
+import cn.aliang.Util.FileUpload;
 import cn.aliang.dao.GoodDao;
 import cn.aliang.entity.Good;
 import cn.aliang.service.GoodService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -86,7 +88,15 @@ public class GoodServiceImpl implements GoodService {
      * @param file
      */
     @Override
-    public void fileUpload(MultipartFile file) {
-
+    public Map<String, Object> uploadImage(MultipartFile file, HttpServletRequest httpServletRequest) {
+        Map<String, Object> map = new HashMap<>();
+        try{
+            String imageName = FileUpload.uploadFile(file, httpServletRequest);
+            map.put("imageName", imageName);
+            return map;
+        }catch(IOException e){
+            map.put("error", "文件上传失败");
+            return map;
+        }
     }
 }

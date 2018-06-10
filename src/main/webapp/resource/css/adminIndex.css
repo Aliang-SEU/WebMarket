@@ -131,3 +131,31 @@ select.ng-pristine.ng-valid.ng-touched {
      margin: 0 0;
     border-radius: 4px;
 }
+
+.choose-file.col-sm-2 {
+    height: 34px;
+    line-height: 34px;
+}
+
+.upload{
+    padding: 4px 10px;
+    height: 100%;
+    width:100%;
+    line-height: 34px;
+    position: relative;
+    border: 1px solid #999;
+    text-decoration: none;
+    cursor: pointer;
+}
+.change{
+    position: absolute;
+    overflow: hidden;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    font-size:0;
+}
+select.good-type{
+    height: 34px;
+}

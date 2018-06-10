@@ -91,6 +91,9 @@ myApp.factory('GoodService', function ($http) {
 
 myApp.controller('goodManagerController', function ($scope, $modal, GoodService, $http) {
 
+    $scope.upload = function(file){
+
+    }
 
     var getAllGoods = function () {
 
@@ -136,10 +139,32 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
         modalInstance.result.then(function(data){
             //修改数据库的值
             data.type = data.type.type
-            $http.post("/good/alterGoodInfo", data).success(function (response) {
-                if(response.success = true){
-                    $scope.goodlist[index] = data;
+            var file = data.files;
+            /**
+             * 首先上传文件
+             */
+            var form = new FormData();
+            form.append('file', file);
+            $http({
+                method: 'POST',
+                url: '/good/uploadImage',
+                data: form,
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity
+            }).success(function (response) {
+                if(response.success ==true){
+                    data.goodImage = response.data.imageName;
+                    //修改商品信息
+                    $http.post("/good/alterGoodInfo", data).success(function (response) {
+                        if(response.success = true){
+                            $scope.goodlist[index] = data;
+                        }
+                        alert(response.message);
+                    })
+                }else{
+                    alert(response.message);
                 }
+            }).error(function (data) {
                 alert(response.message);
             })
         })
@@ -174,7 +199,7 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
 
     }
 
-    $scope.addGoodInfo = function(){
+        $scope.addGoodInfo = function(){
         var good = new Object();
         good.types = $scope.GoodType;
         var modalInstance = $modal.open({
@@ -192,18 +217,61 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
         modalInstance.result.then(function(data){
             //修改数据库的值
             data.type = data.type.type
-            $http.post("/good/addGoodInfo", data).success(function (response) {
+            var file = data.files;
+            /**
+             * 首先上传文件
+             */
+            var form = new FormData();
+            form.append('file', file);
+            $http({
+                method: 'POST',
+                url: '/good/uploadImage',
+                data: form,
+                headers: {'Content-Type': undefined},
+                transformRequest: angular.identity
+            }).success(function (response) {
+                if(response.success == true){
+                    data.goodImage = response.data.imageName;
 
+                    $http.post("/good/addGoodInfo", data).success(function (response) {
+                        alert(response.message);
+                    })
+                }else{
+                    alert(response.message);
+                }
+            }).error(function (response) {
                 alert(response.message);
             })
+
         })
     }
 })
 myApp.controller('modalCtrl', function($scope, $modalInstance, data) {
-    $scope.good= data;
+    $scope.good = data;
+
+    $scope.fileChanged = function(ele){
+
+        var filename = ele.files[0].name;
+        var filetype = ele.files[0].type;
+
+        var index= filename.indexOf("."); //得到"."在第几位
+        var img_id = filename.substring(index); //截断"."之前的，得到后缀
+
+        if(img_id!=".bmp" && img_id!=".png" && img_id!=".gif" && img_id!=".jpg" && img_id!=".jpeg" &&
+            img_id!=".BMP" && img_id!=".PNG" && img_id!=".GIF" && img_id!=".JPG" && img_id!=".JPEG"){
+            alert("图片类型不对");
+            return;
+        }else{
+            $scope.files = ele.files[0];
+            $scope.good.goodImage = $scope.files.name
+            console.log(ele.files)
+            $scope.$apply(); //传播Model的变化。
+        }
+    }
 
     //在这里处理要进行的操作
     $scope.ok = function() {
+        $scope.good.files = $scope.files;
         $modalInstance.close($scope.good);
     };
 

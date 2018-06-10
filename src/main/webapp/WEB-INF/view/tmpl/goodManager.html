@@ -52,7 +52,12 @@
                 <div class="form-group">
                     <label for="good-image" class="col-sm-2 control-label">商品图片</label>
                     <div class="col-sm-6">
-                        <input id="good-image" type="file" name="file" value="file">
+                        <input id="good-image" class="form-control" type="text" readonly="readonly" ng-model="good.goodImage">
+                    </div>
+                    <div class="choose-file col-sm-2">
+                        <a href="javascript:;" class="upload">选择文件
+                            <input class="change" type="file" multiple="multiple" onchange="angular.element(this).scope().fileChanged(this)"/>
+                        </a>
                     </div>
                 </div>
                 <div class="form-group">
@@ -82,7 +87,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">商品分类</label>
                     <div class="type col-sm-10">
-                        <select ng-init="good.type = good.types[good.type - 1]" ng-model="good.type"
+                        <select class="good-type" ng-init="good.type = good.types[good.type - 1]" ng-model="good.type"
                                 ng-options="x.name for x in good.types">
                         </select>
                     </div>

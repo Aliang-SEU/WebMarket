@@ -3,7 +3,9 @@ package cn.aliang.service;
 import cn.aliang.entity.Good;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 public interface GoodService {
 
@@ -29,5 +31,5 @@ public interface GoodService {
 
     public Boolean deleteGoodInfo(Good good);
 
-    public void fileUpload(MultipartFile file);
+    public Map<String, Object> uploadImage(MultipartFile file, HttpServletRequest httpServletRequest);
 }

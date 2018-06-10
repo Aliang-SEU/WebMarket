@@ -6,7 +6,9 @@ import cn.aliang.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -165,4 +167,17 @@ public class GoodController {
             return new Response<Object>(false, "商品信息删除失败");
         }
     }
+
+    @RequestMapping(value="/uploadImage", method = RequestMethod.POST,
+            produces = {"application/json;charset=utf-8"})
+    @ResponseBody
+    public Response<Object> uploadImage(@RequestParam(value = "file" , required = true) MultipartFile file, HttpServletRequest httpServletRequest){
+        Map<String, Object> map = goodService.uploadImage(file, httpServletRequest);
+        if (map.get("error") == null){
+            return new Response<Object>(true, "图片上传成功", map);
+        }else{
+            return new Response<Object>(false, "图片上传失败");
+        }
+    }
+
 }
