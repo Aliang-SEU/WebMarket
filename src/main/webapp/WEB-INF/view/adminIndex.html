@@ -12,6 +12,7 @@
     <div class="row top">
         <div class="logo-img">网上商城后台管理系统</div>
         <div class="time-show">{{current_time | date:'yyyy-MM-dd hh:mm:ss'}}</div>
+        <div class="admin-quit"><a href="/adminLogOut">退出系统</a></div>
     </div>
     <div class="row main-body">
         <div class="left-container">
@@ -21,9 +22,8 @@
             </div>
         </div>
         <div class="right-container container" >
+            <!-- 路由视图 -->
             <ui-view></ui-view>
-            <!-- 换页js脚本 -->
-
         </div>
     </div>
 </div>
@@ -34,7 +34,7 @@
 <script src="/resource/js/lib/angular.min.js"></script>
 <script src="/resource/js/lib/angular-ui-router.min.js"></script>
 <script src="/resource/js/lib/ui-bootstrap-tpls.min.js"></script>
-<link href="/resource/css/adminIndex.css?t=201802123608" rel="stylesheet">
+<link href="/resource/css/adminIndex.css?t=20180223608" rel="stylesheet">
 <script src="/resource/js/lib/tm.pagination.js?t=2012"></script>
 <script src="/resource/js/adminIndex.js?t=2011118122111"></script>
 

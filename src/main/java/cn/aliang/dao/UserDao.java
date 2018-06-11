@@ -74,5 +74,13 @@ public interface UserDao {
      * @return
      */
     List<User> queryAllUser();
+
+    /**
+     * 检查管理员的账号和密码
+     * @param userName
+     * @param password
+     * @return
+     */
+    Integer selectAdminByUsernameAndPassword(@Param("userName") String userName, @Param("password") String password);
 }
 

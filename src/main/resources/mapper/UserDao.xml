@@ -60,4 +60,12 @@
                register_time
                from user
     </select>
+
+    <select id="selectAdminByUsernameAndPassword" resultType="int">
+        select admin_id
+                from user_admin
+                where BINARY user_name = #{userName}
+                      and password = #{password}
+    </select>
+
 </mapper>

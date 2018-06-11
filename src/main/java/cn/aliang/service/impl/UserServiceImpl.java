@@ -108,8 +108,95 @@ public class UserServiceImpl implements UserService {
         return map;
     }
 
+    /**
+     * 用户登录(登录模块)
+     *
+     * @param userName
+     * @param password
+     * @return
+     */
+    @Override
+    public Map<String, Object> adminLogin(String userName, String password, HttpServletResponse response) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        // 校验用户名和密码是否正确
+        Integer adminId = userDao.selectAdminByUsernameAndPassword(userName, MyUtil.md5(password));
+        if (adminId == null) {
+            map.put("error", "用户名或密码错误");
+            return map;
+        }
+        int timeout = 60 * 10; //过期时间 单位:秒
+
+        // 设置登录cookie (利用生成的随机数保证生成的Cookie唯一)，不设置过期时间 随着浏览器关闭即销毁
+        String adminLoginToken = MyUtil.createRandomCode();
+        Cookie cookie = new Cookie("adminLoginToken", adminLoginToken);
+        cookie.setPath("/");
+        cookie.setMaxAge(-1);
+        response.addCookie(cookie);
+
+        // 将token:userId存入redis，并设置过期时间
+        // 通常需要进行异常验证
+        Jedis jedis = jedisPool.getResource();
+
+        //更新loginToken对应的用户Id,并且在服务端设置对应的过期时间
+        jedis.set(adminLoginToken, adminId.toString(), "NX", "EX", timeout);
+
+        jedis.close();
+
+        return map;
+    }
+    /**
+     * 管理员登出
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @Override
+    public Boolean adminLogout(HttpServletRequest request, HttpServletResponse response) {
+        /**
+         * 先清除服务端的cookie
+         */
+        try {
+            String loginToken = null;
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("adminLoginToken")) {
+                    //获取request内的loginToken
+                    loginToken = cookie.getValue();
+                    //获取redis连接
+                    Jedis jedis = jedisPool.getResource();
+                    //删除loginToken
+                    jedis.del(loginToken);
+                    jedis.close();
+                    break;
+                }
+            }
+
+            /**
+             * 清除客户端的cookie
+             */
+            Cookie cookie = new Cookie("adminLoginToken", null);
+            cookie.setPath("/");
+            cookie.setMaxAge(-1);
+            response.addCookie(cookie);
+            return true;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * 支付的时候使用
+     * @param username
+     * @param password
+     * @return
+     */
     @Override
     public Boolean checkPassword(String username, String password) {
+
         Integer userId = userDao.selectUserIdByUserNameAndPassword(username, MyUtil.md5(password));
         if (userId != null) {
             return true;
@@ -224,6 +311,8 @@ public class UserServiceImpl implements UserService {
         }
         return map;
     }
+
+
 
     /**
      * 用户登出

@@ -73,6 +73,11 @@
             <bean class="cn.aliang.Interceptor.LoginInterceptor">
             </bean>
         </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/adminIndex*"/>
+            <bean class="cn.aliang.Interceptor.AdminLoginInterceptor"></bean>
+        </mvc:interceptor>
     </mvc:interceptors>
 
 </beans>

@@ -4,7 +4,7 @@
 }
 .logo-img {
     height: 100%;
-    width: 75%;
+    width: 65%;
     font-size: 30px;
     color: white;
     padding: 20px;
@@ -12,7 +12,7 @@
 }
 .time-show {
     float: left;
-    width: 25%;
+    width: 20%;
     height: 80px;
     font-size: 20px;
     color: #44ff4b;
@@ -161,4 +161,20 @@ select.ng-pristine.ng-valid.ng-touched {
 }
 select.good-type{
     height: 34px;
+}
+
+.admin-quit {
+    padding-left: 40px;
+    height: 80px;
+    width: 15%;
+    float: left;
+    line-height: 80px;
+}
+.admin-quit a{
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+.admin-quit a:hover{
+    color: #ff8b44;
 }

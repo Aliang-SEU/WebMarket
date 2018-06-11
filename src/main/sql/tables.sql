@@ -15,6 +15,13 @@ create TABLE user(
   primary key (user_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
+'管理员表'
+create TABLE user_admin(
+  `admin_id` INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `user_name` VARCHAR(40) NOT NULL COMMENT '用户登录名',
+  `password` VARCHAR(40) NOT NULL COMMENT '密码',
+  primary key (admin_id)
+)ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='管理员表';
 
 '收货地址表'
 create TABLE user_address(
@@ -24,8 +31,7 @@ create TABLE user_address(
   `phone` VARCHAR(11) DEFAULT '' COMMENT '手机号码',
   `address` VARCHAR(40) DEFAULT '' COMMENT '收货人地址',
   `type` int not null DEFAULT 0 COMMENT '是否为默认地址0不是，1是',
-  primary key (address_id),
-  FOREIGN KEY (user_id) REFERENCES user(user_id)
+  primary key (address_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='收货地址表';
 
 '商品描述表'
@@ -47,8 +53,7 @@ CREATE TABLE shopping_cart(
   `good_id` int(10) unsigned zerofill NOT NULL COMMENT '商品id',
   `good_price` decimal(20,2) NOT NULL COMMENT '商品价格',
   `counts` int NOT NULL COMMENT '商品的数量',
-  primary key (user_id, good_id),
-  foreign key (user_id) references user(user_id)
+  primary key (user_id, good_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='购物车表';
 
 '订单表'
@@ -67,8 +72,7 @@ CREATE TABLE shopping_order(
   `receive_name` VARCHAR(10) NOT NULL COMMENT '收货人姓名',
   `phone` VARCHAR(11) NOT NULL COMMENT '收货人手机号',
   primary key (order_id),
-  key(user_id),
-  foreign key (user_id) references user(user_id)
+  key(user_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 '订单商品详情表'

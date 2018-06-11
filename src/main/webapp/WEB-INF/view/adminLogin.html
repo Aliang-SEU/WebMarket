@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!--
+  ~  CMB Confidential
+  ~
+  ~  Copyright (C) 2016 China Merchants Bank Co., Ltd. All rights reserved.
+  ~
+  ~  No part of this file may be reproduced or transmitted in any form or by any
+  ~  means, electronic, mechanical, photocopying, recording, or otherwise, without
+  ~  prior written permission of China Merchants Bank Co., Ltd.
+  -->
+
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>用户登录</title>
+    <style>
+        .form-group{
+            text-align:center;
+            width: 100%
+        }
+        .main-body{
+            margin-left:640px;
+            margin-top: 100px;
+        }
+        .form-horizontal{
+            width:300px
+        }
+    </style>
+
+
+
+</head>
+<body ng-app="myApp" ng-controller="adminLoginController" class="img-responsive center-block">
+<div class="main-body">
+    <form class="form-horizontal" name="myForm" novalidate>
+        <div class="form-group">
+            <h3>管理员登录</h3>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" required name="username" ng-model="username" placeholder="用户名">
+            <span style="color:red" ng-show="myForm.username.$dirty && myForm.username.$invalid">
+                <span ng-show="myForm.username.$error.required">用户名不能为空</span></span>
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" required name="password" ng-model="password" placeholder="密码">
+            <span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+                <span ng-show="myForm.password.$error.required">密码不能为空</span></span>
+        </div>
+        <div class="form-group">
+            <button type="button" ng-click="adminLogin()"
+                    ng-disabled="myForm.username.$dirty && myForm.username.$invalid || myForm.password.$dirty && myForm.password.$invalid" class="btn btn-block btn-success">登录</button>
+        </div>
+    </form>
+</div>
+
+<link href="/resource/css/bootstrap.min.css" rel="stylesheet">
+<script src="/resource/js/lib/jquery3.2.1.js"></script>
+<script src="/resource/js/lib/bootstrap.js"></script>
+<link rel="stylesheet" href="/resource/css/login.css?t=123">
+<script src="/resource/js/lib/angular.min.js"></script>
+
+
+<script>
+    angular.module('myApp',[]).controller('adminLoginController', function ($scope, $http) {
+
+        $scope.adminLogin = function(){
+
+            var loginData = {
+                username : $scope.username,
+                password : $scope.password
+            }
+
+            $http.post('/adminLogin', loginData).success(function(response){
+                if(response.success === true){
+                    alert("登录成功")
+                    location.href = "/adminIndex";
+                }else{
+                    alert(response.message);
+                }
+            })
+        }
+
+    })
+</script>
+</body>
+
+</html>

@@ -6,7 +6,15 @@
 <mapper namespace="cn.aliang.dao.GoodDao">
 
     <select id="queryGoodsByType" resultType="Good">
-        select * from good where good.type=#{type}
+        select  good_id,
+                name,
+                description,
+                key_word,
+                price,
+                counts,
+                good_image,
+                type
+                from good where good.type=#{type}
     </select>
 
     <select id="getGoodCountByType" resultType="int">
@@ -14,11 +22,27 @@
     </select>
 
     <select id="queryGoodsByPage" resultType="Good">
-        select * from good where good.type=#{type} limit #{curPage}, #{pageSize};
+        select  good_id,
+                name,
+                description,
+                key_word,
+                price,
+                counts,
+                good_image,
+                type
+                from good where good.type=#{type} limit #{curPage}, #{pageSize};
     </select>
 
     <select id="getGoodDetailById" resultType="Good">
-        select * from good where good.good_id = #{goodId}
+        select  good_id,
+                name,
+                description,
+                key_word,
+                price,
+                counts,
+                good_image,
+                type
+                from good where good.good_id = #{goodId}
     </select>
 
     <update id="reduceGoodNumberByOrder" >
@@ -28,7 +52,15 @@
     </update>
 
     <select id="queryAllGood" resultType="Good">
-        select * from good;
+        select  good_id,
+                name,
+                description,
+                key_word,
+                price,
+                counts,
+                good_image,
+                type
+                from good;
     </select>
 
     <select id="getGoodCount" resultType="int">
@@ -36,11 +68,27 @@
     </select>
 
     <select id="queryGoodsByPageAdmin" resultType="Good">
-        select * from good order by good_id limit #{curPage}, #{pageSize};
+        select  good_id,
+                name,
+                description,
+                key_word,
+                price,
+                counts,
+                good_image,
+                type
+                from good order by good_id limit #{curPage}, #{pageSize};
     </select>
 
     <select id="queryWithKeyWords" resultType="Good">
-        SELECT * from good where key_word like #{keywords}
+        select  good_id,
+                name,
+                description,
+                key_word,
+                price,
+                counts,
+                good_image,
+                type
+                from good where key_word like #{keywords}
     </select>
 
     <update id="alterGoodInfo">

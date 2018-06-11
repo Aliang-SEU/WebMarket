@@ -26,12 +26,29 @@ public interface UserService {
      */
     public Map<String, Object> userLogin(String userName, String password, HttpServletResponse response);
 
+
     /**
-     * 校验密码
-     * @param username
+     * 管理员登录
+     * @param userName
      * @param password
+     * @param response
      * @return
      */
+    public Map<String, Object> adminLogin(String userName, String password, HttpServletResponse response);
+
+    /**
+     * 管理员注销
+     * @param request
+     * @param response
+     * @return
+     */
+    public Boolean adminLogout(HttpServletRequest request, HttpServletResponse response);
+        /**
+         * 校验密码
+         * @param username
+         * @param password
+         * @return
+         */
     public Boolean checkPassword(String username, String password);
 
     /**

@@ -7,10 +7,10 @@
 <mapper namespace="cn.aliang.dao.GoodTypeDao">
 
     <select id="queryGoodType" resultType="cn.aliang.entity.GoodType">
-        select * from good_type;
+        select type,name from good_type;
     </select>
 
     <select id="queryGoodTypeNameByType" resultType="GoodType">
-        SELECT * from good_type where type = #{type}
+        SELECT type,name from good_type where type = #{type}
     </select>
 </mapper>
