@@ -106,7 +106,7 @@ public class AdminController {
      * 进入到管理员界面
      * @return
      */
-    @RequestMapping("/adminIndex")
+    @RequestMapping("")
     public String adminIndex(){
         return "adminIndex";
     }

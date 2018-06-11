@@ -13,11 +13,8 @@
     <script src="/resource/js/lib/bootstrapValidator.js"></script>
     <script src="/resource/js/lib/angular.min.js"></script>
     <script src="/resource/js/utils.js?t=20180608"></script>
-    <script src="/resource/js/goodDetail.js?t=20180608"></script>
+    <script src="/resource/js/goodDetail.js?t=20181061108"></script>
     <style>
-        .detail-img {
-            width: 280px;
-        }
         .detail-x {
             font-size: 18px;
         }
@@ -43,6 +40,17 @@
         td.good-counts.ng-binding {
             color: red;
         }
+        img.goodPicture {
+            width: 280px;
+        }
+        img.logo-img {
+            height: 60px;
+        }
+        input#productCounts {
+            float: left;
+            width: 40px;
+            text-align: center;
+        }
     </style>
 </head>
 <body ng-app="myApp" ng-controller="goodDetailCtrl">
@@ -53,7 +61,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-1">
-                <a href="/"><img src="/resource/img/logo.jpg" alt="logo"></a>
+                <a href="/"><img class="logo-img" src="/resource/img/logo.jpg" alt="logo"></a>
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-4  pull-right" id="userState">
@@ -100,7 +108,7 @@
                     <td>
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-default" ng-click="subCounts()">-</button>
-                            <button id="productCounts" type="button" class="btn btn-default" ng-init="productCounts=1">{{productCounts}}</button>
+                            <input id="productCounts" type="text" ng-model="productCounts" required ng-change="changeNumber()">
                             <button type="button" class="btn btn-default" ng-click="addCounts()">+</button>
                         </div>
                     </td>
