@@ -32,7 +32,7 @@ public class GoodDaoTest {
 
     @Test
     public void test2(){
-        List<Good> result = goodDao.queryWithKeyWords("%手机%");
+        List<Good> result = goodDao.queryWithKeyWords("%手机%", 5, 20);
         for(Good item : result)
          System.out.println(item);
     }

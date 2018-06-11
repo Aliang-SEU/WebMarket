@@ -115,18 +115,14 @@ public class GoodController {
     @RequestMapping(value = "/searchGood", method = RequestMethod.GET,
             produces={"application/json; charset=utf-8"})
     @ResponseBody
-    public Response<Object> queryAllWithKeyWords(String keyWords,String page, String pageSize){
-        List<Good> list =  goodService.queryGoodWithKeywords(keyWords);
-        /**
-         * 这里应该封装到Service中
-         */
+    public Response<Object> queryAllWithKeyWords(String keyWords, String page, String pageSize){
         int curpage = Integer.parseInt(page);
         int curpageSize = Integer.parseInt(pageSize);
-        int start = (curpage - 1) * curpageSize;
-        int end = curpage * curpageSize;
-        end = end > list.size() ? list.size() : end;
+
+        List<Good> list =  goodService.queryGoodWithKeywords(keyWords, curpage, curpageSize);
+
         if(list != null && !list.isEmpty()){
-            return new Response<Object>(true, String.valueOf(list.size()), list.subList(start, end));
+            return new Response<Object>(true, String.valueOf(list.size()), list);
         }else{
             return new Response<Object>(false,"");
         }

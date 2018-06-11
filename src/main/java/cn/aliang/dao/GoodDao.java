@@ -35,7 +35,7 @@ public interface GoodDao {
     public List<Good>  queryGoodsByPageAdmin(@Param("curPage") Integer curPage, @Param("pageSize") Integer pageSize);
 
     //关键字查询商品的信息
-    public List<Good> queryWithKeyWords(@Param("keywords") String keywords);
+    public List<Good> queryWithKeyWords(@Param("keywords") String keywords,@Param("row") Integer row,@Param("pageSize") Integer pageSize);
 
     //修改商品的信息
     public Integer alterGoodInfo(@Param("good") Good good);

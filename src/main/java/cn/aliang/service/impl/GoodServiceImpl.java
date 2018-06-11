@@ -67,8 +67,9 @@ public class GoodServiceImpl implements GoodService {
      * @return
      */
     @Override
-    public List<Good> queryGoodWithKeywords(String keywords) {
-        return goodDao.queryWithKeyWords("%" + keywords + "%");
+    public List<Good> queryGoodWithKeywords(String keywords, Integer curPage, Integer pageSize) {
+        int row = (curPage - 1) * pageSize;
+        return goodDao.queryWithKeyWords("%" + keywords + "%", row, pageSize);
     }
 
     /**

@@ -88,7 +88,7 @@
                 counts,
                 good_image,
                 type
-                from good where key_word like #{keywords}
+                from good where key_word like #{keywords} limit #{row}, #{pageSize};
     </select>
 
     <update id="alterGoodInfo">

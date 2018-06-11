@@ -23,7 +23,7 @@ public interface GoodService {
 
     public List<Good> queryAllGood();
 
-    public List<Good> queryGoodWithKeywords(String keywords);
+    public List<Good> queryGoodWithKeywords(String keywords, Integer row, Integer pageSize);
 
     public Boolean alterGoodInfo(Good good);
 
