@@ -7,8 +7,9 @@
 img.logo-img {
     height: 60px;
 }
-#topBar{
-
+a {
+    color: #ff8041;
+    text-decoration: none;
 }
 #userState{
     margin-top: 1.5em;

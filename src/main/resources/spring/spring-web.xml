@@ -67,6 +67,9 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/order/*" />
+            <mvc:mapping path="/alterData*" />
+            <mvc:mapping path="/alterUserData*"/>
+            <mvc:mapping path="/getUserData*" />
             <bean class="cn.aliang.Interceptor.LoginInterceptor">
             </bean>
         </mvc:interceptor>

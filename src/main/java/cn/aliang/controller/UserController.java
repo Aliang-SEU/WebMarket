@@ -144,7 +144,7 @@ public class UserController {
      * @param response
      * @return
      */
-    @RequestMapping("/logOut")
+    @RequestMapping(value = "/logOut", method = RequestMethod.GET)
     public String logOut(HttpServletRequest request, HttpServletResponse response){
         Boolean result = userService.logout(request, response);
         if(result == true){

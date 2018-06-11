@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户注册(暂时不需要做)
+     *
      * @param userName
      * @param email
      * @param password
@@ -46,10 +47,10 @@ public class UserServiceImpl implements UserService {
         //首先查询数据库内是否有对应的账号存在
         String passwordMD5 = MyUtil.md5(password);
         Integer userId = userDao.selectUserIdByUserNameAndPassword(userName, passwordMD5);
-        if(userId != null){
+        if (userId != null) {
             map.put("error", "该用户已被注册");
             return map;
-        }else{
+        } else {
             userDao.insertUser(new User(userName, passwordMD5, email, new Date()));
             map.put("success", "注册成功");
         }
@@ -58,12 +59,13 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户登录(登录模块)
+     *
      * @param userName
      * @param password
      * @return
      */
     @Override
-    public Map<String, Object> userLogin(String userName, String password, HttpServletResponse response){
+    public Map<String, Object> userLogin(String userName, String password, HttpServletResponse response) {
 
         Map<String, Object> map = new HashMap<>();
 
@@ -92,8 +94,8 @@ public class UserServiceImpl implements UserService {
         User user = userDao.selectUserInfoByUserId(userId);
 
         //用户信息序列化到redis中
-        byte[] bytes = ProtostuffIOUtil.toByteArray(user, schema,
-                LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
+        byte[] bytes =
+                ProtostuffIOUtil.toByteArray(user, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
         String key = "userId:" + userId.toString();
         String result = jedis.setex(key.getBytes(), timeout, bytes);
 
@@ -109,16 +111,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public Boolean checkPassword(String username, String password) {
         Integer userId = userDao.selectUserIdByUserNameAndPassword(username, MyUtil.md5(password));
-        if(userId != null){
+        if (userId != null) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
     /**
      * ajax 校验用户名是否已经被注册
+     *
      * @param username
      * @return
      */
@@ -130,6 +132,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * ajax校验邮箱是否已经被注册
+     *
      * @param email
      * @return
      */
@@ -141,26 +144,26 @@ public class UserServiceImpl implements UserService {
 
         Map<String, Object> map = new HashMap<>();
         boolean flag;
-        try{
+        try {
             String check = "^([a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$)";
             Pattern regex = Pattern.compile(check);
             Matcher matcher = regex.matcher(email);
             flag = matcher.matches();
-        }catch(Exception e){
+        } catch (Exception e) {
             flag = false;
         }
         /**
          * 邮箱格式不正确
          */
         flag = true; //由于bootstrapValidator插件的缺陷 这里不得不 不使用后端验证 bug点
-        if(flag == false){
+        if (flag == false) {
             map.put("error", "邮箱格式不正确");
-        }else {
+        } else {
             /**
              * 验证邮箱是否已经被注册过
              */
             Integer count = userDao.checkByEmail(email);
-            if(count == 1){
+            if (count == 1) {
                 map.put("error", "邮箱已经被注册");
             }
         }
@@ -169,6 +172,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 根据loginToken查询对应的用户Id
+     *
      * @param loginToken
      * @return
      */
@@ -180,9 +184,9 @@ public class UserServiceImpl implements UserService {
         Jedis jedis = jedisPool.getResource();
         String userId = jedis.get(loginToken);
 
-        if(userId != null) {
+        if (userId != null) {
             map.put("userId", userId);
-        }else{
+        } else {
             map.put("error", "用户已经登出");
         }
         return map;
@@ -190,6 +194,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 通过loginToken查询用户的信息
+     *
      * @param loginToken
      * @return
      */
@@ -201,20 +206,20 @@ public class UserServiceImpl implements UserService {
         Jedis jedis = jedisPool.getResource();
         String userId = jedis.get(loginToken);
 
-        if(userId != null) {
+        if (userId != null) {
             String key = "userId:" + userId;
             byte[] bytes = jedis.get(key.getBytes());
-            if(bytes != null) {
+            if (bytes != null) {
                 //空对象
                 User user = schema.newMessage();
                 ProtostuffIOUtil.mergeFrom(bytes, user, schema);
                 //user 被反序列化
                 map.put("UserInfo", user);
-            }else{
+            } else {
                 User user = userDao.selectUserInfoByUserId(Integer.parseInt(userId));
                 map.put("UserInfo", user);
             }
-        }else{
+        } else {
             map.put("error", "未找到用户信息");
         }
         return map;
@@ -222,6 +227,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户登出
+     *
      * @param request
      * @param response
      * @return
@@ -231,8 +237,7 @@ public class UserServiceImpl implements UserService {
         /**
          * 先清除服务端的cookie
          */
-        Map<String, Object> map = new HashMap<>();
-        try{
+        try {
             String loginToken = null;
             Cookie[] cookies = request.getCookies();
             for (Cookie cookie : cookies) {
@@ -242,9 +247,9 @@ public class UserServiceImpl implements UserService {
                     //获取redis连接
                     Jedis jedis = jedisPool.getResource();
                     //从redis内查找对应的userId
-                    String userId =  jedis.get(loginToken);
-                    if(userId != null){
-                        String key = "userId:" +  userId;
+                    String userId = jedis.get(loginToken);
+                    if (userId != null) {
+                        String key = "userId:" + userId;
                         //删除userInfo
                         jedis.del(key.getBytes());
                     }
@@ -258,19 +263,20 @@ public class UserServiceImpl implements UserService {
             /**
              * 清除客户端的cookie
              */
-            Cookie cookie = new Cookie("loginToken",null);
+            Cookie cookie = new Cookie("loginToken", null);
             cookie.setPath("/");
             cookie.setMaxAge(-1);
             response.addCookie(cookie);
             return true;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
     /**
      * 修改用户的信息
+     *
      * @param user
      * @return
      */
@@ -279,16 +285,16 @@ public class UserServiceImpl implements UserService {
 
         Integer result = userDao.alterUserInfo(user);
 
-        if(result != 0){
+        if (result != 0) {
             //修改成功 将用户的信息放到redis内
             Jedis jedis = jedisPool.getResource();
-            byte[] bytes = ProtostuffIOUtil.toByteArray(user, schema,
-                    LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
+            byte[] bytes =
+                    ProtostuffIOUtil.toByteArray(user, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
             String key = "userId:" + user.getUserId();
             jedis.set(key.getBytes(), bytes);
             jedis.close();
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -296,6 +302,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 查询所有用户的信息
+     *
      * @return
      */
     @Override

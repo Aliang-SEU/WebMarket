@@ -104,6 +104,9 @@
                 if(response != null && response.success == true){
                     alert(response.message);
                     location.href="/";
+                }else{
+                    alert("您的登录状态无效！");
+                    location.href="/toLogin";
                 }
             })
         }
