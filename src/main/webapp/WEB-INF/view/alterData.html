@@ -6,21 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>修改个人信息</title>
-    <link href="/resource/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
-    <script src="/resource/js/lib/jquery3.2.1.js"></script>
-    <script src="/resource/js/lib/bootstrap.js"></script>
-    <script src="/resource/js/lib/bootstrapValidator.js"></script>
-    <script src="/resource/js/lib/angular.min.js"></script>
 
-    <style>
-        .detail-img {
-            width: 20em;
-        }
-        .detail-x {
-            font-size: 18px;
-        }
-    </style>
 </head>
 <body ng-app="myApp">
 <div class="container" ng-controller="goodDetailCtrl">
@@ -79,38 +65,15 @@
     <br/>
     <p id="c1" style="text-align:center">Copyright &copy; 2018-2019 aliang-seu.cn 版权所有</p>
 </footer>
+<link href="/resource/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resource/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
+<script src="/resource/js/lib/jquery3.2.1.js"></script>
+<script src="/resource/js/lib/bootstrap.js"></script>
+<script src="/resource/js/lib/bootstrapValidator.js"></script>
+<script src="/resource/js/lib/angular.min.js"></script>
 
+<link href="/resource/css/alterData.css?t=20180611" rel="stylesheet">
 
-<script>
-    var app = angular.module("myApp", []);
-    var href = location.href; //取得整个地址栏
-    var loginToken = href.substr(href.indexOf("=") + 1);
-
-    app.controller("goodDetailCtrl", function ($scope, $http) {
-        var data = {
-            "loginToken" : loginToken
-        }
-        $http.post("/getUserData", data).success(function (response) {
-            $scope.user = response.data;
-            console.log(response.data)
-        }).error(function (resposne) {
-            alert("数据库错误");
-        })
-
-        $scope.confirmAlter = function(data){
-            var jsonData = JSON.stringify(data)
-
-            $http.post("/alterUserData", jsonData).success(function(response){
-                if(response != null && response.success == true){
-                    alert(response.message);
-                    location.href="/";
-                }else{
-                    alert("您的登录状态无效！");
-                    location.href="/toLogin";
-                }
-            })
-        }
-    })
-</script>
+<script src="/resource/js/alterData.js?t=20180611"></script>
 </body>
 </html>

@@ -25,6 +25,8 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
     }
 
     $scope.searchGood = function (keyWords) {
+        if (keyWords === null || keyWords.trim(" ") === "")
+            return;
         $scope.searchKeyWords = keyWords;
         $http.get('/good/searchGood/?keyWords=' + keyWords + "&page=1&pageSize=12").success(function (response) {
             $scope.paginationConf.currentPage = 1;
@@ -33,24 +35,24 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
             $scope.items = response.data;
         })
     }
-    var getSearchGood = function(){
+    var getSearchGood = function () {
 
         var postData = {
-            type:$rootScope.selType,
+            type: $rootScope.selType,
             curPage: $scope.paginationConf.currentPage,
             pageSize: $scope.paginationConf.itemsPerPage
         }
         $http.get('/good/searchGood/?keyWords=' + $scope.searchKeyWords + "&page="
-            +  $scope.paginationConf.currentPage
+            + $scope.paginationConf.currentPage
             + "&pageSize=" + $scope.paginationConf.itemsPerPage).success(function (response) {
             $scope.paginationConf.totalItems = parseInt(response.message);
             $scope.items = response.data;
         })
     }
-    var getFirstPage = function(){
+    var getFirstPage = function () {
         $scope.paginationConf.currentPage = 1;
         var postData = {
-            type:$rootScope.selType,
+            type: $rootScope.selType,
             curPage: $scope.paginationConf.currentPage,
             pageSize: $scope.paginationConf.itemsPerPage
         }
@@ -65,7 +67,7 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
     var getAllGoods = function () {
 
         var postData = {
-            type:$rootScope.selType,
+            type: $rootScope.selType,
             curPage: $scope.paginationConf.currentPage,
             pageSize: $scope.paginationConf.itemsPerPage
         }
@@ -86,10 +88,10 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
         itemsPerPage: 12, // 每页几条数据，和totalItems决定一共会有几页
         pagesLength: 5,
     };
-    $scope.$watch('paginationConf.currentPage', function(){
-        if($scope.itemsToShow === 'typeResult'){
+    $scope.$watch('paginationConf.currentPage', function () {
+        if ($scope.itemsToShow === 'typeResult') {
             getAllGoods();
-        }else if($scope.itemsToShow === 'searchResult'){
+        } else if ($scope.itemsToShow === 'searchResult') {
             getSearchGood();
         }
     });

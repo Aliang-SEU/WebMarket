@@ -49,3 +49,10 @@
 #totalPrice{
     color: #ff452e;
 }
+img.logo-img {
+    height: 60px;
+}
+
+div.logo-img{
+    margin-left: -80px;
+}

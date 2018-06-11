@@ -56,19 +56,14 @@ app.controller("goodDetailCtrl", function ($scope, $http) {
         var orderData = {
             userId: localStorage.getItem("userId"),
             goodId: $scope.good.goodId,
-            time: Date.now(),
+            goodName: $scope.good.name,
             orderState: 0,
             goodPrice: $scope.good.price,
             counts:$scope.productCounts
         }
 
-        StandardPost("/order/confirmOrder", {
-            userId: localStorage.getItem("userId"),
-            goodId: $scope.good.goodId,
-            goodName: $scope.good.name,
-            orderState: 0,
-            goodPrice: $scope.good.price,
-            counts:$scope.productCounts
-        });
+        localStorage.setItem("order", JSON.stringify(orderData));
+
+        StandardPost("/order/confirmOrder", orderData);
     }
 })

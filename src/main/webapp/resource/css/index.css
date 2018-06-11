@@ -4,12 +4,27 @@
     width: 400px;
     padding: 10px 0px 10px 0px;
 }
+div.top-bar{
+    margin-top: 4em;
+}
+div.top-search{
+    margin-top: 1em;
+}
+div.top-navbar{
+    margin-top: 1em;
+}
+span.top-search{
+    cursor:pointer;
+}
 img.logo-img {
     height: 60px;
 }
-a {
+a.loginState {
     color: #ff8041;
     text-decoration: none;
+}
+a.loginState:hover {
+    color: white;
 }
 #userState{
     margin-top: 1.5em;

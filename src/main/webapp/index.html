@@ -8,11 +8,11 @@
     <title>网上商城</title>
 </head>
 
-<body  ng-app="myApp"  ng-controller="goodListCtrl">
+<body ng-app="myApp" ng-controller="goodListCtrl">
 
-<div class="container-fluid" style="margin-top: 4em;">
+<div class="top-bar container-fluid">
     <div class="row">
-        <img src="resource/img/top.jpg" class="img-responsive center-block" >
+        <img src="resource/img/top.jpg" class="img-responsive center-block">
     </div>
 </div>
 
@@ -25,10 +25,10 @@
                 <a href="/"><img class="logo-img" src="/resource/img/logo.jpg" alt="logo"></a>
             </div>
             <div class="col-md-2"></div>
-            <div class="col-md-4 " style="margin-top: 1em;">
+            <div class="top-search col-md-4 ">
                 <div class="input-group">
                     <input type="text" required class="form-control" ng-model="keyWords" placeholder="请输入要查询的内容"/>
-                    <span style="cursor: pointer" class="input-group-addon" ng-click="searchGood(keyWords)">
+                    <span class="top-search input-group-addon" ng-click="searchGood(keyWords)">
                         <i class="glyphicon glyphicon-search"></i></span>
                 </div>
             </div>
@@ -38,16 +38,17 @@
     </nav>
 </div>
 
-<div >
+<div>
 
     <div class="container">
         <!-- 导航栏 -->
         <div class="row">
-            <div class="col-md-12" style="margin-top: 1em">
+            <div class="top-navbar col-md-12">
                 <nav class="navbar navbar-inverse" role="navigation">
                     <div class="container-fluid">
                         <div class="navbar-header col-offset-2 col-md-1">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                    data-target=".navbar-ex1-collapse">
                                 <span class="sr-only">Toggle navigation</span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
@@ -60,7 +61,9 @@
                                 <ul class="nav navbar-nav">
                                     <li ng-repeat="type in goodTypes">
                                         <!-- 显示对应的商品分类 -->
-                                       <span class="navbar-brand" ng-class="{true:'selected', false:'unselected'}[$root.selType == goodTypes[$index].type]"  ng-click="ShowPages(type.type)">{{type.name}}</span>
+                                        <span class="navbar-brand"
+                                              ng-class="{true:'selected', false:'unselected'}[$root.selType == goodTypes[$index].type]"
+                                              ng-click="ShowPages(type.type)">{{type.name}}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -70,12 +73,13 @@
             </div>
         </div>
 
-            <!-- 分页网格 显示对于分类下的商品详情-->
-        <div class="main" >
+        <!-- 分页网格 显示对于分类下的商品详情-->
+        <div class="main">
             <ul class="goodWrapper">
-                <li class="good-box" ng-repeat="item in items" >
+                <li class="good-box" ng-repeat="item in items">
                     <div class="goodBlock" ng-click="toDetailPage(item.goodId)">
-                        <div class="pPic"><img class="goodPicture" ng-src="{{'/resource/img/good/' + item.goodImage}}" ></div>
+                        <div class="pPic"><img class="goodPicture" ng-src="{{'/resource/img/good/' + item.goodImage}}">
+                        </div>
                         <div class="pName">{{item.name}}</div>
                         <div class="pDescription">{{item.description}}</div>
                         <div class="pPrice"><span>{{item.price | number:2}}元</span></div>
@@ -99,9 +103,9 @@
 <script src="/resource/js/lib/bootstrapValidator.js"></script>
 <script src="/resource/js/lib/angular.min.js"></script>
 
-<link href="/resource/css/main.css?t=20182060112" rel="stylesheet">
+<link href="/resource/css/index.css?t=20182060112" rel="stylesheet">
 <script src="/resource/js/lib/tm.pagination.js?t=2018"></script>
-<script src="/resource/js/utils.js"></script>
+<script src="/resource/js/utils.js?t=2018060221162"></script>
 <script src="/resource/js/main.js?t=2018060221162"></script>
 </body>
 

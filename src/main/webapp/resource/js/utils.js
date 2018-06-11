@@ -17,12 +17,12 @@ function getLoginState(){
     if(loginToken != null ){
         $.get("/getLoginState",{"loginToken":loginToken} , function(result){
             if(result != null && result.success == true){
-                $("#userState").html("欢迎您:<a onclick=\"alterData()\" id='userName'>" + localStorage.getItem("userName")  + " <span class='sep'> | </span>  \
-                            <a href=\"/logOut\"> 注销 </a> " + " <span class='sep'> | </span> \
-                            <a href=\"/order/toOrder\" target='_blank'>我的订单</a>");
+                $("#userState").html("欢迎您:<a class='loginState' onclick=\"alterData()\" id='userName'>" + localStorage.getItem("userName")  + " <span class='sep'> | </span>  \
+                            <a class='loginState' href=\"/logOut\"> 注销 </a> " + " <span class='sep'> | </span> \
+                            <a class='loginState' href=\"/order/toOrder\" target='_blank'>我的订单</a>");
             }else{
-                $("#userState").html("<a href=\"/toLogin\" >亲,请登陆</a>" + "<span class='sep'> | </span> \
-                    <a onclick=\"dueToLogin()\" style='cursor: pointer' >我的订单</a>");
+                $("#userState").html("<a class='loginState' href=\"/toLogin\" >亲,请登陆</a>" + "<span class='sep'> | </span> \
+                    <a class='loginState' onclick=\"dueToLogin()\" style='cursor: pointer' >我的订单</a>");
             }
         });
     }else{

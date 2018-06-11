@@ -18,6 +18,9 @@
     color: #44ff4b;
     line-height: 80px;
 }
+td.good-name.ng-binding {
+    line-height: 100px;
+}
 .main-body{
 
 }

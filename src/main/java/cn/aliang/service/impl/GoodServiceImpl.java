@@ -60,23 +60,44 @@ public class GoodServiceImpl implements GoodService {
         return goodDao.queryGoodsByPageAdmin(rows, pageSize);
     }
 
+
+    /**
+     * 关键字搜索对应的商品
+     * @param keywords
+     * @return
+     */
     @Override
     public List<Good> queryGoodWithKeywords(String keywords) {
         return goodDao.queryWithKeyWords("%" + keywords + "%");
     }
 
+    /**
+     * 修改一个商品
+     * @param good
+     * @return
+     */
     @Override
     public Boolean alterGoodInfo(Good good) {
         Integer result = goodDao.alterGoodInfo(good);
         return result == 1;
     }
 
+    /**
+     * 新增一个商品
+     * @param good
+     * @return
+     */
     @Override
     public Boolean addGoodInfo(Good good) {
         Integer result = goodDao.addGoodInfo(good);
         return result == 1;
     }
 
+    /**
+     * 删除商品的信息
+     * @param good
+     * @return
+     */
     @Override
     public Boolean deleteGoodInfo(Good good) {
         Integer result = goodDao.deleteGoodInfo(good);
@@ -84,7 +105,7 @@ public class GoodServiceImpl implements GoodService {
     }
 
     /**
-     * 商品图片上传(未实现)
+     * 商品图片上传(存储到本地文件夹)
      * @param file
      */
     @Override

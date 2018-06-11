@@ -1,0 +1,54 @@
+/*
+ *  CMB Confidential
+ *
+ *  Copyright (C) 2016 China Merchants Bank Co., Ltd. All rights reserved.
+ *
+ *  No part of this file may be reproduced or transmitted in any form or by any
+ *  means, electronic, mechanical, photocopying, recording, or otherwise, without
+ *  prior written permission of China Merchants Bank Co., Ltd.
+ */
+
+a {
+    color: #ff8041;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:hover {
+    color: white;
+}
+.detail-x {
+    font-size: 18px;
+}
+#userState{
+    margin-top: 1.5em;
+    font-size: 1em;
+    color: white;
+}
+.sep{
+    margin-left:0.5em;
+    margin-right: 0.5em;
+    color: white;
+}
+th {
+    width: 90px;
+}
+td.ng-binding {
+    width: 400px;
+}
+td.good-price.ng-binding {
+    color: red;
+}
+td.good-counts.ng-binding {
+    color: red;
+}
+img.goodPicture {
+    width: 280px;
+}
+img.logo-img {
+    height: 60px;
+}
+input#productCounts {
+    float: left;
+    width: 40px;
+    text-align: center;
+}
