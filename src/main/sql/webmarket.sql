@@ -1,5 +1,5 @@
 ﻿# Host: localhost  (Version 5.6.17)
-# Date: 2018-06-11 23:21:57
+# Date: 2018-06-11 23:28:46
 # Generator: MySQL-Front 6.0  (Build 2.20)
 
 
@@ -159,3 +159,21 @@ CREATE TABLE `user_address` (
 #
 
 INSERT INTO `user_address` VALUES (0000000001,0000000001,'黄志亮','15365717168','江苏省南京市玄武区东南大学',0),(0000000002,0000000002,'周华','15676576576','上海市浦东新区',0),(0000000003,0000000001,'李永斌','15698598695','江苏省南京市玄武区四牌楼',0);
+
+#
+# Structure for table "user_admin"
+#
+
+DROP TABLE IF EXISTS `user_admin`;
+CREATE TABLE `user_admin` (
+  `admin_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `user_name` varchar(40) NOT NULL COMMENT '用户登录名',
+  `password` varchar(40) NOT NULL COMMENT '密码',
+  PRIMARY KEY (`admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='管理员表';
+
+#
+# Data for table "user_admin"
+#
+
+INSERT INTO `user_admin` VALUES (1,'admin','21232f297a57a5a743894a0e4a801fc3');
