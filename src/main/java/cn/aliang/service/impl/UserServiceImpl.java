@@ -1,12 +1,15 @@
 package cn.aliang.service.impl;
 
 import cn.aliang.Util.MyUtil;
+import cn.aliang.Util.ProtoStuffUtil;
 import cn.aliang.dao.UserDao;
 import cn.aliang.entity.User;
 import cn.aliang.service.UserService;
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;
 import com.dyuproject.protostuff.runtime.RuntimeSchema;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
@@ -31,8 +34,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private JedisPool jedisPool;
 
-    private RuntimeSchema<User> schema = RuntimeSchema.createFrom(User.class);
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     /**
      * 用户注册(暂时不需要做)
      *
@@ -75,7 +77,7 @@ public class UserServiceImpl implements UserService {
             map.put("error", "用户名或密码错误");
             return map;
         }
-        int timeout = 60 * 60 * 24; //过期时间 单位:秒
+        int timeout = 60 * 60 * 1; //过期时间 单位:秒
 
         // 设置登录cookie (利用生成的随机数保证生成的Cookie唯一)，不设置过期时间 随着浏览器关闭即销毁
         String loginToken = MyUtil.createRandomCode();
@@ -86,24 +88,29 @@ public class UserServiceImpl implements UserService {
 
         // 将token:userId存入redis，并设置过期时间
         // 通常需要进行异常验证
-        Jedis jedis = jedisPool.getResource();
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            if(jedis != null){
+                //更新loginToken对应的用户Id,并且在服务端设置对应的过期时间
+                jedis.set(loginToken, userId.toString(), "NX", "EX", timeout);
+                //登录之后取到用户的ID与账户名
+                User user = userDao.selectUserInfoByUserId(userId);
+                map.put("userInfo", user);
 
-        //更新loginToken对应的用户Id,并且在服务端设置对应的过期时间
-        jedis.set(loginToken, userId.toString(), "NX", "EX", timeout);
-        //登录之后取到用户的ID与账户名
-        User user = userDao.selectUserInfoByUserId(userId);
+                //用户信息序列化到redis中
+                byte[] bytes = ProtoStuffUtil.serialize(user);
+                String key = "userId:" + userId.toString();
+                jedis.setex(key.getBytes(), 60 * 5, bytes);
 
-        //用户信息序列化到redis中
-        byte[] bytes =
-                ProtostuffIOUtil.toByteArray(user, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
-        String key = "userId:" + userId.toString();
-        String result = jedis.setex(key.getBytes(), timeout, bytes);
-
-        jedis.close();
-
-        // 将用户信息返回，存入localStorage
-        //user.setUserId(userId);
-        map.put("userInfo", user);
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+        }finally {
+            if(jedis != null){
+                jedis.close();
+            }
+        }
 
         return map;
     }
@@ -137,12 +144,21 @@ public class UserServiceImpl implements UserService {
 
         // 将token:userId存入redis，并设置过期时间
         // 通常需要进行异常验证
-        Jedis jedis = jedisPool.getResource();
-
-        //更新loginToken对应的用户Id,并且在服务端设置对应的过期时间
-        jedis.set(adminLoginToken, adminId.toString(), "NX", "EX", timeout);
-
-        jedis.close();
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            if(jedis != null){
+                //更新adminLoginToken对应的用户Id,并且在服务端设置对应的过期时间
+                jedis.set(adminLoginToken, adminId.toString(), "NX", "EX", timeout);
+            }
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+        }
+        finally {
+            if(jedis != null){
+                jedis.close();
+            }
+        }
 
         return map;
     }
@@ -166,10 +182,20 @@ public class UserServiceImpl implements UserService {
                     //获取request内的loginToken
                     loginToken = cookie.getValue();
                     //获取redis连接
-                    Jedis jedis = jedisPool.getResource();
-                    //删除loginToken
-                    jedis.del(loginToken);
-                    jedis.close();
+                    Jedis jedis = null;
+                    try{
+                        jedis = jedisPool.getResource();
+                        if(jedis != null){
+                            //删除loginToken
+                            jedis.del(loginToken);
+                        }
+                    }catch (Exception e){
+                        logger.error(e.getMessage(), e);
+                    }finally {
+                        if (jedis != null) {
+                            jedis.close();
+                        }
+                    }
                     break;
                 }
             }
@@ -290,29 +316,40 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> map = new HashMap<>();
 
         //redis查询 用户的Id
-        Jedis jedis = jedisPool.getResource();
-        String userId = jedis.get(loginToken);
-
-        if (userId != null) {
-            String key = "userId:" + userId;
-            byte[] bytes = jedis.get(key.getBytes());
-            if (bytes != null) {
-                //空对象
-                User user = schema.newMessage();
-                ProtostuffIOUtil.mergeFrom(bytes, user, schema);
-                //user 被反序列化
-                map.put("UserInfo", user);
-            } else {
-                User user = userDao.selectUserInfoByUserId(Integer.parseInt(userId));
-                map.put("UserInfo", user);
+        Jedis jedis = null;
+        String userId = null;
+        try{
+            jedis = jedisPool.getResource();
+            if(jedis != null){
+                userId = jedis.get(loginToken);
+                if (userId != null) {
+                    String key = "userId:" + userId;
+                    byte[] bytes = jedis.get(key.getBytes());
+                    //redis用户信息过期
+                    if (bytes != null) {
+                        //空对象
+                        User user = (User) ProtoStuffUtil.deserialize(bytes, User.class);
+                        //user 被反序列化
+                        map.put("UserInfo", user);
+                    } else {
+                        User user = userDao.selectUserInfoByUserId(Integer.parseInt(userId));
+                        byte[] userByte = ProtoStuffUtil.serialize(user);
+                        jedis.setex(key.getBytes(), 60 * 5, userByte);
+                        map.put("UserInfo", user);
+                    }
+                } else {
+                    map.put("error", "未找到用户信息");
+                }
             }
-        } else {
-            map.put("error", "未找到用户信息");
+        }catch (Exception e){
+            logger.error(e.getMessage(), e);
+        }finally {
+            if(jedis != null){
+                jedis.close();
+            }
         }
         return map;
     }
-
-
 
     /**
      * 用户登出
@@ -334,17 +371,27 @@ public class UserServiceImpl implements UserService {
                     //获取request内的loginToken
                     loginToken = cookie.getValue();
                     //获取redis连接
-                    Jedis jedis = jedisPool.getResource();
-                    //从redis内查找对应的userId
-                    String userId = jedis.get(loginToken);
-                    if (userId != null) {
-                        String key = "userId:" + userId;
-                        //删除userInfo
-                        jedis.del(key.getBytes());
+                    Jedis jedis = null;
+                    try{
+                        jedis = jedisPool.getResource();
+                        if(jedis != null){
+                            //从redis内查找对应的userId
+                            String userId = jedis.get(loginToken);
+                            if (userId != null) {
+                                String key = "userId:" + userId;
+                                //删除userInfo
+                                jedis.del(key.getBytes());
+                            }
+                            //删除loginToken
+                            jedis.del(loginToken);
+                        }
+                    }catch (Exception e){
+                        logger.error(e.getMessage(), e);
+                    }finally {
+                        if(jedis != null){
+                            jedis.close();
+                        }
                     }
-                    //删除loginToken
-                    jedis.del(loginToken);
-                    jedis.close();
                     break;
                 }
             }
@@ -376,12 +423,21 @@ public class UserServiceImpl implements UserService {
 
         if (result != 0) {
             //修改成功 将用户的信息放到redis内
-            Jedis jedis = jedisPool.getResource();
-            byte[] bytes =
-                    ProtostuffIOUtil.toByteArray(user, schema, LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE));
-            String key = "userId:" + user.getUserId();
-            jedis.set(key.getBytes(), bytes);
-            jedis.close();
+            Jedis jedis = null;
+            try{
+                jedis = jedisPool.getResource();
+                if(jedis != null){
+                    String key = "userId:" + user.getUserId();
+                    //信息被更新 则设置过期
+                    jedis.expire(key, 0);
+                }
+            }catch (Exception e){
+                logger.error(e.getMessage(), e);
+            }finally {
+                if(jedis != null){
+                    jedis.close();
+                }
+            }
             return true;
         } else {
             return false;

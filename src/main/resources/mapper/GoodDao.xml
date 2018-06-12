@@ -91,6 +91,10 @@
                 from good where key_word like #{keywords} limit #{row}, #{pageSize};
     </select>
 
+    <select id="queryCountWithKeyWords" resultType="int">
+        SELECT count(*) from good where key_word like #{keywords}
+    </select>
+
     <update id="alterGoodInfo">
         update good set name = #{good.name},
                         description = #{good.description},

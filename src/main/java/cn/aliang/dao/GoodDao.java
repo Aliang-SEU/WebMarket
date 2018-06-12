@@ -37,6 +37,9 @@ public interface GoodDao {
     //关键字查询商品的信息
     public List<Good> queryWithKeyWords(@Param("keywords") String keywords,@Param("row") Integer row,@Param("pageSize") Integer pageSize);
 
+    //关键字查询商品的数量
+    public Integer queryCountWithKeyWords(@Param("keywords") String kerWords);
+
     //修改商品的信息
     public Integer alterGoodInfo(@Param("good") Good good);
 

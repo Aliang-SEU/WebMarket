@@ -58,6 +58,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         // 根据loginToken是否能从redis中获取userId
         if (!StringUtils.hasText(userId)) {
             request.getRequestDispatcher("/toLogin").forward(request, response);
+            jedis.set(loginToken, userId, "NX", "EX", 60 * 10);
             return false;
         }
         //用户通过验证

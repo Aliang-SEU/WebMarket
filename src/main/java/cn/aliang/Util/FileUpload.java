@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Date;
 
 public class FileUpload {
@@ -19,8 +20,8 @@ public class FileUpload {
     public static String uploadFile(MultipartFile file, HttpServletRequest httpServletRequest) throws IOException {
 
         String fileName = file.getOriginalFilename();
-        String path = "E:\\Java Projec WorkSpace\\WebMarket\\src\\main\\webapp\\";
-        String imagePath = path + "/resource/img/good";
+        String imagePath = httpServletRequest.getServletContext().getRealPath("img/good");
+
         File tempFile = new File(imagePath, new Date().getTime() + String.valueOf(fileName));
         if (!tempFile.getParentFile().exists()) {
             tempFile.getParentFile().mkdir();

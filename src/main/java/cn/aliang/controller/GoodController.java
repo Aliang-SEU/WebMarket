@@ -5,10 +5,13 @@ import cn.aliang.entity.Good;
 import cn.aliang.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.NumberUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -115,14 +118,22 @@ public class GoodController {
     @RequestMapping(value = "/searchGood", method = RequestMethod.GET,
             produces={"application/json; charset=utf-8"})
     @ResponseBody
-    public Response<Object> queryAllWithKeyWords(String keyWords, String page, String pageSize){
-        int curpage = Integer.parseInt(page);
-        int curpageSize = Integer.parseInt(pageSize);
+    public Response<Object> queryAllWithKeyWords(String keyWords, Integer page, Integer pageSize){
+        /**
+         * 字段校验
+         */
+        if(keyWords == null || page == null || pageSize == null){
+            return new Response<Object>(false,"搜索字段有误");
+        }
 
-        List<Good> list =  goodService.queryGoodWithKeywords(keyWords, curpage, curpageSize);
+        List<Good> list =  goodService.queryGoodWithKeywords(keyWords, page, pageSize);
+        Integer count =  goodService.queryGoodCountWithKeywords(keyWords);
 
         if(list != null && !list.isEmpty()){
-            return new Response<Object>(true, String.valueOf(list.size()), list);
+            Map<String, Object> map = new HashMap<>();
+            map.put("goodCount", count);
+            map.put("goodList", list);
+            return new Response<Object>(true, "", map);
         }else{
             return new Response<Object>(false,"");
         }

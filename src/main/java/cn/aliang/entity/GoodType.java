@@ -8,6 +8,14 @@ public class GoodType {
     //商品类型名称
     private String name;
 
+    public GoodType() {
+    }
+
+    public GoodType(int type, String name) {
+        this.type = type;
+        this.name = name;
+    }
+
     public int getType() {
         return type;
     }

@@ -6,6 +6,7 @@ import cn.aliang.entity.Good;
 import cn.aliang.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,6 +64,7 @@ public class GoodServiceImpl implements GoodService {
 
     /**
      * 关键字搜索对应的商品
+     *
      * @param keywords
      * @return
      */
@@ -73,7 +75,20 @@ public class GoodServiceImpl implements GoodService {
     }
 
     /**
+     * 关键字搜索商品的数量
+     *
+     * @param keywords
+     * @return
+     */
+    @Override
+    public Integer queryGoodCountWithKeywords(String keywords) {
+
+        return goodDao.queryCountWithKeyWords("%" + keywords + "%");
+    }
+
+    /**
      * 修改一个商品
+     *
      * @param good
      * @return
      */
@@ -85,6 +100,7 @@ public class GoodServiceImpl implements GoodService {
 
     /**
      * 新增一个商品
+     *
      * @param good
      * @return
      */
@@ -96,6 +112,7 @@ public class GoodServiceImpl implements GoodService {
 
     /**
      * 删除商品的信息
+     *
      * @param good
      * @return
      */
@@ -107,16 +124,17 @@ public class GoodServiceImpl implements GoodService {
 
     /**
      * 商品图片上传(存储到本地文件夹)
+     *
      * @param file
      */
     @Override
     public Map<String, Object> uploadImage(MultipartFile file, HttpServletRequest httpServletRequest) {
         Map<String, Object> map = new HashMap<>();
-        try{
+        try {
             String imageName = FileUpload.uploadFile(file, httpServletRequest);
             map.put("imageName", imageName);
             return map;
-        }catch(IOException e){
+        } catch (IOException e) {
             map.put("error", "文件上传失败");
             return map;
         }

@@ -25,6 +25,8 @@ public interface GoodService {
 
     public List<Good> queryGoodWithKeywords(String keywords, Integer row, Integer pageSize);
 
+    public Integer queryGoodCountWithKeywords(String keywords);
+
     public Boolean alterGoodInfo(Good good);
 
     public Boolean addGoodInfo(Good good);

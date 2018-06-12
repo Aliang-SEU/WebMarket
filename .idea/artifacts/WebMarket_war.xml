@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" name="WebMarket:war">
     <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="seckill.war">
+    <root id="archive" name="webmarket.war">
       <element id="artifact" artifact-name="WebMarket:war exploded" />
     </root>
   </artifact>
