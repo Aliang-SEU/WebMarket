@@ -22,6 +22,11 @@ public class GoodServiceImpl implements GoodService {
     @Autowired
     private GoodDao goodDao;
 
+    /**
+     * 按类型查询所有的商品信息
+     * @param type
+     * @return
+     */
     @Override
     public List<Good> listGoodsByType(Integer type) {
 
@@ -29,32 +34,63 @@ public class GoodServiceImpl implements GoodService {
         return list;
     }
 
+    /**
+     * 查询对应类型商品的数量
+     * @param type
+     * @return
+     */
     @Override
     public Integer getGoodCountByType(Integer type) {
         return goodDao.getGoodCountByType(type);
     }
 
+    /**
+     * 分页查询商品的信息
+     * @param type
+     * @param curPage
+     * @param pageSize
+     * @return
+     */
     @Override
     public List<Good> queryGoodsByPage(Integer type, Integer curPage, Integer pageSize) {
         Integer rows = (curPage - 1) * (pageSize);
         return goodDao.queryGoodsByPage(type, rows, pageSize);
     }
 
+    /**
+     * 查询商品的详细信息
+     * @param goodId
+     * @return
+     */
     @Override
     public Good queryGoodDetailById(Integer goodId) {
         return goodDao.getGoodDetailById(goodId);
     }
 
+    /**
+     * 查询所有的商品信息
+     * @return
+     */
     @Override
     public List<Good> queryAllGood() {
         return goodDao.queryAllGood();
     }
 
+    /**
+     * 获得所有商品的数量
+     * @return
+     */
     @Override
     public Integer getGoodCount() {
         return goodDao.getGoodCount();
     }
 
+    /**
+     * 分页查询所有种类的商品
+     * @param curPage
+     * @param pageSize
+     * @return
+     */
     @Override
     public List<Good> queryGoodsByPageAdmin(Integer curPage, Integer pageSize) {
         Integer rows = (curPage - 1) * (pageSize);

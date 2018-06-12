@@ -11,7 +11,7 @@ public class ShoppingOrder {
     private int orderId;
 
     //订单号
-    private String orderNumber;
+    private long orderNumber;
 
     //用户Id
     private int userId;
@@ -95,11 +95,11 @@ public class ShoppingOrder {
         this.orderId = orderId;
     }
 
-    public String getOrderNumber() {
+    public long getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(String orderNumber) {
+    public void setOrderNumber(long orderNumber) {
         this.orderNumber = orderNumber;
     }
 

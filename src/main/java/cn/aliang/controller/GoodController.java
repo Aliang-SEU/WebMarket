@@ -147,7 +147,10 @@ public class GoodController {
     @RequestMapping(value="/alterGoodInfo", method = RequestMethod.POST,
                     produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public Response<Object> alterGoodInfo(@RequestBody  Good good){
+    public Response<Object> alterGoodInfo(@RequestBody Good good){
+        if(good == null){
+            return new Response<Object>(false, "网络故障");
+        }
         Boolean result = goodService.alterGoodInfo(good);
         if (result == true){
             return new Response<Object>(true, "商品信息修改成功");
@@ -165,6 +168,9 @@ public class GoodController {
             produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public Response<Object> addGoodInfo(@RequestBody Good good){
+        if(good == null){
+            return new Response<Object>(false, "网络故障");
+        }
         Boolean result = goodService.addGoodInfo(good);
         if (result == true){
             return new Response<Object>(true, "商品信息增加成功");
@@ -182,6 +188,9 @@ public class GoodController {
             produces = {"application/json;charset=utf-8"})
     @ResponseBody
     public Response<Object> deleteGoodInfo(@RequestBody Good good){
+        if(good == null){
+            return new Response<Object>(false, "网络故障");
+        }
         Boolean result = goodService.deleteGoodInfo(good);
         if (result == true){
             return new Response<Object>(true, "商品信息删除成功");

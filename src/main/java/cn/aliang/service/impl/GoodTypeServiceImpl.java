@@ -1,11 +1,8 @@
 package cn.aliang.service.impl;
 
-import cn.aliang.Util.ProtoStuffUtil;
 import cn.aliang.dao.GoodTypeDao;
 import cn.aliang.entity.GoodType;
 import cn.aliang.service.GoodTypeService;
-import com.dyuproject.protostuff.Schema;
-import com.dyuproject.protostuff.runtime.RuntimeSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +85,11 @@ public class GoodTypeServiceImpl implements GoodTypeService {
         return goodTypeList;
     }
 
+    /**
+     * 使用类型来查询商品分类的名字
+     * @param type
+     * @return
+     */
     @Override
     public String queryGoodTypeNameByType(Integer type) {
         /**
@@ -96,12 +98,11 @@ public class GoodTypeServiceImpl implements GoodTypeService {
         Jedis jedis = null;
         try{
             jedis = jedisPool.getResource();
-            if(jedis != null){
                 String name = jedis.hget(key, String.valueOf(type));
                 if(name != null){
                     return name;
                 }
-            }
+
         }catch (Exception e){
             logger.error(e.getMessage(), e);
         }finally {
@@ -117,9 +118,8 @@ public class GoodTypeServiceImpl implements GoodTypeService {
         if (goodType != null) {
             try{
                 jedis = jedisPool.getResource();
-                if(jedis != null){
-                    jedis.hset(key, String.valueOf(goodType.getType()), goodType.getName());
-                }
+                jedis.hset(key, String.valueOf(goodType.getType()), goodType.getName());
+
             }catch (Exception e){
                 logger.error(e.getMessage(), e);
             }finally {

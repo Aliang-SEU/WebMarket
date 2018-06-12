@@ -10,7 +10,7 @@ import java.util.Map;
 public interface UserService {
 
     /**
-     * 用户注册(暂时不需要做)
+     * 用户注册
      * @param username
      * @param email
      * @param password

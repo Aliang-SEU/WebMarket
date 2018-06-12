@@ -1,5 +1,8 @@
 package cn.aliang.Util;
 
+/**
+ * 返回的状态码
+ */
 public enum State {
 
     //成功

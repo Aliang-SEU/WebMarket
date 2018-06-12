@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * 用户注册(暂时不需要做)
+     * 用户注册
      *
      * @param userName
      * @param email
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
             map.put("error", "用户名或密码错误");
             return map;
         }
-        int timeout = 60 * 60 * 1; //过期时间 单位:秒
+
 
         // 设置登录cookie (利用生成的随机数保证生成的Cookie唯一)，不设置过期时间 随着浏览器关闭即销毁
         String loginToken = MyUtil.createRandomCode();
@@ -93,6 +93,7 @@ public class UserServiceImpl implements UserService {
         try {
             jedis = jedisPool.getResource();
 
+            int timeout = 60 * 60 * 1; //过期时间 单位:秒
             //更新loginToken对应的用户Id,并且在服务端设置对应的过期时间
             jedis.set(loginToken, userId.toString(), "NX", "EX", timeout);
             //登录之后取到用户的ID与账户名
@@ -196,7 +197,6 @@ public class UserServiceImpl implements UserService {
                     break;
                 }
             }
-
             /**
              * 清除客户端的cookie
              */
@@ -292,13 +292,21 @@ public class UserServiceImpl implements UserService {
         Map<String, Object> map = new HashMap<>();
 
         //redis查询
-        Jedis jedis = jedisPool.getResource();
-        String userId = jedis.get(loginToken);
-
-        if (userId != null) {
-            map.put("userId", userId);
-        } else {
-            map.put("error", "用户已经登出");
+        Jedis jedis = null;
+        try{
+            jedis = jedisPool.getResource();
+            String userId = jedis.get(loginToken);
+            if (userId != null) {
+                map.put("userId", userId);
+            } else {
+                map.put("error", "用户已经登出");
+            }
+        }catch(Exception e){
+            logger.error(e.getMessage(), e);
+        }finally {
+            if(jedis != null){
+                jedis.close();
+            }
         }
         return map;
     }
@@ -393,7 +401,6 @@ public class UserServiceImpl implements UserService {
                     break;
                 }
             }
-
             /**
              * 清除客户端的cookie
              */
@@ -424,11 +431,9 @@ public class UserServiceImpl implements UserService {
             Jedis jedis = null;
             try {
                 jedis = jedisPool.getResource();
-
                 String key = "userId:" + user.getUserId();
                 //信息被更新 则设置过期
                 jedis.expire(key, 0);
-
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
             } finally {

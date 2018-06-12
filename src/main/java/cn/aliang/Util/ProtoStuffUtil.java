@@ -24,6 +24,12 @@ import java.util.List;
 public class ProtoStuffUtil {
 
 
+    /**
+     * protostuff序列化一个对象到字节数组
+     * @param obj
+     * @param <T>
+     * @return
+     */
     public static <T> byte[] serialize(T obj) {
         if (obj == null) {
             throw new RuntimeException("序列化对象(" + obj + ")!");
@@ -42,6 +48,13 @@ public class ProtoStuffUtil {
         return protostuff;
     }
 
+    /**
+     * protostuff反序列化对象
+     * @param paramArrayOfByte
+     * @param targetClass
+     * @param <T>
+     * @return
+     */
     public static <T> T deserialize(byte[] paramArrayOfByte, Class<T> targetClass) {
         if (paramArrayOfByte == null || paramArrayOfByte.length == 0) {
             throw new RuntimeException("反序列化对象发生异常,byte序列为空!");
@@ -57,6 +70,12 @@ public class ProtoStuffUtil {
         return instance;
     }
 
+    /**
+     * protobuf 序列化一个list对象
+     * @param objList
+     * @param <T>
+     * @return
+     */
     public static <T> byte[] serializeList(List<T> objList) {
         if (objList == null || objList.isEmpty()) {
             throw new RuntimeException("序列化对象列表(" + objList + ")参数异常!");
@@ -86,6 +105,13 @@ public class ProtoStuffUtil {
         return protostuff;
     }
 
+    /**
+     * 反序列化一个list对象
+     * @param paramArrayOfByte
+     * @param targetClass
+     * @param <T>
+     * @return
+     */
     public static <T> List<T> deserializeList(byte[] paramArrayOfByte, Class<T> targetClass) {
         if (paramArrayOfByte == null || paramArrayOfByte.length == 0) {
             throw new RuntimeException("反序列化对象发生异常,byte序列为空!");
