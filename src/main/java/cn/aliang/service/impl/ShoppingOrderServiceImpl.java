@@ -31,7 +31,7 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
     @Override
     public boolean createShoppingOrder(ShoppingOrder order) {
         //创建订单号
-        String orderNumber = createOrderNumber(order.getUserId(), System.currentTimeMillis());
+        String orderNumber = createOrderNumber(order.getUserId());
         order.setOrderNumber(orderNumber);
         order.setCreateTime(new Date());
         order.setTotalPrice(order.getCounts()*order.getGoodPrice());
@@ -46,25 +46,20 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
         else{
             Integer result = shoppingOrderDao.insertShoppingOrder(order, good);
             result += shoppingOrderDao.insertOrderDetail(order, good);
-            if(result != 0) {
-                return true;
-            }else{
-                return false;
-            }
+
+            return result != 0;
         }
     }
 
     /**
-     * 订单号内部调用函数
+     * 根据用户的ID生成订单号(15位)
      * @param userId
-     * @param time
      * @return
      */
-    private String createOrderNumber(int userId, long time){
-        String orderNumber = "";
-        orderNumber += String.format("%010d", userId);
-        orderNumber += time;
-        return orderNumber;
+    public String createOrderNumber(int userId){
+        String dbInfo = String.valueOf((userId / 10) % 8 + 1);
+        String tableInfo = String.valueOf(userId % 10);
+        return dbInfo + tableInfo + System.currentTimeMillis();
     }
 
     /**

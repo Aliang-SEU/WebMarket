@@ -21,6 +21,6 @@ public class ShoppingOrderServiceImplTest {
 
     @Test
     public void order(){
-       //System.out.println(shoppingOrderService.createOrderNumber(1, new Date().getTime()));
+       System.out.println(shoppingOrderService.createOrderNumber(12321421));
     }
 }
