@@ -146,6 +146,7 @@ public class UserController {
      */
     @RequestMapping(value = "/logOut", method = RequestMethod.GET)
     public String logOut(HttpServletRequest request, HttpServletResponse response){
+
         Boolean result = userService.logout(request, response);
         if(result == true){
             //注销成功，跳转到登录界面

@@ -10,6 +10,7 @@ public class MyUtil {
 
     /**
      * MD5加密工具
+     *
      * @param plainText
      * @return
      */
@@ -30,10 +31,11 @@ public class MyUtil {
 
     /**
      * 利用当前时间生成一个随机码 用来生成loginToken
+     *
      * @return
      */
     public static String createRandomCode() {
 
-        return new Date().getTime() + UUID.randomUUID().toString().replace("-", "");
+        return System.currentTimeMillis() + UUID.randomUUID().toString().replace("-", "");
     }
 }

@@ -22,6 +22,7 @@ create TABLE user_admin(
   `password` VARCHAR(40) NOT NULL COMMENT '密码',
   primary key (admin_id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='管理员表';
+
 insert into user_admin(user_name, password) values('admin','21232f297a57a5a743894a0e4a801fc3');
 '收货地址表'
 create TABLE user_address(

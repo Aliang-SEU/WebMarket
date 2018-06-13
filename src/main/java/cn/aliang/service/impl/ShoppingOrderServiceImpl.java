@@ -18,7 +18,7 @@ import java.util.List;
  * @author J10154
  */
 @Service
-public class ShoppingOrderServiceImpl implements ShoppingOrderService{
+public class ShoppingOrderServiceImpl implements ShoppingOrderService {
 
     @Autowired
     private ShoppingOrderDao shoppingOrderDao;
@@ -28,8 +28,10 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
 
     //唯一订单号生成
     SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+
     /**
      * 创建一个订单
+     *
      * @param order
      * @return
      */
@@ -39,21 +41,20 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
         String orderNumber = createOrderNumber(order.getUserId());
         order.setOrderNumber(idWorker.nextId());
         order.setCreateTime(new Date());
-        order.setTotalPrice(order.getCounts()*order.getGoodPrice());
+        order.setTotalPrice(order.getCounts() * order.getGoodPrice());
         order.setFinishTime(order.getCreateTime());
         /*
             首先需要检查库存的情况
          */
         Integer goodNumber = goodDao.reduceGoodNumberByOrder(order);
         Good good = goodDao.getGoodDetailById(order.getGoodId());
-        if(goodNumber <= 0)
+        if (goodNumber <= 0) {
             return false;
-        else{
+        } else {
             /**
              * 这里需要保证数据的一致性
              */
             Integer result = shoppingOrderDao.insertShoppingOrder(order, good);
-            result += shoppingOrderDao.insertOrderDetail(order, good);
 
             return result != 0;
         }
@@ -61,10 +62,11 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
 
     /**
      * 根据用户的ID生成订单号(15位)
+     *
      * @param userId
      * @return
      */
-    public String createOrderNumber(int userId){
+    public String createOrderNumber(int userId) {
         String dbInfo = String.valueOf((userId / 10) % 8 + 1);
         String tableInfo = String.valueOf(userId % 10);
         return dbInfo + tableInfo + System.currentTimeMillis();
@@ -72,6 +74,7 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
 
     /**
      * 根据订单号查询订单的信息
+     *
      * @param userId
      * @return
      */
@@ -83,6 +86,7 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
 
     /**
      * 支付订单
+     *
      * @param orderId
      * @return
      */
@@ -94,6 +98,7 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
 
     /**
      * 接收订单
+     *
      * @param orderId
      * @return
      */
@@ -105,6 +110,7 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
 
     /**
      * 接收订单
+     *
      * @param orderId
      * @return
      */
@@ -116,6 +122,7 @@ public class ShoppingOrderServiceImpl implements ShoppingOrderService{
 
     /**
      * 查询所有的订单信息
+     *
      * @return
      */
     @Override

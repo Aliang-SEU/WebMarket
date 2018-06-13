@@ -70,7 +70,13 @@
             <mvc:mapping path="/alterData*" />
             <mvc:mapping path="/alterUserData*"/>
             <mvc:mapping path="/getUserData*" />
+            <mvc:mapping path="/logOut"/>
             <bean class="cn.aliang.Interceptor.LoginInterceptor">
+                <property name="unExcludedUrls">
+                    <list>
+                        <value>/order/sendOrder</value>
+                    </list>
+                </property>
             </bean>
         </mvc:interceptor>
 

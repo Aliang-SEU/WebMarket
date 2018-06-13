@@ -12,6 +12,7 @@ public class FileUpload {
 
     /**
      * 图片上传接口
+     *
      * @param file
      * @param httpServletRequest
      * @return
@@ -22,7 +23,7 @@ public class FileUpload {
         String fileName = file.getOriginalFilename();
         String imagePath = httpServletRequest.getServletContext().getRealPath("img/good");
 
-        File tempFile = new File(imagePath, new Date().getTime() + String.valueOf(fileName));
+        File tempFile = new File(imagePath, System.currentTimeMillis() + String.valueOf(fileName));
         if (!tempFile.getParentFile().exists()) {
             tempFile.getParentFile().mkdir();
         }

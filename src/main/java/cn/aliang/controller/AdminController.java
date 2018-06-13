@@ -36,54 +36,58 @@ public class AdminController {
 
     /**
      * 查询所有的订单
+     *
      * @return
      */
-    @RequestMapping(value = "/adminIndex/queryShoppingOrder", method = RequestMethod.GET,
-                    produces = {"application/json; charset=utf-8"})
+    @RequestMapping(value = "/adminIndex/queryShoppingOrder", method = RequestMethod.GET, produces = {
+            "application/json; charset=utf-8"})
     @ResponseBody
-    public Response<Object> queryShoppingOrder(){
-        List<ShoppingOrder> list =  shoppingOrderService.queryAllShoppingOrder();
-        if(list != null && !list.isEmpty()){
+    public Response<Object> queryShoppingOrder() {
+        List<ShoppingOrder> list = shoppingOrderService.queryAllShoppingOrder();
+        if (list != null && !list.isEmpty()) {
             return new Response<Object>(true, "", list);
-        }else{
+        } else {
             return new Response<Object>(false, "还没有订单");
         }
     }
 
     /**
      * 查询所有用户的信息
+     *
      * @return
      */
-    @RequestMapping(value = "/adminIndex/queryUserInfo", method = RequestMethod.GET,
-            produces = {"application/json; charset=utf-8"})
+    @RequestMapping(value = "/adminIndex/queryUserInfo", method = RequestMethod.GET, produces = {
+            "application/json; charset=utf-8"})
     @ResponseBody
-    public Response<Object> queryUserInfo(){
-        List<User> list =  userService.queryAllUser();
-        if(list != null && !list.isEmpty()){
+    public Response<Object> queryUserInfo() {
+        List<User> list = userService.queryAllUser();
+        if (list != null && !list.isEmpty()) {
             return new Response<Object>(true, "", list);
-        }else{
+        } else {
             return new Response<Object>(false, "还没有商品");
         }
     }
 
     /**
      * 查询所有的商品
+     *
      * @return
      */
-    @RequestMapping(value = "/adminIndex/queryAllGood", method = RequestMethod.GET,
-            produces = {"application/json; charset=utf-8"})
+    @RequestMapping(value = "/adminIndex/queryAllGood", method = RequestMethod.GET, produces = {
+            "application/json; charset=utf-8"})
     @ResponseBody
-    public Response<Object> queryAllGood(){
-        List<Good> list =  goodService.queryAllGood();
-        if(list != null && !list.isEmpty()){
+    public Response<Object> queryAllGood() {
+        List<Good> list = goodService.queryAllGood();
+        if (list != null && !list.isEmpty()) {
             return new Response<Object>(true, "", list);
-        }else{
+        } else {
             return new Response<Object>(false, "还没有商品");
         }
     }
 
     /**
      * 跳转到登录页面
+     *
      * @return
      */
     @RequestMapping(value = "/adminLogin", method = RequestMethod.GET)
@@ -93,24 +97,25 @@ public class AdminController {
 
     /**
      * 管理员登录
+     *
      * @return
      */
-    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST,
-                    produces = {"application/json;charset=utf-8"})
+    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
     @ResponseBody
-    public Response<Object> adminLogin(@RequestBody Map<String, String> userMap,
-                                        HttpServletResponse response) {
+    public Response<Object> adminLogin(@RequestBody Map<String, String> userMap, HttpServletResponse response) {
+        /**
+         * 数据校验
+         */
         String username = userMap.get("username");
         String password = userMap.get("password");
-        if(username == null || password == null ||
-                username.equals("") || password.equals("")){
+        if (username == null || password == null || username.equals("") || password.equals("")) {
             return new Response<>(false, "用户名或密码输入有误");
         }
         Map<String, Object> map = userService.adminLogin(username, password, response);
 
-        if(map.get("error") != null){
+        if (map.get("error") != null) {
             return new Response<>(false, map.get("error").toString());
-        }else {
+        } else {
             return new Response<>(true, "");
         }
 
@@ -118,28 +123,27 @@ public class AdminController {
 
     /**
      * 管理员注销
+     *
      * @param request
      * @param response
      * @return
      */
     @RequestMapping(value = "/adminLogOut", method = RequestMethod.GET)
-    public String adminLogOut(HttpServletRequest request, HttpServletResponse response){
+    public String adminLogOut(HttpServletRequest request, HttpServletResponse response) {
         Boolean result = userService.adminLogout(request, response);
-        if(result == true){
-            //注销成功，跳转到登录界面
-            return "redirect:/adminLogin";
-        }else{
-            //应该不会失败，跳转到登录界面
-            return "redirect:/adminLogin";
-        }
+
+        //注销成功，跳转到登录界面
+        return "redirect:/adminLogin";
+
     }
 
     /**
      * 进入到管理员界面
+     *
      * @return
      */
     @RequestMapping("/adminIndex")
-    public String adminIndex(){
+    public String adminIndex() {
         return "adminIndex";
     }
 }

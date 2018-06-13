@@ -10,6 +10,7 @@ import redis.clients.jedis.JedisPool;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 权限拦截，验证登录的状态
@@ -22,16 +23,20 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     //Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
-    //private List<String> excludedUrls;
+    private List<String> unExcludedUrls;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String requestUri = request.getRequestURI();
 
-        if(requestUri.indexOf("/order/sendOrder") != -1){
-            return true;
+        //放行的请求
+        for(String url : unExcludedUrls){
+            if(requestUri.indexOf(url) != -1){
+                return true;
+            }
         }
+
         String loginToken = null;
         // 是否有cookie
         Cookie[] cookies = request.getCookies();
@@ -72,13 +77,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
     }
-/*
-    public List<String> getExcludedUrls() {
-        return excludedUrls;
+
+    public List<String> getUnExcludedUrls() {
+        return unExcludedUrls;
     }
 
-    public void setExcludedUrls(List<String> excludedUrls) {
-        this.excludedUrls = excludedUrls;
+    public void setUnExcludedUrls(List<String> unExcludedUrls) {
+        this.unExcludedUrls = unExcludedUrls;
     }
-*/
+
 }
