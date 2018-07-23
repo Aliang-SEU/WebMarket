@@ -16,5 +16,16 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
 
     </settings>
+    <environments default="">
+        <environment id="mysql_jdbc">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.mysql.driverClassName}" />
+                <property name="url" value="${jdbc.mysql.url}" />
+                <property name="username" value="${jdbc.mysql.username}" />
+                <property name="password" value="${jdbc.mysql.password}" />
+            </dataSource>
+        </environment>
+    </environments>
 
 </configuration>
