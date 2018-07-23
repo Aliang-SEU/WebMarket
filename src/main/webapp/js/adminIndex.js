@@ -31,7 +31,7 @@ myApp.controller("adminController", function ($rootScope, $modal, $scope, $http,
     $scope.orderState = {0: "待付款", 1: "订单已付款,待发货", 2: "订单已发货", 3: "订单已完成"}
     //左侧栏菜单页面
     $scope.menuArray = new Array('订单管理', '用户管理', '商品管理');
-    $http.get("/queryGoodType").success(function (response) {
+    $http.get("/webmarket/queryGoodType").success(function (response) {
         $scope.GoodType = response.data;
     })
     //时间模块
@@ -50,12 +50,12 @@ myApp.controller("adminController", function ($rootScope, $modal, $scope, $http,
     var updatePage = function (index) {
         switch (index) {
             case 0:
-                $http.get("/adminIndex/queryShoppingOrder").success(function (response) {
+                $http.get("/webmarket/adminIndex/queryShoppingOrder").success(function (response) {
                     $scope.orderlist = response.data;
                 })
                 break;
             case 1:
-                $http.get("/adminIndex/queryUserInfo").success(function (response) {
+                $http.get("/webmarket/adminIndex/queryUserInfo").success(function (response) {
                     $scope.userlist = response.data;
                 })
                 break;
@@ -70,7 +70,7 @@ myApp.controller("adminController", function ($rootScope, $modal, $scope, $http,
 
 myApp.controller('orderManager', function ($rootScope, $modal, $scope, $http, $timeout, $interval, $state, $injector, GoodService) {
     $scope.sendOrder = function (index) {
-        $http.get("/order/sendOrder?orderId=" + $scope.orderlist[index].orderId).success(function (resposne) {
+        $http.get("/webmarket/order/sendOrder?orderId=" + $scope.orderlist[index].orderId).success(function (resposne) {
             if (resposne.success = true) {
                 $scope.orderlist[index].orderState += 1;
             }
@@ -82,7 +82,7 @@ myApp.controller('orderManager', function ($rootScope, $modal, $scope, $http, $t
 myApp.factory('GoodService', function ($http) {
     return {
         getList: function (condition) {
-            return $http.post("/good/GetGoodList", condition);
+            return $http.post("/webmarket/good/GetGoodList", condition);
         },
         getListCount: function (name) {
             return $http.get(name);
@@ -102,7 +102,7 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
             curPage: $scope.paginationConf.currentPage,
             pageSize: $scope.paginationConf.itemsPerPage
         }
-        GoodService.getListCount("/good/GetGoodCount").success(function (response) {
+        GoodService.getListCount("/webmarket/good/GetGoodCount").success(function (response) {
             $scope.paginationConf.totalItems = response.data;
         })
         GoodService.getList(postData).success(function (response) {

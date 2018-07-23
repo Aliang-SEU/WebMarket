@@ -40,7 +40,7 @@
 </head>
 <body ng-app="myApp" ng-controller="adminLoginController" class="img-responsive center-block">
 <div class="main-body">
-    <div class="loginLogo-div"><img class="loginLogo" src="/img/adminLogin.jpg"> </div>
+    <div class="loginLogo-div"><img class="loginLogo" src="/webmarket/img/adminLogin.jpg"> </div>
     <div align="center">
         <div class="login-form">
             <form class="form-horizontal" name="myForm" novalidate>
@@ -66,11 +66,11 @@
     </div>
 </div>
 
-<link href="/css/bootstrap.min.css" rel="stylesheet">
-<script src="/js/lib/jquery3.2.1.js"></script>
-<script src="/js/lib/bootstrap.js"></script>
-<link rel="stylesheet" href="/css/login.css?t=123">
-<script src="/js/lib/angular.min.js"></script>
+<link href="../webmarket/css/bootstrap.min.css" rel="stylesheet">
+<script src="../webmarket/js/lib/jquery3.2.1.js"></script>
+<script src="../webmarket/js/lib/bootstrap.js"></script>
+<link rel="stylesheet" href="../webmarket/css/login.css?t=123">
+<script src="../webmarket/js/lib/angular.min.js"></script>
 
 
 <script>
@@ -83,10 +83,10 @@
                 password : $scope.password
             }
 
-            $http.post('/adminLogin', loginData).success(function(response){
+            $http.post('/webmarket/adminLogin', loginData).success(function(response){
                 if(response.success === true){
                     alert("登录成功")
-                    location.href = "/adminIndex";
+                    location.href = "/webmarket/adminIndex";
                 }else{
                     alert(response.message);
                 }

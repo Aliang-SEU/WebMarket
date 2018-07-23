@@ -6,11 +6,11 @@ $(function () {
 
     $("#registerButton").on("click", function () {
         var data = $("#registerForm").serialize();
-        $.post("/register", data, function (response) {
+        $.post("/webmarket/register", data, function (response) {
             //验证成功
             if (response != null && response.success == true) {
                 alert(response.message);
-                window.location.href = "/toLogin";
+                window.location.href = "/webmarket/toLogin";
             } else {
 
             }

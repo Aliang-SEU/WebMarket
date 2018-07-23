@@ -15,7 +15,7 @@ app.controller("goodDetailCtrl", function ($scope, $http) {
     var data = {
         "loginToken" : loginToken
     }
-    $http.post("/getUserData", data).success(function (response) {
+    $http.post("/webmarket/getUserData", data).success(function (response) {
         $scope.user = response.data;
         console.log(response.data)
     }).error(function (resposne) {
@@ -25,13 +25,13 @@ app.controller("goodDetailCtrl", function ($scope, $http) {
     $scope.confirmAlter = function(data){
         var jsonData = JSON.stringify(data)
 
-        $http.post("/alterUserData", jsonData).success(function(response){
+        $http.post("/webmarket/alterUserData", jsonData).success(function(response){
             if(response != null && response.success == true){
                 alert(response.message);
-                location.href="/";
+                location.href="/webmarket";
             }else{
                 alert("您的登录状态无效！");
-                location.href="/toLogin";
+                location.href="/webmarket/toLogin";
             }
         })
     }

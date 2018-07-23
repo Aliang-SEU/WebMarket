@@ -3,7 +3,7 @@ app.controller("confirmController", function ($scope, $http, $modal){
 
     $scope.goodInfo = goodInfo;
 
-    $http.get("/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
+    $http.get("/webmarket/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
         $scope.addressList = response.data;
 
     })
@@ -17,9 +17,9 @@ app.controller("confirmController", function ($scope, $http, $modal){
 
     $scope.deleteAddress = function(addressId){
         if (window.confirm('确认删除该地址？')) {
-            $http.get("/deleteAddress/" + addressId).success(function (response) {
+            $http.get("/webmarket/deleteAddress/" + addressId).success(function (response) {
                 if (response.success == true) {
-                    $http.get("/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
+                    $http.get("/webmarket/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
                         $scope.addressList = response.data;
                     })
                 }
@@ -52,7 +52,7 @@ app.controller("confirmController", function ($scope, $http, $modal){
                 phone:$scope.selectAdd.phone
             }
 
-            StandardPost("/order/createOrder", orderData);
+            StandardPost("/webmarket/order/createOrder", orderData);
         }
     }
     //添加一个新的地址
@@ -72,8 +72,8 @@ app.controller("confirmController", function ($scope, $http, $modal){
         modalInstance.result.then(function(data){
             console.log(data)
             data.userId = $scope.goodInfo.userId;
-            $http.post("/addAddress", data).success(function(){
-                $http.get("/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
+            $http.post("/webmarket/addAddress", data).success(function(){
+                $http.get("/webmarket/queryAddress/" + $scope.goodInfo.userId).success(function (response) {
                     $scope.addressList = response.data;
                 })
             })

@@ -21,9 +21,9 @@ myApp.controller("checkController", function ($scope, $http) {
             "password": password
         }
         //先进行密码校验
-        $http.post("/checkPassword", data).success(function (response) {
+        $http.post("/webmarket/checkPassword", data).success(function (response) {
             if (response.success == true) {
-                $http.get("/order/pay/?orderId=" + $scope.orderInfo.orderId)
+                $http.get("/webmarket/order/pay/?orderId=" + $scope.orderInfo.orderId)
                     .success(function (response) {
                         alert(response.message);
                         //校验成功更新页面
@@ -43,7 +43,7 @@ myApp.controller("checkController", function ($scope, $http) {
 
     //确认收货
     $scope.receive = function (index) {
-        $http.get("/order/receive/?orderId=" + $scope.ordersTransport[index].orderId)
+        $http.get("/webmarket/order/receive/?orderId=" + $scope.ordersTransport[index].orderId)
             .success(function (response) {
                 alert(response.message);
                 $http.get("/order/queryAllOrder/" + userId).success(function (response) {
@@ -56,7 +56,7 @@ myApp.controller("checkController", function ($scope, $http) {
     $scope.orderState = {0: "待付款", 1: "订单已付款,待发货", 2: "订单已发货", 3: "订单已完成"}
     var userId = localStorage.getItem("userId");
 
-    $http.get("/order/queryAllOrder/" + userId).success(function (response) {
+    $http.get("/webmarket/order/queryAllOrder/" + userId).success(function (response) {
         if (response != null && response.success == true) {
             console.log(response.data);
             wrapperData($scope, response);

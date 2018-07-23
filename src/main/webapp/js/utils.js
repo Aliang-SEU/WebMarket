@@ -15,19 +15,19 @@ function getLoginState(){
 
     //loginToken不为空
     if(loginToken != null ){
-        $.get("/getLoginState",{"loginToken":loginToken} , function(result){
+        $.get("/webmarket/getLoginState",{"loginToken":loginToken} , function(result){
             if(result != null && result.success == true){
                 $("#userState").html("欢迎您:<a class='loginState' onclick=\"alterData()\" id='userName'>" + localStorage.getItem("userName")  + " <span class='sep'> | </span>  \
-                            <a class='loginState' href=\"/logOut\"> 注销 </a> " + " <span class='sep'> | </span> \
-                            <a class='loginState' href=\"/order/toOrder\" target='_blank'>我的订单</a>");
+                            <a class='loginState' href=\"/webmarket/logOut\"> 注销 </a> " + " <span class='sep'> | </span> \
+                            <a class='loginState' href=\"/webmarket/order/toOrder\" target='_blank'>我的订单</a>");
             }else{
-                $("#userState").html("<a class='loginState' href=\"/toLogin\" >亲,请登陆</a>" + "<span class='sep'> | </span> \
+                $("#userState").html("<a class='loginState' href=\"/webmarket/toLogin\" >亲,请登陆</a>" + "<span class='sep'> | </span> \
                     <a class='loginState' onclick=\"dueToLogin()\" style='cursor: pointer' >我的订单</a>");
             }
         });
     }else{
         alter("请您先登录");
-        window.open("/toLogin", "_black")
+        window.open("/webmarket/toLogin", "_black")
     }
 }
 

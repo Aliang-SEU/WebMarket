@@ -14,7 +14,7 @@ app.run(function ($rootScope) {
 app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, GoodService) {
     $scope.itemsToShow = 'typeResult';
 
-    $http.get("/queryGoodType").success(function (response) {
+    $http.get("/webmarket/queryGoodType").success(function (response) {
         $scope.goodTypes = response.data;
     });
 
@@ -28,7 +28,7 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
         if (keyWords === null || keyWords.trim(" ") === "")
             return;
         $scope.searchKeyWords = keyWords;
-        $http.get('/good/searchGood/?keyWords=' + keyWords + "&page=1&pageSize=12").success(function (response) {
+        $http.get('/webmarket/good/searchGood/?keyWords=' + keyWords + "&page=1&pageSize=12").success(function (response) {
             $scope.paginationConf.currentPage = 1;
             $scope.itemsToShow = 'searchResult';
             $scope.paginationConf.totalItems = response.data.goodCount;
@@ -42,7 +42,7 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
             curPage: $scope.paginationConf.currentPage,
             pageSize: $scope.paginationConf.itemsPerPage
         }
-        $http.get('/good/searchGood/?keyWords=' + $scope.searchKeyWords + "&page="
+        $http.get('/webmarket/good/searchGood/?keyWords=' + $scope.searchKeyWords + "&page="
             + $scope.paginationConf.currentPage
             + "&pageSize=" + $scope.paginationConf.itemsPerPage).success(function (response) {
             $scope.paginationConf.totalItems = response.data.goodCount;
@@ -98,17 +98,17 @@ app.controller('goodListCtrl', function ($window, $scope, $http, $rootScope, Goo
     $scope.$watch('selType', getFirstPage);
 
     $scope.toDetailPage = function (id) {
-        var href = '/good/GoodDetail?goodId=' + id;
+        var href = '/webmarket/good/GoodDetail?goodId=' + id;
         window.open(href);
     }
 });
 app.factory('GoodService', function ($http) {
     return {
         getList: function (condition) {
-            return $http.post("/good/GetResult", condition);
+            return $http.post("/webmarket/good/GetResult", condition);
         },
         getListCount: function (condition) {
-            return $http.get("/good/GetResultCount/" + condition);
+            return $http.get("/webmarket/good/GetResultCount/" + condition);
         }
     };
 });

@@ -12,7 +12,7 @@
 
 <div class="top-bar container-fluid">
     <div class="row">
-        <img src="/img/top.jpg" class="img-responsive center-block">
+        <img src="./img/top.jpg" class="img-responsive center-block">
     </div>
 </div>
 
@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-1">
-                <a href="/"><img class="logo-img" src="/img/logo.jpg" alt="logo"></a>
+                <a href="/"><img class="logo-img" src="./img/logo.jpg" alt="logo"></a>
             </div>
             <div class="col-md-2"></div>
             <div class="top-search col-md-4 ">
@@ -78,7 +78,7 @@
             <ul class="goodWrapper">
                 <li class="good-box" ng-repeat="item in items">
                     <div class="goodBlock" ng-click="toDetailPage(item.goodId)">
-                        <div class="pPic"><img class="goodPicture" ng-src="{{'/img/good/' + item.goodImage}}">
+                        <div class="pPic"><img class="goodPicture" ng-src="{{'./img/good/' + item.goodImage}}">
                         </div>
                         <div class="pName">{{item.name}}</div>
                         <div class="pDescription">{{item.description}}</div>
@@ -96,17 +96,17 @@
 </div>
 
 
-<link href="/css/bootstrap.min.css" rel="stylesheet">
-<link href="/css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
-<script src="/js/lib/jquery3.2.1.js"></script>
-<script src="/js/lib/bootstrap.js"></script>
-<script src="/js/lib/bootstrapValidator.js"></script>
-<script src="/js/lib/angular.min.js"></script>
+<link href="./css/bootstrap.min.css" rel="stylesheet">
+<link href="./css/lib/bootstrapValidator0.5.3.css" rel="stylesheet">
+<script src="./js/lib/jquery3.2.1.js"></script>
+<script src="./js/lib/bootstrap.js"></script>
+<script src="./js/lib/bootstrapValidator.js"></script>
+<script src="./js/lib/angular.min.js"></script>
 
-<link href="/css/index.css?t=20182060112" rel="stylesheet">
-<script src="/js/lib/tm.pagination.js?t=2018"></script>
-<script src="/js/utils.js?t=20180602262"></script>
-<script src="/js/main.js?t=2018060162"></script>
+<link href="./css/index.css?t=20182060112" rel="stylesheet">
+<script src="./js/lib/tm.pagination.js?t=2018"></script>
+<script src="./js/utils.js?t=20180602262"></script>
+<script src="./js/main.js?t=2018060162"></script>
 </body>
 
 </html>

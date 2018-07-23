@@ -10,10 +10,10 @@ var app = angular.module("myApp", []);
 app.controller("goodDetailCtrl", function ($scope, $http) {
 
     $scope.productCounts = 1;
-    $http.get("/good/GoodDetail/"+goodId).success(function (response) {
+    $http.get("/webmarket/good/GoodDetail/"+goodId).success(function (response) {
         $scope.good = response.data;
 
-        $http.get("/queryGoodType/" + $scope.good.type).success(function (response) {
+        $http.get("/webmarket/queryGoodType/" + $scope.good.type).success(function (response) {
             $scope.type = response.data;
         });
 
@@ -64,6 +64,6 @@ app.controller("goodDetailCtrl", function ($scope, $http) {
 
         localStorage.setItem("order", JSON.stringify(orderData));
 
-        StandardPost("/order/confirmOrder", orderData);
+        StandardPost("/webmarket/order/confirmOrder", orderData);
     }
 })

@@ -7,22 +7,22 @@ $(function(){
         //数据转化
         var data = $("#loginForm").serialize();
 
-        $.post("/login", data, function(response){
+        $.post("/webmarket/login", data, function(response){
             if(response != null && response.success == true){
                 localStorage.setItem("userId", response.data.userInfo.userId);
                 localStorage.setItem("userName", response.data.userInfo.userName);
                 alert("登录成功");
                 var prevLink = document.referrer;
                 if($.trim(prevLink)==''){
-                    location.href = '/';
+                    location.href = '/webmarket';
                 }else{
                     if(prevLink.indexOf('toRegister') != -1){      //来自注册页面
-                        location.href = '/';
+                        location.href = '/webmarket';
                     }else if(prevLink.indexOf('confirmOrder') != -1){  //来自确认订单界面
                         var orderData = localStorage.getItem("order");
                         orderData = JSON.parse(orderData);
                         orderData.userId = response.data.userInfo.userId; //防止不同用户登录这里修改用户id
-                        StandardPost("/order/confirmOrder", orderData);
+                        StandardPost("/webmarket/order/confirmOrder", orderData);
                     }
                     else{
                         location.href = prevLink;
