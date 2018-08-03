@@ -29,12 +29,12 @@
 
     <!-- 3:配置jsp 显示VideoResolver -->
 
-    <bean id="viewResolverJsp" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/view/"/>
-        <property name="suffix" value=".jsp"/>
-        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
-        <property name="order" value="1"/>
-    </bean>
+    <!--<bean id="viewResolverJsp" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="/WEB-INF/view/"/>-->
+        <!--<property name="suffix" value=".jsp"/>-->
+        <!--<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>-->
+        <!--<property name="order" value="1"/>-->
+    <!--</bean>-->
 
     <!-- 配置freeMarker视图解析器 -->
     <bean id="viewResolverFtl" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">

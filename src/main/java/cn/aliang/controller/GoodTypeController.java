@@ -29,7 +29,7 @@ public class GoodTypeController {
     public Response<List<GoodType>> queryGoodType(){
 
         List<GoodType> list = goodTypeService.queryGoodType();
-        return new Response<List<GoodType>>(true, "", list);
+        return new Response<List<GoodType>>(true, Integer.toString(list.size()), list);
 
     }
 

@@ -148,7 +148,7 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
             form.append('file', file);
             $http({
                 method: 'POST',
-                url: '/good/uploadImage',
+                url: '/webmarket/good/uploadImage',
                 data: form,
                 headers: {'Content-Type': undefined},
                 transformRequest: angular.identity
@@ -156,7 +156,7 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
                 if (response.success === true) {
                     data.goodImage = response.data.imageName;
                     //修改商品信息
-                    $http.post("/good/alterGoodInfo", data).success(function (response) {
+                    $http.post("/webmarket/good/alterGoodInfo", data).success(function (response) {
                         if (response.success = true) {
                             $scope.goodlist[index] = data;
                         }
@@ -174,7 +174,7 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
     $scope.deleteGoodInfo = function (index) {
         if (window.confirm("你确定要删除该商品的吗")) {
             var good = Object.assign({}, $scope.goodlist[index]);
-            $http.post("/good/deleteGoodInfo", good).success(function (response) {
+            $http.post("/webmarket/good/deleteGoodInfo", good).success(function (response) {
                 if (response.success = true) {
                     alert(response.message)
                     $scope.goodlist.splice(index, 1);
@@ -183,7 +183,7 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
                             curPage: $scope.paginationConf.currentPage - 1,
                             pageSize: $scope.paginationConf.itemsPerPage
                         }
-                        GoodService.getListCount("/good/GetGoodCount").success(function (response) {
+                        GoodService.getListCount("/webmarket/good/GetGoodCount").success(function (response) {
                             $scope.paginationConf.totalItems = response.data;
                         })
                         GoodService.getList(postData).success(function (response) {
@@ -226,7 +226,7 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
             form.append('file', file);
             $http({
                 method: 'POST',
-                url: '/good/uploadImage',
+                url: '/webmarket/good/uploadImage',
                 data: form,
                 headers: {'Content-Type': undefined},
                 transformRequest: angular.identity
@@ -234,7 +234,7 @@ myApp.controller('goodManagerController', function ($scope, $modal, GoodService,
                 if (response.success === true) {
                     data.goodImage = response.data.imageName;
 
-                    $http.post("/good/addGoodInfo", data).success(function (response) {
+                    $http.post("/webmarket/good/addGoodInfo", data).success(function (response) {
                         alert(response.message);
                     })
                 } else {

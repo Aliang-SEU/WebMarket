@@ -107,7 +107,7 @@ public class GoodController {
      */
     @RequestMapping(value="/GoodDetail", method = RequestMethod.GET)
     public String toGoodDetail(){
-        return "good/GoodDetail";
+        return "goodDetail";
     }
 
     /**

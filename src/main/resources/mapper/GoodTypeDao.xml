@@ -6,7 +6,7 @@
 <!-- UserDao的mybatis映射文件 -->
 <mapper namespace="cn.aliang.dao.GoodTypeDao">
 
-    <select id="queryGoodType" resultType="cn.aliang.entity.GoodType">
+    <select id="queryGoodType" useCache="false" resultType="cn.aliang.entity.GoodType">
         select type,name from good_type;
     </select>
 

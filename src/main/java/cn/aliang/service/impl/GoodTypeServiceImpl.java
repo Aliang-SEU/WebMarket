@@ -40,24 +40,25 @@ public class GoodTypeServiceImpl implements GoodTypeService {
         /**
          * 先尝试从redis缓存获取商品的分类信息
          */
-        try {
-            jedis = jedisPool.getResource();
-            if (jedis != null) {
-
-                Map<String, String> map = jedis.hgetAll(key);
-                for (Map.Entry<String, String> entry : map.entrySet()) {
-                    Integer type = Integer.parseInt(entry.getKey());
-                    goodTypeList.add(new GoodType(type, entry.getValue()));
-                }
-                return goodTypeList;
-            }
-        } catch (Exception e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            if (jedis != null) {
-                jedis.close();
-            }
-        }
+//        try {
+//            jedis = jedisPool.getResource();
+//            if (jedis != null) {
+//                Map<String, String> map = jedis.hgetAll(key);
+//                if(map != null) {
+//                    for(Map.Entry<String, String> entry : map.entrySet()) {
+//                        Integer type = Integer.parseInt(entry.getKey());
+//                        goodTypeList.add(new GoodType(type, entry.getValue()));
+//                    }
+//                    return goodTypeList;
+//                }
+//            }
+//        } catch (Exception e) {
+//            logger.error(e.getMessage(), e);
+//        } finally {
+//            if (jedis != null) {
+//                jedis.close();
+//            }
+//        }
 
         /**
          * 数据库获取
@@ -66,22 +67,23 @@ public class GoodTypeServiceImpl implements GoodTypeService {
         /**
          * 进行redis缓存
          */
-        if (goodTypeList != null && !goodTypeList.isEmpty()) {
-            try {
-                jedis = jedisPool.getResource();
-                if (jedis != null) {
-                    for (GoodType type : goodTypeList) {
-                        jedis.hset(key, String.valueOf(type.getType()), type.getName());
-                    }
-                }
-            } catch (Exception e) {
-                logger.error(e.getMessage(), e);
-            } finally {
-                if (jedis != null) {
-                    jedis.close();
-                }
-            }
-        }
+//        if (goodTypeList != null && !goodTypeList.isEmpty()) {
+//            try {
+//                jedis = jedisPool.getResource();
+//                if (jedis != null) {
+//                    for (GoodType type : goodTypeList) {
+//                        jedis.hset(key, String.valueOf(type.getType()), type.getName());
+//                        jedis.expire(key, 600);
+//                    }
+//                }
+//            } catch (Exception e) {
+//                logger.error(e.getMessage(), e);
+//            } finally {
+//                if (jedis != null) {
+//                    jedis.close();
+//                }
+//            }
+//        }
         return goodTypeList;
     }
 

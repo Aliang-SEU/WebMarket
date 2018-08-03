@@ -27,7 +27,7 @@ myApp.controller("checkController", function ($scope, $http) {
                     .success(function (response) {
                         alert(response.message);
                         //校验成功更新页面
-                        $http.get("/order/queryAllOrder/" + userId).success(function (response) {
+                        $http.get("/webmarket/order/queryAllOrder/" + userId).success(function (response) {
                             if (response != null && response.success == true) {
                                 wrapperData($scope, response);
                             }

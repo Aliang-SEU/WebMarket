@@ -36,14 +36,14 @@ function alterData(){
 
     var username = localStorage.getItem("username");
     var loginToken = getCookie("loginToken");
-    var url = '/alterData?loginToken=' + loginToken;
+    var url = '/webmarket/alterData?loginToken=' + loginToken;
     window.open(url);
 
 }
 
 function dueToLogin() {
     alert("请先登录");
-    window.open("/toLogin", "_black")
+    window.open("/webmarket/toLogin", "_black")
 }
 
 StandardPost = function(url, args){

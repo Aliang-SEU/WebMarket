@@ -25,10 +25,11 @@
 
     <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
         <constructor-arg index="0" ref="jedisPoolConfig"/>
-        <constructor-arg index="1" value="${redis.hostName}" />
-        <constructor-arg index="2" value="${redis.port}" />
-        <constructor-arg index="3" value="${redis.timeout}" />
+        <constructor-arg index="1" value="${redis.hostName}" type="java.lang.String"/>
+        <constructor-arg index="2" value="${redis.port}" type="int"/>
+        <constructor-arg index="3" value="${redis.timeout}" type="int"/>
         <!--Redis密码-->
+
     </bean>
 
     <!-- 4:扫描web相关的bean -->
