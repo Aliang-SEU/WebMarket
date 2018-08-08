@@ -4,5 +4,5 @@
 实现了用户登录(基于 LoginToken 的会话登录)、注册、个人信息修改、商品浏览及搜索、订单管理以及后
 台管理系统等功能。  
 代码写的十分粗糙=。= 当时完全不会前端  
-在线地址: www.aliangseu.cn/webmarket  
+在线地址: www.aliangseu.cn/webmarket  账户:hzl 密码:1234
 后台管理: www.aliangseu.cn/webmarket/adminIndex 账户:admin 密码:admin
