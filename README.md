@@ -5,3 +5,4 @@
 台管理系统等功能。  
 代码写的十分粗糙=。= 当时完全不会前端  
 在线地址: www.aliangseu.cn/webmarket
+后台管理: www.aliangseu.cn/webmarket/adminIndex 账户:admin 密码:admin
